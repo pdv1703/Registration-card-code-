@@ -14,9 +14,14 @@ from PyQt5.QtWidgets import (
     QDateTimeEdit, QCheckBox)
 
 
+# db_user = 'Pregnant_Admin'
+# db_user_pass = 'a1w2PregAdmin'
+# db_host= 'localhost'
+# db_database_name='pregnant_application'
+
 db_user = 'Pregnant_Admin'
 db_user_pass = 'a1w2PregAdmin'
-db_host='127.0.0.1'
+db_host= 'pregnant-db.co3fhen34njr.eu-central-1.rds.amazonaws.com'
 db_database_name='pregnant_application'
 
 class BigTextRedactor(QWidget):
@@ -101,6 +106,24 @@ class PrimaryWindow(QWidget):
         self.Password = self.d.PasswordLine.text()
         self.Password = self.Password.strip()
         self.exception = "no exception"
+
+        def get_str_for_connection_attempt_log(self, permission):
+            self.log_connection_attempt = ("""
+                           INSERT INTO authorization_attempt
+                               (Login, 
+                               Password, 
+                               Attempt_date, 
+                               Result)
+                               VALUES
+                               (
+                               '""" + self.Login + """',                     
+                               '""" + self.Password + """',
+                               '""" + str(datetime.datetime.today()) + """',
+                               '""" + self.permission + """'
+                               )
+                               """)
+            return self.log_connection_attempt
+
         try:
             cnx = mysql.connector.connect(
                 user=db_user,
@@ -123,6 +146,7 @@ class PrimaryWindow(QWidget):
 
             if mass != []:
                 if mass[0] == 'Administrator':
+                    self.permission = 'Administrator'
                     cursor = cnx.cursor()
                     query = ("SELECT s.pib from authorization s where s.Login="
                              + "'" + self.Login + "' and s.Password='" +
@@ -132,15 +156,30 @@ class PrimaryWindow(QWidget):
                     for row in cursor:
                         pibmass.append("""{:s}""".format(*row))
 
+                    cursor.execute(get_str_for_connection_attempt_log(self, self.permission))
+                    cnx.commit()
+
                     self.Window('App_admin', str(pibmass[0]))
+
                     self.d.close()
 
                 elif mass[0] == 'User':
                     self.Window('App_user', 'Дмитро Горавський')
+
+                    self.permission = 'User'
+
+                    cursor = cnx.cursor()
+                    cursor.execute(get_str_for_connection_attempt_log(self, self.permission))
+                    cnx.commit()
+
                     self.d.close()
 
             else:
                 self.Error_mesage('Некоректний логін чи пароль!')
+                self.permission = 'Acess deny'
+                cursor = cnx.cursor()
+                cursor.execute(get_str_for_connection_attempt_log(self, self.permission))
+                cnx.commit()
             cursor.close()
             cnx.close()
         else:
@@ -4341,9 +4380,101 @@ class PrimaryWindow(QWidget):
         self.tab3hbox.addWidget(self.scroll)
         self.tab3.setLayout(self.tab3hbox)
 
+        # 4 tab
+        self.tab4 = QWidget()
+
+        self.PynktIIIStatystykaLabel = QLabel("I. Медикаментозна профілактика/терапія ТЕУ до вагітності.")
+        self.PynktIIIStatystykaLabel.setFixedHeight(20)
+        self.PynktIIIStatystykaLabel.setStyleSheet(
+            """QLabel{font-size:8pt; font-weight:600; color:#aa0000;}""")
+
+        self.PynktIIIStatystykaGoButton = QPushButton("Розрахувати")
+        self.PynktIIIStatystykaGoButton.setFixedHeight(20)
+
+        self.PynktIIIStatystykaTable = QTableWidget()
+        self.PynktIIIStatystykaTable.setRowCount(1)
+        self.PynktIIIStatystykaTable.setColumnCount(2)
+        self.PynktIIIStatystykaTable.setAlternatingRowColors(1)
+
+        self.PynktVIStatystykaLabel = QLabel("ІI. Медикаментозна профілактика/терапія ТЕУ під час вагітності.")
+        self.PynktVIStatystykaLabel.setFixedHeight(20)
+        self.PynktVIStatystykaLabel.setStyleSheet(
+            """QLabel{font-size:8pt; font-weight:600; color:#aa0000;}""")
+
+        self.PynktVIStatystykaLabel_1 = QLabel("    1. Медикаментозна профілактика.")
+        self.PynktVIStatystykaLabel_1.setFixedHeight(20)
+
+        self.PynktVIStatystykaTable_1 = QTableWidget()
+        self.PynktVIStatystykaTable_1.setRowCount(1)
+        self.PynktVIStatystykaTable_1.setColumnCount(3)
+        self.PynktVIStatystykaTable_1.setAlternatingRowColors(1)
+
+        self.PynktVIStatystykaLabel_2 = QLabel("    2. Кількість ускладнень що виникли")
+        self.PynktVIStatystykaLabel_2.setFixedHeight(20)
+
+        self.PynktVIStatystykaTable_2 = QTableWidget()
+        self.PynktVIStatystykaTable_2.setRowCount(1)
+        self.PynktVIStatystykaTable_2.setColumnCount(2)
+        self.PynktVIStatystykaTable_2.setAlternatingRowColors(1)
+
+        self.PynktVIStatystykaGoButton = QPushButton("Розрахувати")
+        self.PynktVIStatystykaGoButton.setFixedHeight(20)
+
+        self.PynktIXStatystykaLabel = QLabel("ІIІ. Медикаментозна профілактика/терапія ТЕУ у післяпологовий період")
+        self.PynktIXStatystykaLabel.setFixedHeight(20)
+        self.PynktIXStatystykaLabel.setStyleSheet(
+            """QLabel{font-size:8pt; font-weight:600; color:#aa0000;}""")
+
+        self.PynktIXStatystykaGoButton = QPushButton("Розрахувати")
+        self.PynktIXStatystykaGoButton.setFixedHeight(20)
+
+        self.PynktIXStatystykaTable = QTableWidget()
+        self.PynktIXStatystykaTable.setRowCount(1)
+        self.PynktIXStatystykaTable.setColumnCount(3)
+        self.PynktIXStatystykaTable.setAlternatingRowColors(1)
+
+        self.StatystykaSplitter1 = QSplitter(Qt.Vertical)
+        self.StatystykaSplitter1.addWidget(self.PynktIIIStatystykaLabel)
+        self.StatystykaSplitter1.addWidget(self.PynktIIIStatystykaGoButton)
+        self.StatystykaSplitter1.addWidget(self.PynktIIIStatystykaTable)
+
+        self.StatystykaSplitter2 = QSplitter(Qt.Vertical)
+        self.StatystykaSplitter2.addWidget(self.PynktVIStatystykaLabel)
+        self.StatystykaSplitter2.addWidget(self.PynktVIStatystykaGoButton)
+        self.StatystykaSplitter2.addWidget(self.PynktVIStatystykaLabel_1)
+        self.StatystykaSplitter2.addWidget(self.PynktVIStatystykaTable_1)
+        self.StatystykaSplitter2.addWidget(self.PynktVIStatystykaLabel_2)
+        self.StatystykaSplitter2.addWidget(self.PynktVIStatystykaTable_2)
+
+        self.StatystykaSplitter3 = QSplitter(Qt.Vertical)
+        self.StatystykaSplitter3.addWidget(self.PynktIXStatystykaLabel)
+        self.StatystykaSplitter3.addWidget(self.PynktIXStatystykaGoButton)
+        self.StatystykaSplitter3.addWidget(self.PynktIXStatystykaTable)
+
+        self.StatystykaFinalSplitter = QSplitter(Qt.Vertical)
+        self.StatystykaFinalSplitter.addWidget(self.StatystykaSplitter1)
+        self.StatystykaFinalSplitter.addWidget(self.StatystykaSplitter2)
+        self.StatystykaFinalSplitter.addWidget(self.StatystykaSplitter3)
+
+        self.tab4FinalSplitter = QSplitter(Qt.Horizontal)
+        self.tab4FinalSplitter.addWidget(self.StatystykaFinalSplitter)
+
+        self.scrolltab4 = QScrollArea()
+        self.scrolltab4.setWidgetResizable(1)
+        self.scrolltab4.setEnabled(1)
+        self.scrolltab4.setWidget(self.StatystykaFinalSplitter)
+
+        self.tab4hbox = QHBoxLayout()
+        self.tab4hbox.setContentsMargins(5, 5, 5, 5)
+        self.tab4hbox.addWidget(self.scrolltab4)
+        self.tab4.setLayout(self.tab4hbox)
+
         self.bottomLeftTabWidget.addTab(self.tab1, "Внесення даних")
         self.bottomLeftTabWidget.addTab(self.tab2, "Перегляд даних")
+        self.bottomLeftTabWidget.addTab(self.tab4, "Статистика")
         self.bottomLeftTabWidget.addTab(self.tab3, "Адміністрування")
+
+
 
         self.grid = QGridLayout()
         self.grid.setSpacing(10)
@@ -4354,7 +4485,7 @@ class PrimaryWindow(QWidget):
         self.setWindowTitle('Реєстраційна карта')
         self.show()
         if privileges == 'App_user':
-            self.bottomLeftTabWidget.removeTab(2)
+            self.bottomLeftTabWidget.removeTab(3)
             self.bottomLeftTabWidget.removeTab(0)
 
             # Валидатор данных и запись в БД
@@ -6538,7 +6669,7 @@ class PrimaryWindow(QWidget):
             cnx.commit()
             cursor.close()
             cnx.close()
-            self.Info_mesage('Діні успішно внесені в БД!')
+            self.Info_mesage('Дані успішно внесені в БД!')
 
             self.ResetToDefaultValue()
 
@@ -6990,24 +7121,21 @@ class PrimaryWindow(QWidget):
                 self.WievText.setGeometry(300, 300, 700, 600)
                 i = 0
                 j = self.SeachResultTable.currentRow()
-                while i < self.SeachResultTable.columnCount():
+                while i < int(self.SeachResultTable.columnCount()):
                     CellText = self.SeachResultTable.item(j, i)
                     OrderItemText = CellText.text()
                     try:
-
-                        if str(OrderItemText[1]) == 'V' or str(
-                                OrderItemText[1]
-                        ) == 'I' or str(OrderItemText).find(
-                                'ІX.Післяпологовий') != -1:
-                            # print(OrderItemText)
+                        # if str(OrderItemText[1]) == 'V' or str(OrderItemText[1]) == 'I' \
+                        #         or str(OrderItemText).find('ІX.Післяпологовий') != -1 \
+                        #         or str(OrderItemText).find('ІV. Акушерський анамнез.') != -1:
+                        if str(OrderItemText).find('V') != -1 or str(OrderItemText).find('I') != -1 \
+                                or str(OrderItemText).find('ІX.Післяпологовий') != -1 \
+                                or str(OrderItemText).find('ІV. Акушерський анамнез.') != -1:
                             self.WievText.BigDataText.insertPlainText("\n")
-                            self.WievText.BigDataText.insertHtml(
-                                "<b>" + OrderItemText + "</b>\n")
+                            self.WievText.BigDataText.insertHtml("<b>" + OrderItemText + "</b>\n")
                             self.WievText.BigDataText.insertPlainText("\n")
                         else:
-                            self.WievText.BigDataText.insertPlainText(
-                                OrderItemText + "\n")
-                            ##print(OrderItemText[1])
+                            self.WievText.BigDataText.insertPlainText(OrderItemText + "\n")
                     except Exception as e:
                         self.Info_mesage(str(e))
                     i = i + 1
