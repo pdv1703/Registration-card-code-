@@ -13,7 +13,6 @@ from PyQt5.QtWidgets import (
     QComboBox, QDateEdit, QInputDialog, QErrorMessage, QMessageBox,
     QDateTimeEdit, QCheckBox)
 
-
 # db_user = 'Pregnant_Admin'
 # db_user_pass = 'a1w2PregAdmin'
 # db_host= 'localhost'
@@ -21,8 +20,9 @@ from PyQt5.QtWidgets import (
 
 db_user = 'Pregnant_Admin'
 db_user_pass = 'a1w2PregAdmin'
-db_host= 'pregnant-db.co3fhen34njr.eu-central-1.rds.amazonaws.com'
-db_database_name='pregnant_application'
+db_host = 'pregnant-db.co3fhen34njr.eu-central-1.rds.amazonaws.com'
+db_database_name = 'pregnant_application'
+
 
 class BigTextRedactor(QWidget):
     def __init__(self):
@@ -55,13 +55,13 @@ class Authorization(QWidget):
         self.PasswordTitle = QLabel()
         self.PasswordTitle.setText('Введіть пароль:')
         self.PasswordLine = QLineEdit()
-        self.PasswordLine.setText('q1w2e3r4')
+        self.PasswordLine.setText('test')
         self.PasswordLine.setEchoMode(2)
 
         self.LoginTitle = QLabel()
         self.LoginTitle.setText('Логін:')
         self.LoginLine = QLineEdit()
-        self.LoginLine.setText('Savka')
+        self.LoginLine.setText('test')
 
         self.AuthorizationButton = QPushButton('Ok')
         self.ExitButton = QPushButton('Exit')
@@ -95,9 +95,11 @@ class PrimaryWindow(QWidget):
         return privileges
 
     def initUI(self):
-        # self.Window('App_admin', 'Дмитро Горавський')
+        #self.Window('App_admin', 'Дмитро Горавський')
         self.d = Authorization()
         self.d.AuthorizationButton.clicked.connect(self.ParsCredential)
+        self.d.PasswordLine.returnPressed.connect(self.ParsCredential)
+        self.d.LoginLine.returnPressed.connect(self.ParsCredential)
 
     def ParsCredential(self):
         self.Login = self.d.LoginLine.text()
@@ -156,7 +158,9 @@ class PrimaryWindow(QWidget):
                     for row in cursor:
                         pibmass.append("""{:s}""".format(*row))
 
-                    cursor.execute(get_str_for_connection_attempt_log(self, self.permission))
+                    cursor.execute(
+                        get_str_for_connection_attempt_log(
+                            self, self.permission))
                     cnx.commit()
 
                     self.Window('App_admin', str(pibmass[0]))
@@ -169,7 +173,9 @@ class PrimaryWindow(QWidget):
                     self.permission = 'User'
 
                     cursor = cnx.cursor()
-                    cursor.execute(get_str_for_connection_attempt_log(self, self.permission))
+                    cursor.execute(
+                        get_str_for_connection_attempt_log(
+                            self, self.permission))
                     cnx.commit()
 
                     self.d.close()
@@ -178,7 +184,8 @@ class PrimaryWindow(QWidget):
                 self.Error_mesage('Некоректний логін чи пароль!')
                 self.permission = 'Acess deny'
                 cursor = cnx.cursor()
-                cursor.execute(get_str_for_connection_attempt_log(self, self.permission))
+                cursor.execute(
+                    get_str_for_connection_attempt_log(self, self.permission))
                 cnx.commit()
             cursor.close()
             cnx.close()
@@ -4383,25 +4390,30 @@ class PrimaryWindow(QWidget):
         # 4 tab
         self.tab4 = QWidget()
 
-        self.PynktIIIStatystykaLabel = QLabel("I. Медикаментозна профілактика/терапія ТЕУ до вагітності.")
+        self.PynktIIIStatystykaLabel = QLabel(
+            "I. Медикаментозна профілактика/терапія ТЕУ до вагітності.")
         self.PynktIIIStatystykaLabel.setFixedHeight(20)
         self.PynktIIIStatystykaLabel.setStyleSheet(
             """QLabel{font-size:8pt; font-weight:600; color:#aa0000;}""")
 
         self.PynktIIIStatystykaGoButton = QPushButton("Розрахувати")
         self.PynktIIIStatystykaGoButton.setFixedHeight(20)
+        self.PynktIIIStatystykaGoButton.clicked.connect(
+            self.PynktIIIStatystykaFunk)
 
         self.PynktIIIStatystykaTable = QTableWidget()
         self.PynktIIIStatystykaTable.setRowCount(1)
         self.PynktIIIStatystykaTable.setColumnCount(2)
         self.PynktIIIStatystykaTable.setAlternatingRowColors(1)
 
-        self.PynktVIStatystykaLabel = QLabel("ІI. Медикаментозна профілактика/терапія ТЕУ під час вагітності.")
+        self.PynktVIStatystykaLabel = QLabel(
+            "ІI. Медикаментозна профілактика/терапія ТЕУ під час вагітності.")
         self.PynktVIStatystykaLabel.setFixedHeight(20)
         self.PynktVIStatystykaLabel.setStyleSheet(
             """QLabel{font-size:8pt; font-weight:600; color:#aa0000;}""")
 
-        self.PynktVIStatystykaLabel_1 = QLabel("    1. Медикаментозна профілактика.")
+        self.PynktVIStatystykaLabel_1 = QLabel(
+            "    1. Медикаментозна профілактика.")
         self.PynktVIStatystykaLabel_1.setFixedHeight(20)
 
         self.PynktVIStatystykaTable_1 = QTableWidget()
@@ -4409,7 +4421,8 @@ class PrimaryWindow(QWidget):
         self.PynktVIStatystykaTable_1.setColumnCount(3)
         self.PynktVIStatystykaTable_1.setAlternatingRowColors(1)
 
-        self.PynktVIStatystykaLabel_2 = QLabel("    2. Кількість ускладнень що виникли")
+        self.PynktVIStatystykaLabel_2 = QLabel(
+            "    2. Кількість ускладнень що виникли")
         self.PynktVIStatystykaLabel_2.setFixedHeight(20)
 
         self.PynktVIStatystykaTable_2 = QTableWidget()
@@ -4419,8 +4432,12 @@ class PrimaryWindow(QWidget):
 
         self.PynktVIStatystykaGoButton = QPushButton("Розрахувати")
         self.PynktVIStatystykaGoButton.setFixedHeight(20)
+        self.PynktVIStatystykaGoButton.clicked.connect(
+            self.PynktVIStatystykaFunk1)
 
-        self.PynktIXStatystykaLabel = QLabel("ІIІ. Медикаментозна профілактика/терапія ТЕУ у післяпологовий період")
+        self.PynktIXStatystykaLabel = QLabel(
+            "ІIІ. Медикаментозна профілактика/терапія ТЕУ у післяпологовий період"
+        )
         self.PynktIXStatystykaLabel.setFixedHeight(20)
         self.PynktIXStatystykaLabel.setStyleSheet(
             """QLabel{font-size:8pt; font-weight:600; color:#aa0000;}""")
@@ -4474,8 +4491,6 @@ class PrimaryWindow(QWidget):
         self.bottomLeftTabWidget.addTab(self.tab4, "Статистика")
         self.bottomLeftTabWidget.addTab(self.tab3, "Адміністрування")
 
-
-
         self.grid = QGridLayout()
         self.grid.setSpacing(10)
         self.grid.addWidget(self.bottomLeftTabWidget, 1, 0)
@@ -4488,7 +4503,163 @@ class PrimaryWindow(QWidget):
             self.bottomLeftTabWidget.removeTab(3)
             self.bottomLeftTabWidget.removeTab(0)
 
-            # Валидатор данных и запись в БД
+    # Статистика по ІІІ пункту
+    def PynktIIIStatystykaFunk(self):
+        "Статистика по ІІІ пункту"
+        try:
+            cnx = self.ConnectToPregnantBD()
+        except mysql.connector.DatabaseError as e:
+            self.Info_mesage(str(e))
+
+        try:
+            pynkt_III_stat_cursor = cnx.cursor()
+        except mysql.connector.DatabaseError as e:
+            self.Info_mesage(str(e))
+            cnx.close()
+
+        query_to_stat = (
+            """SELECT COUNT(*) AS Кількість ,REPLACE(MedukamentoznaProfilaktukaNazvaPreperaty, '2.1. Назва препарата:', '') AS "Назва препарату" FROM Registry 
+WHERE MedukamentoznaProfilaktukaNazvaPreperaty != '2.1. Медикаментозна профілактика не проводилась.'
+GROUP BY MedukamentoznaProfilaktukaNazvaPreperaty;""")
+        try:
+            pynkt_III_stat_cursor.execute(query_to_stat)
+        except mysql.connector.DatabaseError as e:
+            self.Info_mesage(str(e))
+            pynkt_III_stat_cursor.close()
+            cnx.close()
+        try:
+            i = 0
+            for column_description in pynkt_III_stat_cursor.description:
+                self.PynktIIIStatystykaTable.setHorizontalHeaderItem(
+                    i,
+                    QTableWidgetItem(
+                        str("{:<13}".format(*column_description))))
+                i = i + 1
+        except mysql.connector.DatabaseError as e:
+            self.Info_mesage(str(e))
+            cnx.close()
+
+        self.PynktIIIStatystykaTable.setRowCount(0)
+
+        for row, form in enumerate(pynkt_III_stat_cursor):
+            self.PynktIIIStatystykaTable.insertRow(row)
+            for column, item in enumerate(form):
+                self.PynktIIIStatystykaTable.setItem(row, column,
+                                                     QTableWidgetItem(
+                                                         str(item)))
+        self.PynktIIIStatystykaTable.resizeColumnsToContents()
+        self.PynktIIIStatystykaTable.setSortingEnabled(1)
+
+        try:
+            pynkt_III_stat_cursor.close()
+        except mysql.connector.DatabaseError as e:
+            self.Info_mesage(str(e))
+            cnx.close()
+        cnx.close()
+
+    def PynktVIStatystykaFunk1(self):
+        "Статистика по VІ пункту"
+        self.PynktVIStatystykaTable_1.setRowCount(0)
+        try:
+            cnx = self.ConnectToPregnantBD()
+        except mysql.connector.DatabaseError as e:
+            self.Info_mesage(str(e))
+
+        try:
+            pynkt_VI_stat_cursor = cnx.cursor()
+        except mysql.connector.DatabaseError as e:
+            self.Info_mesage(str(e))
+            cnx.close()
+
+        query_to_stat = (
+            """SELECT COUNT(MedukamentoznaProfilaktukaPynktVINazvaPreperaty) as Кількість, REPLACE(MedukamentoznaProfilaktukaPynktVINazvaPreperaty, '2.1 Назва препарату:', '') AS "Назва препарату",
+ REPLACE(MedukamentoznaProfilaktukaPynktVITerminKoluPruznacheno, '2.3 Термін коли призначено:', '') AS "Термін коли призначено"
+ FROM Registry GROUP BY MedukamentoznaProfilaktukaPynktVINazvaPreperaty, MedukamentoznaProfilaktukaPynktVITerminKoluPruznacheno;"""
+        )
+        try:
+            pynkt_VI_stat_cursor.execute(query_to_stat)
+        except mysql.connector.DatabaseError as e:
+            self.Info_mesage(str(e))
+            pynkt_VI_stat_cursor.close()
+            cnx.close()
+        try:
+            i = 0
+            for column_description in pynkt_VI_stat_cursor.description:
+                self.PynktVIStatystykaTable_1.setHorizontalHeaderItem(
+                    i,
+                    QTableWidgetItem(
+                        str("{:<13}".format(*column_description))))
+                i = i + 1
+        except mysql.connector.DatabaseError as e:
+            self.Info_mesage(str(e))
+            cnx.close()
+
+        for row, form in enumerate(pynkt_VI_stat_cursor):
+            self.PynktVIStatystykaTable_1.insertRow(row)
+            for column, item in enumerate(form):
+                self.PynktVIStatystykaTable_1.setItem(row, column,
+                                                      QTableWidgetItem(
+                                                          str(item)))
+        self.PynktVIStatystykaTable_1.resizeColumnsToContents()
+        self.PynktVIStatystykaTable_1.setSortingEnabled(1)
+        cnx.close()
+        self.PynktVIStatystykaFunk2()
+
+    def PynktVIStatystykaFunk2(self):
+
+        self.PynktVIStatystykaTable_2.setRowCount(0)
+        try:
+            cnx = self.ConnectToPregnantBD()
+        except mysql.connector.DatabaseError as e:
+            self.Info_mesage(str(e))
+
+        try:
+            pynkt_VI_stat_cursor1 = cnx.cursor()
+        except mysql.connector.DatabaseError as e:
+            self.Info_mesage(str(e))
+            cnx.close()
+
+        query_to_stat = (
+                """SELECT COUNT(*) AS Кількість ,REPLACE(YskladneenaVidProfilaktykuPynktVI, '5. Наявність ускладнень від проведеної профілактики: так; Ускладнення:', '') AS Ускладнення
+FROM Registry 
+WHERE YskladneenaVidProfilaktykuPynktVI != '5. Наявність ускладнень від проведеної профілактики: ні.'
+GROUP BY YskladneenaVidProfilaktykuPynktVI;""")
+        try:
+            pynkt_VI_stat_cursor1.execute(query_to_stat)
+        except mysql.connector.DatabaseError as e:
+            self.Info_mesage(str(e))
+            pynkt_VI_stat_cursor1.close()
+            cnx.close()
+        try:
+            i = 0
+            for column_description in pynkt_VI_stat_cursor1.description:
+                self.PynktVIStatystykaTable_2.setHorizontalHeaderItem(
+                    i,
+                    QTableWidgetItem(
+                        str("{:<13}".format(*column_description))))
+                i = i + 1
+        except mysql.connector.DatabaseError as e:
+            self.Info_mesage(str(e))
+            cnx.close()
+
+        for row, form in enumerate(pynkt_VI_stat_cursor1):
+            self.PynktVIStatystykaTable_2.insertRow(row)
+            for column, item in enumerate(form):
+                self.PynktVIStatystykaTable_2.setItem(row, column,
+                                                      QTableWidgetItem(
+                                                          str(item)))
+        self.PynktVIStatystykaTable_2.resizeColumnsToContents()
+        self.PynktVIStatystykaTable_2.setSortingEnabled(1)
+
+        try:
+            pynkt_VI_stat_cursor1.close()
+        except mysql.connector.DatabaseError as e:
+            self.Info_mesage(str(e))
+            cnx.close()
+
+        cnx.close()
+
+        # Валидатор данных и запись в БД
 
     def InsertToDBFunc(self):
         self.ErrorCount = 0
@@ -5420,18 +5591,18 @@ class PrimaryWindow(QWidget):
         if self.YskladneenaVidProfilaktykuPynktVINoCheckBox.isChecked():
             self.YskladneenaVidProfilaktykuPynktVI = '5. Наявність ускладнень від проведеної профілактики: ні.'
         else:
-            self.YskladneenaVidProfilaktykuPynktVI = '5. Наявність ускладнень від проведеної профілактики: так; назва операції та дата: '
-            self.YskladneenaVidProfilaktykuPynktVIText = self.HiryrgichneLikyvannaNazvaOpericiiPynktVILineEdit.text(
+            self.YskladneenaVidProfilaktykuPynktVI = '5. Наявність ускладнень від проведеної профілактики: так; Ускладнення: '
+            self.YskladneenaVidProfilaktykuPynktVIText = self.YskladneenaVidProfilaktykuNajavnistPynktVILineEdit.text(
             )
             self.YskladneenaVidProfilaktykuPynktVIText = self.YskladneenaVidProfilaktykuPynktVIText.strip(
             )
             if self.YskladneenaVidProfilaktykuPynktVIText == '':
                 self.ErrorCount = self.ErrorCount + 1
                 self.Error_mesage(
-                    'Необхідно заповнити назву операції та дату в пункті "VІ Проведення профілактики/терапії ТЕУ під час вагітності"!'
+                    'Необхідно заповнити наявність ускладнень від проведеної профілактики в пункті "VІ Проведення профілактики/терапії ТЕУ під час вагітності"!'
                 )
             # else:
-                # self.YskladneenaVidProfilaktykuPynktVIText = self.YskladneenaVidProfilaktykuPynktVIText
+            # self.YskladneenaVidProfilaktykuPynktVIText = self.YskladneenaVidProfilaktykuPynktVIText
             self.YskladneenaVidProfilaktykuPynktVI = self.YskladneenaVidProfilaktykuPynktVI + self.YskladneenaVidProfilaktykuPynktVIText
         self.YskladneenaVidProfilaktykuPynktVI = self.YskladneenaVidProfilaktykuPynktVI.replace(
             "'", "''")
@@ -6059,14 +6230,12 @@ class PrimaryWindow(QWidget):
                 self.ElastuchnaKompressiaPynktIX = '2.1. Еластична компресія: так; клас ' + self.ElastuchnaKompressiaPynktIXText
         self.ElastuchnaKompressiaPynktIX = self.ElastuchnaKompressiaPynktIX.replace(
             "'", "''")
-        # print(self.ElastuchnaKompressiaPynktIX)
 
         self.MedukamentoznaProfilaktukaPynktIX = ''
         if self.MedukamentoznaProfilaktukaPynktIXNoCheckBox.isChecked():
             self.MedukamentoznaProfilaktukaPynktIX = '2.2. Медикаментозна профілактика/терапія: ні.'
         else:
             self.MedukamentoznaProfilaktukaPynktIX = '2.2. Медикаментозна профілактика/терапія: так.'
-        # print(self.MedukamentoznaProfilaktukaPynktIX)
 
         self.MedukamentoznaProfilaktukaPynktIXNazvaPreparaty = '2.2.1. Назва препарата: медикаментозна профілактика/терапія не проводилася.'
         if self.MedukamentoznaProfilaktukaPynktIXYesCheckBox.isChecked():
@@ -6083,7 +6252,6 @@ class PrimaryWindow(QWidget):
                 self.MedukamentoznaProfilaktukaPynktIXNazvaPreparaty = '2.2.1. Назва препарата: ' + self.MedukamentoznaProfilaktukaPynktIXNazvaPreparatyText
         self.MedukamentoznaProfilaktukaPynktIXNazvaPreparaty = self.MedukamentoznaProfilaktukaPynktIXNazvaPreparaty.replace(
             "'", "''")
-        # print(self.MedukamentoznaProfilaktukaPynktIXNazvaPreparaty)
 
         self.MedukamentoznaProfilaktukaPynktIXRegumPrujomy = '2.2.2. Режим прийому: медикаментозна профілактика/терапія не проводилася.'
         if self.MedukamentoznaProfilaktukaPynktIXYesCheckBox.isChecked():
@@ -6100,7 +6268,6 @@ class PrimaryWindow(QWidget):
                 self.MedukamentoznaProfilaktukaPynktIXRegumPrujomy = '2.2.2. Режим прийому: ' + self.MedukamentoznaProfilaktukaPynktIXRegumPrujomyText
         self.MedukamentoznaProfilaktukaPynktIXRegumPrujomy = self.MedukamentoznaProfilaktukaPynktIXRegumPrujomy.replace(
             "'", "''")
-        # print(self.MedukamentoznaProfilaktukaPynktIXRegumPrujomy)
 
         self.MedukamentoznaProfilaktukaPynktIXTerminKoluPruznacheno = '2.2.3. Термін коли призначено: медикаментозна профілактика/терапія не проводилася.'
         if self.MedukamentoznaProfilaktukaPynktIXYesCheckBox.isChecked():
@@ -6117,14 +6284,12 @@ class PrimaryWindow(QWidget):
                 self.MedukamentoznaProfilaktukaPynktIXTerminKoluPruznacheno = '2.2.3. Термін коли призначено: ' + self.MedukamentoznaProfilaktukaPynktITerminKoluPruznachenoText
         self.MedukamentoznaProfilaktukaPynktIXTerminKoluPruznacheno = self.MedukamentoznaProfilaktukaPynktIXTerminKoluPruznacheno.replace(
             "'", "''")
-        # print(self.MedukamentoznaProfilaktukaPynktIXTerminKoluPruznacheno)
 
         self.HiryrgichneLikyvannaPynktIX = ''
         if self.HiryrgichneLikyvannaPynktIXNoCheckBox.isChecked():
             self.HiryrgichneLikyvannaPynktIX = '2.3. Хірургічне лікування: ні.'
         else:
             self.HiryrgichneLikyvannaPynktIX = '2.3. Хірургічне лікування: так.'
-        # print(self.HiryrgichneLikyvannaPynktIX)
 
         self.HiryrgichneLikyvannaPynktIXTerminNazvaOperacii = '2.3.1. Назва операції та дата: хірургічне лікування не проводилося.'
         if self.HiryrgichneLikyvannaPynktIXYesCheckBox.isChecked():
@@ -6141,7 +6306,6 @@ class PrimaryWindow(QWidget):
                 self.HiryrgichneLikyvannaPynktIXTerminNazvaOperacii = '2.3.1.Назва операції та дата: ' + self.HiryrgichneLikyvannaPynktIXTerminNazvaOperaciiText
         self.HiryrgichneLikyvannaPynktIXTerminNazvaOperacii = self.HiryrgichneLikyvannaPynktIXTerminNazvaOperacii.replace(
             "'", "''")
-        # print(self.HiryrgichneLikyvannaPynktIXTerminNazvaOperacii)
 
         self.TruvalistProvedenoiProfilaktuktPynktIX = '3. Тривалість проведеної профілактики: профілактика не проводилась.'
         self.TruvalistProvedenoiProfilaktuktPynktIXText = self.TruvalistProvedenoiProfilaktuktPynktIXLineEdit.text(
@@ -6152,7 +6316,6 @@ class PrimaryWindow(QWidget):
             self.TruvalistProvedenoiProfilaktuktPynktIX = '3. Тривалість проведеної профілактики: ' + self.TruvalistProvedenoiProfilaktuktPynktIXText
         self.TruvalistProvedenoiProfilaktuktPynktIX = self.TruvalistProvedenoiProfilaktuktPynktIX.replace(
             "'", "''")
-        # print(self.TruvalistProvedenoiProfilaktuktPynktIX)
 
         self.YskladnennaVidProfilaktukyPynktIX = ''
         if self.YskladnennaVidProfilaktukyPynktIXNoCheckBox.isChecked():
@@ -6171,14 +6334,12 @@ class PrimaryWindow(QWidget):
                 self.YskladnennaVidProfilaktukyPynktIX = '4. Наявність ускладнень від проведеної профілактики: так; ускладнення: ' + self.YskladnennaVidProfilaktukyPynktIXText
         self.YskladnennaVidProfilaktukyPynktIX = self.YskladnennaVidProfilaktukyPynktIX.replace(
             "'", "''")
-        # print(self.YskladnennaVidProfilaktukyPynktIX)
 
         self.TromboembolichniYskladnennaPynktIX = ''
         if self.TromboembolichniYskladnennaPynktIXNoCheckBox.isChecked():
             self.TromboembolichniYskladnennaPynktIX = '5. Тромбоемболічні ускладнення: ні.'
         else:
             self.TromboembolichniYskladnennaPynktIX = '5. Тромбоемболічні ускладнення: так.'
-        # print(self.TromboembolichniYskladnennaPynktIX)
 
         self.TromboembolichniYskladnennaPynktIXVudTey = '5.1. Вид ТЕУ: тромбоемболічні ускладнення відсутні.'
         if self.TromboembolichniYskladnennaPynktIXYesCheckBox.isChecked():
@@ -6195,7 +6356,6 @@ class PrimaryWindow(QWidget):
                 self.TromboembolichniYskladnennaPynktIXVudTey = '5.1. Вид ТЕУ: ' + self.TromboembolichniYskladnennaPynktIXVudTeyText
         self.TromboembolichniYskladnennaPynktIXVudTey = self.TromboembolichniYskladnennaPynktIXVudTey.replace(
             "'", "''")
-        # print(self.TromboembolichniYskladnennaPynktIXVudTey)
 
         self.TromboembolichniYskladnennaPynktIXTerminVunuknenna = '5.2. Термін винекнення: тромбоемболічні ускладнення відсутні.'
         if self.TromboembolichniYskladnennaPynktIXYesCheckBox.isChecked():
@@ -6212,7 +6372,6 @@ class PrimaryWindow(QWidget):
                 self.TromboembolichniYskladnennaPynktIXTerminVunuknenna = '5.2. Термін винекнення: ' + self.TromboembolichniYskladnennaPynktIXTerminVunuknennaText
         self.TromboembolichniYskladnennaPynktIXTerminVunuknenna = self.TromboembolichniYskladnennaPynktIXTerminVunuknenna.replace(
             "'", "''")
-        # print(self.TromboembolichniYskladnennaPynktIXTerminVunuknenna)
 
         self.TromboembolichniYskladnennaPynktIXTerapiaTEY = '5.3. Терапія ТЕУ: тромбоемболічні ускладнення відсутні.'
         if self.TromboembolichniYskladnennaPynktIXYesCheckBox.isChecked():
@@ -6229,49 +6388,42 @@ class PrimaryWindow(QWidget):
                 self.TromboembolichniYskladnennaPynktIXTerapiaTEY = '5.3. Терапія ТЕУ: ' + self.TromboembolichniYskladnennaPynktIXTerapiaTEYText
         self.TromboembolichniYskladnennaPynktIXTerapiaTEY = self.TromboembolichniYskladnennaPynktIXTerapiaTEY.replace(
             "'", "''")
-        # print(self.TromboembolichniYskladnennaPynktIXTerapiaTEY)
 
         self.MastutPynktIX = ''
         if self.MastutPynktIXNoCheckBox.isChecked():
             self.MastutPynktIX = '6. Мастит: ні.'
         else:
             self.MastutPynktIX = '6. Мастит: так.'
-        # print(self.MastutPynktIX)
 
         self.SubinvolyciaMatkuPynktIX = ''
         if self.SubinvolyciaMatkuPynktIXNoCheckBox.isChecked():
             self.SubinvolyciaMatkuPynktIX = '7. Субінволюція матки: ні.'
         else:
             self.SubinvolyciaMatkuPynktIX = '7. Субінволюція матки: так.'
-        # print(self.SubinvolyciaMatkuPynktIX)
 
         self.EndometrutPynktIX = ''
         if self.EndometrutPynktIXNoCheckBox.isChecked():
             self.EndometrutPynktIX = '8. Ендометрит: ні.'
         else:
             self.EndometrutPynktIX = '8. Ендометрит: так.'
-        # print(self.EndometrutPynktIX)
 
         self.PiznaPologovaKrovotechaPynktIX = ''
         if self.PiznaPologovaKrovotechaPynktIXNoCheckBox.isChecked():
             self.PiznaPologovaKrovotechaPynktIX = '9. Пізня післяпологова кровотеча: ні.'
         else:
             self.PiznaPologovaKrovotechaPynktIX = '9. Пізня післяпологова кровотеча: так.'
-        # print(self.PiznaPologovaKrovotechaPynktIX)
 
         self.SepsusPynktIX = ''
         if self.SepsusPynktIXNoCheckBox.isChecked():
             self.SepsusPynktIX = '10. Сепсис: ні.'
         else:
             self.SepsusPynktIX = '10. Сепсис: так.'
-        # print(self.SepsusPynktIX)
 
         self.RoshodgennaShvivPynktIX = ''
         if self.RoshodgennaShvivPynktIXNoCheckBox.isChecked():
             self.RoshodgennaShvivPynktIX = '11. Розходження швів: ні.'
         else:
             self.RoshodgennaShvivPynktIX = '11. Розходження швів: так.'
-        # print(self.RoshodgennaShvivPynktIX)
 
         self.InshiPynktIX = '12. Інші: відсутні.'
         self.InshiPynktIXText = self.InshiPynktIXLineEdit.text()
@@ -6279,14 +6431,12 @@ class PrimaryWindow(QWidget):
         if self.InshiPynktIXText != '':
             self.InshiPynktIX = '12. Інші: ' + self.InshiPynktIXText
         self.InshiPynktIX = self.InshiPynktIX.replace("'", "''")
-        # print(self.InshiPynktIX)
 
         self.HirVtyrchannaVPershi6TugnivPynktIX = ''
         if self.HirVtyrchannaVPershi6TugnivPynktIXNoCheckBox.isChecked():
             self.HirVtyrchannaVPershi6TugnivPynktIX = '13. Хірургічні втручання в перші 6 тиж після пологів: ні.'
         else:
             self.HirVtyrchannaVPershi6TugnivPynktIX = '13. Хірургічні втручання в перші 6 тиж після пологів: так.'
-        # print(self.HirVtyrchannaVPershi6TugnivPynktIX)
 
         self.VupuskaDodomyPynktIX = ''
         if self.VupuskaDodomyPynktIXNoCheckBox.isChecked():
@@ -6303,7 +6453,6 @@ class PrimaryWindow(QWidget):
                 )
             else:
                 self.VupuskaDodomyPynktIX = '14. Виписка додому: так; на ' + self.VupuskaDodomyPynktIXText + " добу."
-        # print(self.VupuskaDodomyPynktIX)
 
         self.PerevedennaVInshuiStacionarPynktIX = ''
         if self.PerevedennaVInshuiStacionarPynktIXNoCheckBox.isChecked():
@@ -6320,19 +6469,15 @@ class PrimaryWindow(QWidget):
                 )
             else:
                 self.PerevedennaVInshuiStacionarPynktIX = '15. Переведена в інший стаціонар: так; на ' + self.PerevedennaVInshuiStacionarPynktIXText + " добу."
-        # print(self.PerevedennaVInshuiStacionarPynktIX)
 
         self.ChangeDateRow = 'Дата та час заповнення реєстраційної карти: ' + self.ChangeDate.text(
         )
-        # print(self.ChangeDateRow)
 
         self.WhoChangeRow = 'Заповняв: ' + self.WhoChange.text()
         self.WhoChangeRow = self.WhoChangeRow.replace("'", "''")
-        # print(self.WhoChangeRow)
 
-        # print("Kilkist pomulok: " + str(self.ErrorCount))
         if self.ErrorCount == 0:
-            self.Error_mesage('Реєстраційну картку заповнено повністю!')
+            #self.Error_mesage('Реєстраційну картку заповнено повністю!')
 
             try:
                 cnx = self.ConnectToPregnantBD()
@@ -7074,7 +7219,6 @@ class PrimaryWindow(QWidget):
                 """select * from Registry R where R.PasportniDani """ +
                 self.PasportniDaniToSelect + " and R.HistoryNumber " +
                 self.HistoryNumberToSelect + " and R.Age " + self.AgeToSelect)
-            # print(query_to_seach)
 
             try:
                 seach_cursor.execute(query_to_seach)
@@ -7132,10 +7276,12 @@ class PrimaryWindow(QWidget):
                                 or str(OrderItemText).find('ІX.Післяпологовий') != -1 \
                                 or str(OrderItemText).find('ІV. Акушерський анамнез.') != -1:
                             self.WievText.BigDataText.insertPlainText("\n")
-                            self.WievText.BigDataText.insertHtml("<b>" + OrderItemText + "</b>\n")
+                            self.WievText.BigDataText.insertHtml(
+                                "<b>" + OrderItemText + "</b>\n")
                             self.WievText.BigDataText.insertPlainText("\n")
                         else:
-                            self.WievText.BigDataText.insertPlainText(OrderItemText + "\n")
+                            self.WievText.BigDataText.insertPlainText(
+                                OrderItemText + "\n")
                     except Exception as e:
                         self.Info_mesage(str(e))
                     i = i + 1
@@ -7206,13 +7352,19 @@ class PrimaryWindow(QWidget):
                     cursor.close()
                     cnx.close()
                     self.Info_mesage('Користувач успішно створений!')
+                    self.CreateUserPIBLineEdit.setText("")
+                    self.CreateUserPasswordLineEdit.setText("")
+                    self.CreateUserLoginLineEdit.setText("")
                 except mysql.connector.DatabaseError as e:
                     self.Info_mesage(str(e))
                     cursor.close()
                     cnx.close()
 
             except mysql.connector.DatabaseError as e:
-                self.Info_mesage(str(e))
+                if e.errno == 1062:
+                    self.Error_mesage("Користувач з таким логіном вже існує.")
+                else:
+                    self.Info_mesage(str(e))
                 cursor.close()
                 cnx.close()
 
@@ -7730,7 +7882,6 @@ class PrimaryWindow(QWidget):
         if self.YskladneenaVidProfilaktykuNoCheckBox.isChecked():
             self.YskladneenaVidProfilaktykuYesCheckBox.setEnabled(0)
         else:
-            # print('ddd')
             self.YskladneenaVidProfilaktykuYesCheckBox.setEnabled(1)
             self.YskladneenaVidProfilaktykuYesCheckBox.setChecked(1)
             self.YskladneenaVidProfilaktykuNoCheckBox.setChecked(0)
