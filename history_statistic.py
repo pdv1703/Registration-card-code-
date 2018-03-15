@@ -55,13 +55,13 @@ class Authorization(QWidget):
         self.PasswordTitle = QLabel()
         self.PasswordTitle.setText('Введіть пароль:')
         self.PasswordLine = QLineEdit()
-        self.PasswordLine.setText('test')
+        self.PasswordLine.setText('')
         self.PasswordLine.setEchoMode(2)
 
         self.LoginTitle = QLabel()
         self.LoginTitle.setText('Логін:')
         self.LoginLine = QLineEdit()
-        self.LoginLine.setText('test')
+        self.LoginLine.setText('')
 
         self.AuthorizationButton = QPushButton('Ok')
         self.ExitButton = QPushButton('Exit')
@@ -4444,11 +4444,26 @@ class PrimaryWindow(QWidget):
 
         self.PynktIXStatystykaGoButton = QPushButton("Розрахувати")
         self.PynktIXStatystykaGoButton.setFixedHeight(20)
+        self.PynktIXStatystykaGoButton.clicked.connect(
+            self.PynktIXStatystykaFunk1)
 
-        self.PynktIXStatystykaTable = QTableWidget()
-        self.PynktIXStatystykaTable.setRowCount(1)
-        self.PynktIXStatystykaTable.setColumnCount(3)
-        self.PynktIXStatystykaTable.setAlternatingRowColors(1)
+        self.PynktIXStatystykaLabel_1 = QLabel(
+            "    1. Кількість ускладнень по видам")
+        self.PynktIXStatystykaLabel_1.setFixedHeight(20)
+
+        self.PynktIXStatystykaLabel_2 = QLabel(
+            "    2. Терапія ТЕУ")
+        self.PynktIXStatystykaLabel_2.setFixedHeight(20)
+
+        self.PynktIXStatystykaTable_1 = QTableWidget()
+        self.PynktIXStatystykaTable_1.setRowCount(1)
+        self.PynktIXStatystykaTable_1.setColumnCount(2)
+        self.PynktIXStatystykaTable_1.setAlternatingRowColors(1)
+
+        self.PynktIXStatystykaTable_2 = QTableWidget()
+        self.PynktIXStatystykaTable_2.setRowCount(1)
+        self.PynktIXStatystykaTable_2.setColumnCount(4)
+        self.PynktIXStatystykaTable_2.setAlternatingRowColors(1)
 
         self.StatystykaSplitter1 = QSplitter(Qt.Vertical)
         self.StatystykaSplitter1.addWidget(self.PynktIIIStatystykaLabel)
@@ -4466,7 +4481,10 @@ class PrimaryWindow(QWidget):
         self.StatystykaSplitter3 = QSplitter(Qt.Vertical)
         self.StatystykaSplitter3.addWidget(self.PynktIXStatystykaLabel)
         self.StatystykaSplitter3.addWidget(self.PynktIXStatystykaGoButton)
-        self.StatystykaSplitter3.addWidget(self.PynktIXStatystykaTable)
+        self.StatystykaSplitter3.addWidget(self.PynktIXStatystykaLabel_1)
+        self.StatystykaSplitter3.addWidget(self.PynktIXStatystykaTable_1)
+        self.StatystykaSplitter3.addWidget(self.PynktIXStatystykaLabel_2)
+        self.StatystykaSplitter3.addWidget(self.PynktIXStatystykaTable_2)
 
         self.StatystykaFinalSplitter = QSplitter(Qt.Vertical)
         self.StatystykaFinalSplitter.addWidget(self.StatystykaSplitter1)
@@ -4606,7 +4624,6 @@ GROUP BY MedukamentoznaProfilaktukaNazvaPreperaty;""")
         self.PynktVIStatystykaFunk2()
 
     def PynktVIStatystykaFunk2(self):
-
         self.PynktVIStatystykaTable_2.setRowCount(0)
         try:
             cnx = self.ConnectToPregnantBD()
@@ -4658,6 +4675,104 @@ GROUP BY YskladneenaVidProfilaktykuPynktVI;""")
             cnx.close()
 
         cnx.close()
+
+    def PynktIXStatystykaFunk1(self):
+        "Фуекція статистики ІХ пункту (кількість ускладнень по видам)"
+        self.PynktIXStatystykaTable_1.setRowCount(0)
+        try:
+            cnx = self.ConnectToPregnantBD()
+        except mysql.connector.DatabaseError as e:
+            self.Info_mesage(str(e))
+
+        try:
+            pynkt_IX_stat_cursor1 = cnx.cursor()
+        except mysql.connector.DatabaseError as e:
+            self.Info_mesage(str(e))
+            cnx.close()
+
+        query_to_stat = (
+            """SELECT COUNT(*) AS Кількість ,REPLACE(YskladnennaVidProfilaktukyPynktIX, '4. Наявність ускладнень від проведеної профілактики: так; ускладнення:', '') AS Ускладнення
+FROM Registry 
+WHERE YskladnennaVidProfilaktukyPynktIX != '4. Наявність ускладнень від проведеної профілактики: ні.'
+GROUP BY YskladnennaVidProfilaktukyPynktIX;""")
+        try:
+            pynkt_IX_stat_cursor1.execute(query_to_stat)
+        except mysql.connector.DatabaseError as e:
+            self.Info_mesage(str(e))
+            pynkt_IX_stat_cursor1.close()
+            cnx.close()
+        try:
+            i = 0
+            for column_description in pynkt_IX_stat_cursor1.description:
+                self.PynktIXStatystykaTable_1.setHorizontalHeaderItem(
+                    i,
+                    QTableWidgetItem(
+                        str("{:<13}".format(*column_description))))
+                i = i + 1
+        except mysql.connector.DatabaseError as e:
+            self.Info_mesage(str(e))
+            cnx.close()
+
+        for row, form in enumerate(pynkt_IX_stat_cursor1):
+            self.PynktIXStatystykaTable_1.insertRow(row)
+            for column, item in enumerate(form):
+                self.PynktIXStatystykaTable_1.setItem(row, column,
+                                                          QTableWidgetItem(
+                                                              str(item)))
+        self.PynktIXStatystykaTable_1.resizeColumnsToContents()
+        self.PynktIXStatystykaTable_1.setSortingEnabled(1)
+        cnx.close()
+        self.PynktIXStatystykaFunk2()
+
+    def PynktIXStatystykaFunk2(self):
+        "Фуекція статистики ІХ пункту (Який вид ТЕУ, на якому терміні і яка проводилась профілактика)"
+        self.PynktIXStatystykaTable_2.setRowCount(0)
+        try:
+            cnx = self.ConnectToPregnantBD()
+        except mysql.connector.DatabaseError as e:
+            self.Info_mesage(str(e))
+
+        try:
+            pynkt_IX_stat_cursor2 = cnx.cursor()
+        except mysql.connector.DatabaseError as e:
+            self.Info_mesage(str(e))
+            cnx.close()
+
+        query_to_stat = (
+            """SELECT COUNT(TromboembolichniYskladnennaPynktIXVudTey) as Кількість, REPLACE(TromboembolichniYskladnennaPynktIXVudTey, '5.1. Вид ТЕУ:', '') AS "Вид ТЕУ",
+ REPLACE(TromboembolichniYskladnennaPynktIXTerminVunuknenna, '5.2. Термін винекнення:', '') AS "Термін виникнення",
+ REPLACE(TromboembolichniYskladnennaPynktIXTerapiaTEY, '5.3. Терапія ТЕУ:', '') AS "Терапія ТЕУ"
+ FROM Registry 
+ WHERE TromboembolichniYskladnennaPynktIXVudTey not like '%тромбоемболічні ускладнення відсутні.%'
+ GROUP BY TromboembolichniYskladnennaPynktIXVudTey, TromboembolichniYskladnennaPynktIXTerminVunuknenna, TromboembolichniYskladnennaPynktIXTerapiaTEY;""")
+        try:
+            pynkt_IX_stat_cursor2.execute(query_to_stat)
+        except mysql.connector.DatabaseError as e:
+            self.Info_mesage(str(e))
+            pynkt_IX_stat_cursor2.close()
+            cnx.close()
+        try:
+            i = 0
+            for column_description in pynkt_IX_stat_cursor2.description:
+                self.PynktIXStatystykaTable_2.setHorizontalHeaderItem(
+                    i,
+                    QTableWidgetItem(
+                        str("{:<13}".format(*column_description))))
+                i = i + 1
+        except mysql.connector.DatabaseError as e:
+            self.Info_mesage(str(e))
+            cnx.close()
+
+        for row, form in enumerate(pynkt_IX_stat_cursor2):
+            self.PynktIXStatystykaTable_2.insertRow(row)
+            for column, item in enumerate(form):
+                self.PynktIXStatystykaTable_2.setItem(row, column,
+                                                      QTableWidgetItem(
+                                                          str(item)))
+        self.PynktIXStatystykaTable_2.resizeColumnsToContents()
+        self.PynktIXStatystykaTable_2.setSortingEnabled(1)
+        cnx.close()
+
 
         # Валидатор данных и запись в БД
 
