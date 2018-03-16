@@ -131,7 +131,7 @@ class PrimaryWindow(QWidget):
                 database=db_database_name)
 
         except mysql.connector.DatabaseError as e:
-            self.Info_mesage(str(e))
+            self.Error_mesage(str(e))
             self.exception = "error"
 
         if self.exception == 'no exception':
@@ -188,11 +188,14 @@ class PrimaryWindow(QWidget):
             cnx.close()
         else:
             self.Error_mesage(
-                "Помилка у доступі до БД для можливості перевірки даних авторизації.\nЗверніться до адміністратора.\n\n"
-                + str(self.exception))
+                "Помилка у доступі до БД для можливості перевірки даних авторизації.\nЗверніться до адміністратора.\n"
+            )
 
     def Error_mesage(self, message):
         QMessageBox.information(self, "Помилка!", message)
+        file = open("error_log.txt", "a", encoding='utf-8')
+        file.write("\n" * 2 + str(datetime.datetime.today()) + "  " + str(message))
+        file.close()
 
     def Info_mesage(self, message):
         QMessageBox.information(self, "Інформація", message)
@@ -4243,13 +4246,11 @@ class PrimaryWindow(QWidget):
         self.SeachFormFirstNameLineEdit.setFixedHeight(20)
         self.SeachFormFirstNameLineEdit.returnPressed.connect(self.SeachInfo)
 
-
         self.SeachFormLastNameLabel = QLabel("Прізвище:")
         self.SeachFormLastNameLabel.setFixedHeight(20)
         self.SeachFormLastNameLineedit = QLineEdit()
         self.SeachFormLastNameLineedit.setFixedHeight(20)
         self.SeachFormLastNameLineedit.returnPressed.connect(self.SeachInfo)
-
 
         self.SeachFormFatherNameLabel = QLabel("Побатькові:")
         self.SeachFormFatherNameLabel.setFixedHeight(20)
@@ -4262,7 +4263,8 @@ class PrimaryWindow(QWidget):
         self.SeachFormHistoryNumberLabel.setFixedHeight(20)
         self.SeachFormHistoryNumberLineEdit = QLineEdit()
         self.SeachFormHistoryNumberLineEdit.setFixedHeight(20)
-        self.SeachFormHistoryNumberLineEdit.returnPressed.connect(self.SeachInfo)
+        self.SeachFormHistoryNumberLineEdit.returnPressed.connect(
+            self.SeachInfo)
 
         self.SeachFormAgeLabel = QLabel("Вік:")
         self.SeachFormAgeLabel.setFixedHeight(20)
@@ -7478,9 +7480,9 @@ VupuskaDodomyPynktIX AS	"Виписка додому",
 PerevedennaVInshuiStacionarPynktIX AS "Переведення в інший стаціонар",						
 ChangeDateRow AS "Дата заповнення",
 WhoChangeRow AS	"Хто заповняв"	
-FROM Registry R WHERE R.PasportniDani """ +
-                self.PasportniDaniToSelect + " and R.HistoryNumber " +
-                self.HistoryNumberToSelect + " and R.Age " + self.AgeToSelect					)
+FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
+                " and R.HistoryNumber " + self.HistoryNumberToSelect +
+                " and R.Age " + self.AgeToSelect)
 
             try:
                 seach_cursor.execute(query_to_seach)
@@ -7506,7 +7508,7 @@ FROM Registry R WHERE R.PasportniDani """ +
             self.SeachResultTable.hideColumn(111)
             self.SeachResultTable.hideColumn(73)
             self.SeachResultTable.hideColumn(1)
-            self.SeachResultTable.hideColumn(0) #8,91, 111, 73
+            self.SeachResultTable.hideColumn(0)  #8,91, 111, 73
             #self.SeachResultTable.horizontalHeader().setStretchLastSection(0)
 
             for row, form in enumerate(seach_cursor):

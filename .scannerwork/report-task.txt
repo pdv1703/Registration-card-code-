@@ -2,5 +2,5 @@ projectKey=registration_card_gui
 serverUrl=http://192.100.0.30:9000
 serverVersion=6.7.0.33306
 dashboardUrl=http://192.100.0.30:9000/dashboard/index/registration_card_gui
-ceTaskId=AWIpSZlNzZIwH3uYk4sZ
-ceTaskUrl=http://192.100.0.30:9000/api/ce/task?id=AWIpSZlNzZIwH3uYk4sZ
+ceTaskId=AWIu_ubVzZIwH3uYk4sa
+ceTaskUrl=http://192.100.0.30:9000/api/ce/task?id=AWIu_ubVzZIwH3uYk4sa
