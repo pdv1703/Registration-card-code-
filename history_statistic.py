@@ -1,17 +1,14 @@
 # -*- coding: utf-8 -*-
 import sys
 import mysql.connector
-from mysql.connector import errorcode
-import os
 import datetime
-from PyQt5.QtCore import Qt, QDateTime, QDate, QDir
+from PyQt5.QtCore import Qt, QDateTime
 from PyQt5.QtCore import QCoreApplication
-from PyQt5.QtWidgets import (
-    QWidget, QLabel, QLineEdit, QTextEdit, QGridLayout, QApplication,
-    QPushButton, QMainWindow, QApplication, QScrollArea, QTableWidget,
-    QTableWidgetItem, QSplitter, QHBoxLayout, QTabWidget, QSizePolicy,
-    QComboBox, QDateEdit, QInputDialog, QErrorMessage, QMessageBox,
-    QDateTimeEdit, QCheckBox)
+from PyQt5.QtWidgets import (QWidget, QLabel, QLineEdit, QTextEdit,
+                             QGridLayout, QPushButton, QApplication,
+                             QScrollArea, QTableWidget, QTableWidgetItem,
+                             QSplitter, QHBoxLayout, QTabWidget, QSizePolicy,
+                             QComboBox, QMessageBox, QDateTimeEdit, QCheckBox)
 
 # db_user = 'Pregnant_Admin'
 # db_user_pass = 'a1w2PregAdmin'
@@ -4244,28 +4241,35 @@ class PrimaryWindow(QWidget):
         self.SeachFormFirstNameLabel.setFixedHeight(20)
         self.SeachFormFirstNameLineEdit = QLineEdit()
         self.SeachFormFirstNameLineEdit.setFixedHeight(20)
+        self.SeachFormFirstNameLineEdit.returnPressed.connect(self.SeachInfo)
+
 
         self.SeachFormLastNameLabel = QLabel("Прізвище:")
         self.SeachFormLastNameLabel.setFixedHeight(20)
         self.SeachFormLastNameLineedit = QLineEdit()
         self.SeachFormLastNameLineedit.setFixedHeight(20)
+        self.SeachFormLastNameLineedit.returnPressed.connect(self.SeachInfo)
+
 
         self.SeachFormFatherNameLabel = QLabel("Побатькові:")
         self.SeachFormFatherNameLabel.setFixedHeight(20)
         self.SeachFormFatherNameLineEdit = QLineEdit()
         self.SeachFormFatherNameLineEdit.setFixedHeight(20)
+        self.SeachFormFatherNameLineEdit.returnPressed.connect(self.SeachInfo)
 
         self.SeachFormHistoryNumberLabel = QLabel(
             "№ Історії вагітності/пологів:")
         self.SeachFormHistoryNumberLabel.setFixedHeight(20)
         self.SeachFormHistoryNumberLineEdit = QLineEdit()
         self.SeachFormHistoryNumberLineEdit.setFixedHeight(20)
+        self.SeachFormHistoryNumberLineEdit.returnPressed.connect(self.SeachInfo)
 
         self.SeachFormAgeLabel = QLabel("Вік:")
         self.SeachFormAgeLabel.setFixedHeight(20)
         self.SeachFormAgeLineEdit = QLineEdit()
         self.SeachFormAgeLineEdit.setInputMask("D00")
         self.SeachFormAgeLineEdit.setFixedHeight(20)
+        self.SeachFormAgeLineEdit.returnPressed.connect(self.SeachInfo)
 
         self.SeachButton = QPushButton("Пошук")
         self.SeachButton.clicked.connect(self.SeachInfo)
@@ -4451,8 +4455,7 @@ class PrimaryWindow(QWidget):
             "    1. Кількість ускладнень по видам")
         self.PynktIXStatystykaLabel_1.setFixedHeight(20)
 
-        self.PynktIXStatystykaLabel_2 = QLabel(
-            "    2. Терапія ТЕУ")
+        self.PynktIXStatystykaLabel_2 = QLabel("    2. Терапія ТЕУ")
         self.PynktIXStatystykaLabel_2.setFixedHeight(20)
 
         self.PynktIXStatystykaTable_1 = QTableWidget()
@@ -4637,7 +4640,7 @@ GROUP BY MedukamentoznaProfilaktukaNazvaPreperaty;""")
             cnx.close()
 
         query_to_stat = (
-                """SELECT COUNT(*) AS Кількість ,REPLACE(YskladneenaVidProfilaktykuPynktVI, '5. Наявність ускладнень від проведеної профілактики: так; Ускладнення:', '') AS Ускладнення
+            """SELECT COUNT(*) AS Кількість ,REPLACE(YskladneenaVidProfilaktykuPynktVI, '5. Наявність ускладнень від проведеної профілактики: так; Ускладнення:', '') AS Ускладнення
 FROM Registry 
 WHERE YskladneenaVidProfilaktykuPynktVI != '5. Наявність ускладнень від проведеної профілактики: ні.'
 GROUP BY YskladneenaVidProfilaktykuPynktVI;""")
@@ -4717,8 +4720,8 @@ GROUP BY YskladnennaVidProfilaktukyPynktIX;""")
             self.PynktIXStatystykaTable_1.insertRow(row)
             for column, item in enumerate(form):
                 self.PynktIXStatystykaTable_1.setItem(row, column,
-                                                          QTableWidgetItem(
-                                                              str(item)))
+                                                      QTableWidgetItem(
+                                                          str(item)))
         self.PynktIXStatystykaTable_1.resizeColumnsToContents()
         self.PynktIXStatystykaTable_1.setSortingEnabled(1)
         cnx.close()
@@ -4744,7 +4747,8 @@ GROUP BY YskladnennaVidProfilaktukyPynktIX;""")
  REPLACE(TromboembolichniYskladnennaPynktIXTerapiaTEY, '5.3. Терапія ТЕУ:', '') AS "Терапія ТЕУ"
  FROM Registry 
  WHERE TromboembolichniYskladnennaPynktIXVudTey not like '%тромбоемболічні ускладнення відсутні.%'
- GROUP BY TromboembolichniYskladnennaPynktIXVudTey, TromboembolichniYskladnennaPynktIXTerminVunuknenna, TromboembolichniYskladnennaPynktIXTerapiaTEY;""")
+ GROUP BY TromboembolichniYskladnennaPynktIXVudTey, TromboembolichniYskladnennaPynktIXTerminVunuknenna, TromboembolichniYskladnennaPynktIXTerapiaTEY;"""
+        )
         try:
             pynkt_IX_stat_cursor2.execute(query_to_stat)
         except mysql.connector.DatabaseError as e:
@@ -4772,7 +4776,6 @@ GROUP BY YskladnennaVidProfilaktukyPynktIX;""")
         self.PynktIXStatystykaTable_2.resizeColumnsToContents()
         self.PynktIXStatystykaTable_2.setSortingEnabled(1)
         cnx.close()
-
 
         # Валидатор данных и запись в БД
 
@@ -7330,10 +7333,154 @@ GROUP BY YskladnennaVidProfilaktukyPynktIX;""")
 
         else:
 
+            # query_to_seach = (
+            #     """select * from Registry R where R.PasportniDani """ +
+            #     self.PasportniDaniToSelect + " and R.HistoryNumber " +
+            #     self.HistoryNumberToSelect + " and R.Age " + self.AgeToSelect)
             query_to_seach = (
-                """select * from Registry R where R.PasportniDani """ +
+                """SELECT
+id AS "№ в БД", 		 	
+PasportniDaniTitle AS "Паспортні дані (заголовок)",										
+PasportniDani AS "Паспортніаспортні дані",			
+HistoryNumber AS "Номер історії вагітності",							
+Age AS "Вік",					
+Address AS "Адреса",													
+Proffesional AS "Професійна діяльність",									
+Disability AS "Інвалідність",											
+ReceduvyTromboemboliiTitle,									
+ReceduvyTromboembolii AS "Рецедиви тромбоемболії",								
+TromboemboliiAndEstrogens AS "Тромбоемболії, неспровоковані або пов'язані з прийомом естрогенів",			
+TromboemboliaSprovokovana AS "Тромбоемболія спровокована",							
+SimeinuiAnamnezTromboembolii AS "Сімейний анамнез тромбоемболії",
+VstanovlennaTrombofilia AS "Встановлена тромбофілія",
+SypytniZahvoryvanna AS "Супутні захворювання",										
+OldMore35 AS "Вік більше 35",				
+Ogirinna AS	"Ожиріння",								
+VagitnistMore3 AS "Вагітність ≥ 3",											
+Kyrinna AS "Куріння",							
+VelykiVarikozniVenu	 AS "Великі варикозні вени",										
+ProvedennaProfTEYdpVagitnosti AS "Проведення профілактики/терапії ТЕУ до вагітності",			
+ElastychnaKompresia	AS "Еластична компресія",
+MedukamentoznaProfilaktuka AS "Медикаментозна профілактика",									
+MedukamentoznaProfilaktukaNazvaPreperaty AS "Назва препарату",
+MedukamentoznaProfilaktukaRegymPrujomy AS "Режим прийому",					
+HiryrgichneLikyvanna AS "Хірургічне лікування",
+TryvalistProvedennoiProfilaktyky AS "Тривалість проведеної профілактики",		
+YskladneenaVidProfilaktyku AS "Ускладнення від профілактики",
+AkysherskiiAnamnez AS "Акушерський анамнез",	
+DanaVagitnist AS "Дана вагітність",												
+DanaVagitnistZaRahynkom AS "Дана вагітність за рахунком",									
+DaniPologuZaRahynkom AS "Дані пологи за рахунком",									
+PoperedniPologuZavershulus AS "Попередні пологи завершились",									
+PoperedniPologu AS "Попередні пологи",												
+NayavnistGuvyhDitey AS "Наявність живих дітей",									
+VPerebigDannoiVagitnosti AS	"V. Перебіг даної вагітності.",								
+Vagitnist AS "Вагітність",													
+NaOblikyVGinochiiKonsyltacii AS	"На обліку в жіночій консультації",							
+ZagrozaPereruvannaVagitnosti AS	"Загроза переривання вагітності",
+ZagrozaPeredchasnuhPologiv AS "Загроза передчасних пологів",								
+ZagrozaPeredchasnuhPologivP4_1 AS "Причина загрози переривання пологів",								
+GestozIPolovunuVagitnosti AS "Гестоз І половини вагітності",							
+InshiPruchynyZnevodnenna AS	"Інші причини зневоднення",
+GestozIIPolovunuVagitnosti AS "Гестоз ІІ половини вагітності",		
+GestozIIPolovunuVagitnostiVTermini AS "Термін діагностування гестозу ІІ половини вагітності",							
+VunuknennaTEY AS "Виникнення ТЕУ",
+VudTEY AS "Вид ТЕУ",							
+TEYTerminVagitnosti AS	"ТЕУ у терміні вагітності",										
+Bagatovodda AS "Багатоводдя",			
+BagatovoddaDiagnostovanoVTerminVagitnosti AS "Багатоводдя діагностовано з терміну вагітності", 					
+MaloVodda AS "Маловоддя",
+MaloVoddaDiagnostovanoVTerminVagitnosti AS "Маловоддя діагностовано з терміну вагітності",				
+DustressPloda AS "Дистресс плода",										
+ZatrumkaRozvutkyPloda AS "затримка розвитку плода",							
+NajavnistSustemnoiInfekcii AS "Наявність системної інфекції",			
+PatologiaPlacentu AS "Патологія плаценти",	
+PatologiaLocalizaciiPlacentu AS	"Паталогія  локалізації плаценти",						
+PeredchasneVadsharyvannaPlacentu AS "Передчасне відшарування плаценти",
+HiryrgichniVtyrchannaPidChasVagitnosti AS "Хірургічні втурчання під час вагітності",
+TruvalaImmobilizacia AS	"Тривала іммобілізація", 
+ZavershennaDannoiVagitnosti AS "Завершення даної вагітності",				
+ProvedennaProfilaktukuTerapiiTEYPidChasVagitnosti AS "Проведення профілактики/терапії ТЕУ під час вагітності",		
+PokazuDlaProvedennaProfilaktuky AS "Покази до проведення профілактики",
+ElastychnaKompresiaPynktVI AS "Еластична компресія",									
+MedukamentoznaProfilaktukaPynktVI AS "Медикаментозна профілактика",			
+MedukamentoznaProfilaktukaPynktVINazvaPreperaty AS "Назва препарату",
+MedukamentoznaProfilaktukaPynktVIRegymPrujomy AS "Режим прийому",
+MedukamentoznaProfilaktukaPynktVITerminKoluPruznacheno AS "Термін коли призначено",
+HiryrgichneLikyvannaPynktVI AS "Хірургічне лікування",
+TryvalistProvedennoiProfilaktykyPynktVI AS "Тривалість проведеної профілактика",		
+YskladneenaVidProfilaktykuPynktVI AS "Ускладнення від профілактики",
+TerapiyVidminenoZaGodDoPologivPynktVI AS "За який час до пологів відмінено терапію",
+PerebigDanuhPologiv	AS "Перебіг даних пологів",
+PologuVaginalni AS "Пологи вагінальні",				
+PologuAbdominalni AS "Пологи абдомінальні",						
+PokazannaDlaAbdominalnogoRozrodjenna AS "Покази для абдомінального розродження",				
+PoryshennaPologovoiDialnosti AS "Порушення пологової діяльності",
+KorekciaAnomaliiPologovoiDialnosti AS "Корекція аномалії пологової діяльності",
+VuluvNavkoloplodovuhVod	AS "Вилив навколоплодових вод",
+DustressPlodaVPologah AS "Дистресс плода",		
+GipotonichnaKrovotecha AS "Гіпотонічна кровотеча",					
+AnomaliiPrukriplennaPlacentu AS	"Аномалії прикріплення плаценти",		
+DefektPoslidy AS "Дефект посліду",
+DefektObolonok AS "Дефект оболонок",							
+AnomaliiPrukriplennaPypovunu AS	"Аномалії прикріплення пуповини",						
+OperatuvnaDopomoga AS "Оперативна допомога",
+RozruvuPologovuhShlahiv AS "Розриви полгових шляхів", 					
+EpizoAboPerineotomia AS	"Епізіо- або перінеотомія",									
+KrovovtrataVPologah	AS "Крововтрата в полгах ",										
+TruvalistPologiv AS	"Тривалість пологів",										
+StanNovonarodgennogoTaNeoPeriodTitleLable,					
+Naroduvsa AS "Народився",													
+PruchunaMertvonarodgenna AS	"Причини мертвонародження",								
+ZrilistNovonarodgennogo	AS "Зрілість новонародженого",						
+ParametruNovonarodgennogo AS "Параметри новонародженого",								
+GipotrofiaPloda AS "Гіпотрофія плода",		
+OcinkaZaShkaloyApgar AS "Оцінка за шкалою апгар",										
+NovonarodjenuiZVadamuRozvutky AS "Вади розвитку новонародженого",	
+PologovaTravma AS "Пологова травма",
+SDR AS "СДР",							
+VnytrishnoytrobneInfikyvanna AS "Внутрішньоутробне інфікування",								
+GemoragichniYskladnenna	AS "Геморагічні ускладнення",
+Anemia AS "Анемія",			
+GiperBilirybinemia AS "Гіпербілірубінемія",										
+Asfiksia AS "Асфіксія",													
+PoryshennaKardioRespiratornoiAdaptacii AS "Порушення кардіо-респіраторної адаптації",						
+VtrataMasuTila AS "Втрата маси тіла",
+VitaminKVvedeno AS "Вітамін К введено",							
+VupusanuiNa AS "Виписаний на",						
+NeonatalnaSmert AS "Неонатальна смерть",								
+PruchunaSmertiZaRezyltatomAytopsii AS "Причина смерті за результатом аутопсії",							
+PislapologovuiPeriod,					
+PislapologovuiPerebig AS "Післяпологовий перебіг",										
+ProfilaktukaTerapiaTEYPynktI AS "Чи проводилась профілактика/терапія ТЕУ",			
+ElastuchnaKompressiaPynktIX AS "Еластична компресія",
+MedukamentoznaProfilaktukaPynktIX AS "Медикаментозна профілактика/терапія",		
+MedukamentoznaProfilaktukaPynktIXNazvaPreparaty AS "Назва препарату",			
+MedukamentoznaProfilaktukaPynktIXRegumPrujomy AS "Режим прийому",
+MedukamentoznaProfilaktukaPynktIXTerminKoluPruznacheno AS "Термін коли призначено",
+HiryrgichneLikyvannaPynktIX AS "Хірургічне лікування",									
+HiryrgichneLikyvannaPynktIXTerminNazvaOperacii AS "Назва операції",		
+TruvalistProvedenoiProfilaktuktPynktIX AS "Тривалість проведеної профілактики",
+YskladnennaVidProfilaktukyPynktIX AS "Ускладнення від проведеної профілактики",							
+TromboembolichniYskladnennaPynktIX AS "Тромбоемболічні ускладнення",							
+TromboembolichniYskladnennaPynktIXVudTey AS "Вид ТЕУ",
+TromboembolichniYskladnennaPynktIXTerminVunuknenna AS "Термін виникнення",			
+TromboembolichniYskladnennaPynktIXTerapiaTEY AS	"Терапія ТЕУ",
+MastutPynktIX AS "Мастит",
+SubinvolyciaMatkuPynktIX AS "Субінволюція матки",							
+EndometrutPynktIX AS "Ендометрит",
+PiznaPologovaKrovotechaPynktIX AS "Пізня пологова кровотеча",							
+SepsusPynktIX AS "Сепсис",
+RoshodgennaShvivPynktIX AS "Розходження швів",							
+InshiPynktIX AS	"Інші",											
+HirVtyrchannaVPershi6TugnivPynktIX AS "Хірургічні втручання в перші 6 тиж після пологів",						
+VupuskaDodomyPynktIX AS	"Виписка додому",		
+PerevedennaVInshuiStacionarPynktIX AS "Переведення в інший стаціонар",						
+ChangeDateRow AS "Дата заповнення",
+WhoChangeRow AS	"Хто заповняв"	
+FROM Registry R WHERE R.PasportniDani """ +
                 self.PasportniDaniToSelect + " and R.HistoryNumber " +
-                self.HistoryNumberToSelect + " and R.Age " + self.AgeToSelect)
+                self.HistoryNumberToSelect + " and R.Age " + self.AgeToSelect					)
 
             try:
                 seach_cursor.execute(query_to_seach)
@@ -7354,6 +7501,13 @@ GROUP BY YskladnennaVidProfilaktukyPynktIX;""")
                 self.Info_mesage(str(e))
 
             self.SeachResultTable.setRowCount(0)
+            self.SeachResultTable.hideColumn(8)
+            self.SeachResultTable.hideColumn(91)
+            self.SeachResultTable.hideColumn(111)
+            self.SeachResultTable.hideColumn(73)
+            self.SeachResultTable.hideColumn(1)
+            self.SeachResultTable.hideColumn(0) #8,91, 111, 73
+            #self.SeachResultTable.horizontalHeader().setStretchLastSection(0)
 
             for row, form in enumerate(seach_cursor):
                 self.SeachResultTable.insertRow(row)
@@ -7387,9 +7541,15 @@ GROUP BY YskladnennaVidProfilaktukyPynktIX;""")
                         # if str(OrderItemText[1]) == 'V' or str(OrderItemText[1]) == 'I' \
                         #         or str(OrderItemText).find('ІX.Післяпологовий') != -1 \
                         #         or str(OrderItemText).find('ІV. Акушерський анамнез.') != -1:
-                        if str(OrderItemText).find('V') != -1 or str(OrderItemText).find('I') != -1 \
-                                or str(OrderItemText).find('ІX.Післяпологовий') != -1 \
-                                or str(OrderItemText).find('ІV. Акушерський анамнез.') != -1:
+                        if str(OrderItemText).find('I. Паспортні дані.') != -1\
+                                or str(OrderItemText).find('II. Наявність постійних факторів ризику ТЕУ.') != -1 \
+                                or str(OrderItemText).find('III. Проведення профілактики/терапії ТЕУ до вагітності:') != -1 \
+                                or str(OrderItemText).find('ІV. Акушерський анамнез.') != -1 \
+                                or str(OrderItemText).find('V. Перебіг даної вагітності.') != -1 \
+                                or str(OrderItemText).find('VІ. Проведення профілактики/терапії ТЕУ під час вагітності:') != -1 \
+                                or str(OrderItemText).find('VII. Перебіг даних пологів.') != -1 \
+                                or str(OrderItemText).find('VIII. Стан новонародженого та перебіг раннього неонатального періоду.') != -1 \
+                                or str(OrderItemText).find('ІX.Післяпологовий період.') != -1:
                             self.WievText.BigDataText.insertPlainText("\n")
                             self.WievText.BigDataText.insertHtml(
                                 "<b>" + OrderItemText + "</b>\n")
@@ -7403,6 +7563,8 @@ GROUP BY YskladnennaVidProfilaktukyPynktIX;""")
 
                 self.WievText.CloseBigDataTextButton.clicked.connect(
                     self.WievText.close)
+                #self.WievText.BigDataText.adjustSize()
+
             else:
                 self.Error_mesage("Виділений рядок порожній!")
         else:
