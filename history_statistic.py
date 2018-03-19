@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+
+#created by Dmytro Horavskii
+# e-mail p.d.v.1703@i.ua
+
 import sys
 import mysql.connector
 import datetime
@@ -92,7 +96,6 @@ class PrimaryWindow(QWidget):
         return privileges
 
     def initUI(self):
-        #self.Window('App_admin', 'Дмитро Горавський')
         self.d = Authorization()
         self.d.AuthorizationButton.clicked.connect(self.ParsCredential)
         self.d.PasswordLine.returnPressed.connect(self.ParsCredential)
@@ -193,8 +196,9 @@ class PrimaryWindow(QWidget):
 
     def Error_mesage(self, message):
         QMessageBox.information(self, "Помилка!", message)
-        file = open("error_log.txt", "a", encoding='utf-8')
-        file.write("\n" * 2 + str(datetime.datetime.today()) + "  " + str(message))
+        file = open("error_log.txt", "a+", encoding='utf-8')
+        file.write(
+            "\n" * 2 + str(datetime.datetime.today()) + "  " + str(message))
         file.close()
 
     def Info_mesage(self, message):
@@ -213,7 +217,8 @@ class PrimaryWindow(QWidget):
 
     def Window(self, privileges, WhoCangeParam):
 
-        self.bottomLeftTabWidget = QTabWidget()
+        widget = QTabWidget()
+        self.bottomLeftTabWidget = widget
 
         # 1-st tab
         self.tab1 = QWidget()
@@ -223,7 +228,6 @@ class PrimaryWindow(QWidget):
         self.PIBLabel.setFixedHeight(20)
         self.PIBLabel.setStyleSheet(
             """QLabel{font-size:8pt; font-weight:600; color:#aa0000;}""")
-        # self.PIBLabel.setTextFormat(Qt.RichText)
 
         self.OneLabel = QLabel('    1)')
         self.OneLabel.setFixedWidth(30)
@@ -282,7 +286,6 @@ class PrimaryWindow(QWidget):
         self.AddressLabel.setFixedHeight(30)
         self.AddressLabel.setFixedWidth(65)
         self.AddressLineEdit = QLineEdit()
-        # self.AddressLineEdit.setMaximumWidth(500)
 
         self.splitter7 = QSplitter(Qt.Horizontal)
         self.splitter7.addWidget(self.HistoryNumberLabel)
@@ -292,7 +295,7 @@ class PrimaryWindow(QWidget):
         self.splitter7.addWidget(self.AddressLabel)
         self.splitter7.addWidget(self.AddressLineEdit)
 
-        ###Подпункт 5 Професійна діяльність:
+        # Подпункт 5 Професійна діяльність:
         self.ProffesionalLabel = QLabel('    5)    Професійна діяльність:')
         self.ProffesionalLabel.setFixedHeight(30)
         self.ProffesionalLabel.setFixedWidth(180)
@@ -677,8 +680,8 @@ class PrimaryWindow(QWidget):
         self.splitter12.addWidget(self.splitter20)
         self.splitter12.addWidget(self.splitter21)
         self.splitter12.addWidget(self.splitter22)
-        # ІІІ. Проведення профілактики/терапії ТЕУ до вагітності: а) так б)ні
 
+        # ІІІ. Проведення профілактики/терапії ТЕУ до вагітності: а) так б)ні
         self.ProvedennaProfTEYdpVagitnostiLabel = QLabel(
             ' III. Проведення профілактики/терапії ТЕУ до вагітності:')
         self.ProvedennaProfTEYdpVagitnostiLabel.setFixedWidth(400)
@@ -836,8 +839,7 @@ class PrimaryWindow(QWidget):
         self.HiryrgichneLikyvannaSplitter.addWidget(
             self.HiryrgichneLikyvannaNazvaOpericiiLineEdit)
 
-        # 4)	Тривалість проведеної профілактики _____________________
-
+        # 4)	Тривалість проведеної профілактики _________
         self.TryvalistProvedennoiProfilaktykyLabel = QLabel(
             '    4. Тривалість проведеної профілактики:')
         self.TryvalistProvedennoiProfilaktykyLabel.setFixedWidth(400)
@@ -854,8 +856,7 @@ class PrimaryWindow(QWidget):
         self.TryvalistProvedennoiProfilaktykySplitter.addWidget(
             self.TryvalistProvedennoiProfilaktykyLineEdit)
 
-        # 5)	Наявність ускладнень від проведеної профілактики: а) так б)ні Ускладення:_______________________________________________
-
+        # 5)	Наявність ускладнень від проведеної профілактики: а) так б)ні Ускладення:_______________
         self.YskladneenaVidProfilaktykuLabel = QLabel(
             '    5. Наявність ускладнень від проведеної профілактики:')
         self.YskladneenaVidProfilaktykuLabel.setFixedHeight(15)
@@ -908,7 +909,6 @@ class PrimaryWindow(QWidget):
             self.YskladneenaVidProfilaktykuSplitter)
 
         # ІV. Акушерський анамнез.
-
         self.AkysherskiiAnamnezLabel = QLabel('\n IV) Акушерський анамнез.')
         self.AkysherskiiAnamnezLabel.setFixedHeight(30)
         self.AkysherskiiAnamnezLabel.setStyleSheet(
@@ -972,9 +972,9 @@ class PrimaryWindow(QWidget):
             self.DaniPologuZaRahynkomLabel)
         self.DaniPologuZaRahynkomSplitter.addWidget(
             self.DaniPologuZaRahynkomLineEdit)
+
         # 4)	Попередні вагітності завершились
         # а) пологами  б) аборт самовільний _____ в) аборт штучний _____
-
         self.PoperedniPologuZavershulusLabel = QLabel(
             '    4. Попередні вагітності завершились:')
         self.PoperedniPologuZavershulusLabel.setFixedHeight(15)
@@ -1089,7 +1089,6 @@ class PrimaryWindow(QWidget):
             self.NayavnistGuvyhDiteyNoCheckBox)
 
         # финальный сплиттер пункта IV    Акушерський анамнез.
-
         self.PynkIVSplitter = QSplitter(Qt.Vertical)
         self.PynkIVSplitter.addWidget(self.AkysherskiiAnamnezLabel)
         self.PynkIVSplitter.addWidget(self.DanaVagitnistSplitter)
@@ -1132,7 +1131,6 @@ class PrimaryWindow(QWidget):
             '    2. На обліку в жіночій консультації з:')
         self.NaOblikyVGinochiiKonsyltaciiLabel.setFixedHeight(15)
         self.NaOblikyVGinochiiKonsyltaciiLabel.setFixedWidth(400)
-        # self.NaOblikyVGinochiiKonsyltaciiLabel.show()
 
         self.NaOblikyVGinochiiKonsyltaciiLineEdit = QLineEdit()
         self.NaOblikyVGinochiiKonsyltaciiLineEdit.setInputMask('D0')
@@ -1284,7 +1282,7 @@ class PrimaryWindow(QWidget):
         self.GestozIPolovunuVagitnostiSplitter.addWidget(
             self.GestozIPolovunuVagitnostiYesCheckBox)
 
-        # 6) Інші причини зневоднення: а) так  б) ні; в)____________________
+        # 6) Інші причини зневоднення: а) так  б) ні; в)______
         self.InshiPruchynyZnevodnennaLabel = QLabel(
             '    6. Інші причини зневоднення:')
         self.InshiPruchynyZnevodnennaLabel.setFixedHeight(15)
@@ -1341,7 +1339,6 @@ class PrimaryWindow(QWidget):
 
         self.GestozIIPolovunuVagitnostiProeklampsiaLegkogoStCheckBox = QCheckBox(
             'Прееклампсія легкого ступеня')
-        # self.GestozIIPolovunuVagitnostiProeklampsiaLegkogoStCheckBox.setFixedWidth(50)
         self.GestozIIPolovunuVagitnostiProeklampsiaLegkogoStCheckBox.setChecked(
             0)
         self.GestozIIPolovunuVagitnostiProeklampsiaLegkogoStCheckBox.setEnabled(
@@ -1351,7 +1348,6 @@ class PrimaryWindow(QWidget):
 
         self.GestozIIPolovunuVagitnostiProeklampsiaSerednogoStCheckBox = QCheckBox(
             'Середнього ступеня')
-        # self.GestozIIPolovunuVagitnostiProeklampsiaSerednogoStCheckBox.setFixedWidth(50)
         self.GestozIIPolovunuVagitnostiProeklampsiaSerednogoStCheckBox.setChecked(
             0)
         self.GestozIIPolovunuVagitnostiProeklampsiaSerednogoStCheckBox.setEnabled(
@@ -1361,7 +1357,6 @@ class PrimaryWindow(QWidget):
 
         self.GestozIIPolovunuVagitnostiProeklampsiaVagkogoStCheckBox = QCheckBox(
             'Важкого ступеня')
-        # self.GestozIIPolovunuVagitnostiProeklampsiaVagkogoStCheckBox.setFixedWidth(50)
         self.GestozIIPolovunuVagitnostiProeklampsiaVagkogoStCheckBox.setChecked(
             0)
         self.GestozIIPolovunuVagitnostiProeklampsiaVagkogoStCheckBox.setEnabled(
@@ -1423,6 +1418,7 @@ class PrimaryWindow(QWidget):
         self.VunuknennaTEYSplitter.addWidget(self.VunuknennaTEYLabel)
         self.VunuknennaTEYSplitter.addWidget(self.VunuknennaTEYNoCheckBox)
         self.VunuknennaTEYSplitter.addWidget(self.VunuknennaTEYYesCheckBox)
+
         # 9.1. Вид ТЕУ______________________________________________
         self.VudTEYLabel = QLabel('    9.1. Вид ТЕУ:')
         self.VudTEYLabel.setFixedHeight(15)
@@ -1864,9 +1860,6 @@ class PrimaryWindow(QWidget):
         self.ZavershennaDannoiVagitnostiSamovilnuiVukudenCheckBox.stateChanged.connect(
             self.ZavershennaDannoiVagitnostiSamovilnuiVukudenFunc)
 
-        # ZavershennaDannoiVagitnostiPologuVTerminiFunc ZavershennaDannoiVagitnostiPereryvannaZaMedPokFunc
-        # ZavershennaDannoiVagitnostiSamovilnuiVukudenFunc
-
         self.ZavershennaDannoiVagitnostiSamovilnuiVukudenLineEdit = QLineEdit()
         self.ZavershennaDannoiVagitnostiSamovilnuiVukudenLineEdit.setFixedWidth(
             100)
@@ -1932,12 +1925,10 @@ class PrimaryWindow(QWidget):
         self.PynkVSplitter.addWidget(
             self.HiryrgichniVtyrchannaPidChasVagitnostiSplitter)
         self.PynkVSplitter.addWidget(self.TruvalaImmobilizaciaSplitter)
-        # self.PynkVSplitter.addWidget(self.ZavershennaDannoiVagitnostiLabel)
         self.PynkVSplitter.addWidget(
             self.ZavershennaDannoiVagitnostiHorizontalSplitter)
 
         # VІ Проведення профілактики/терапії ТЕУ під час вагітності: а) так б)ні
-
         self.ProvedennaProfilaktukuTerapiiTEYPidChasVagitnostiLabel = QLabel(
             '  VІ) Проведення профілактики/терапії ТЕУ під час вагітності:')
         self.ProvedennaProfilaktukuTerapiiTEYPidChasVagitnostiLabel.setFixedHeight(
@@ -2016,7 +2007,6 @@ class PrimaryWindow(QWidget):
         self.ElastychnaKompresiaPynktVILevelLabel.hide()
 
         self.ElastychnaKompresiaPynktVILevelLineEdit = QLineEdit()
-        # self.ElastychnaKompresiaPynktVILevelLineEdit.setFixedHeight(20)
         self.ElastychnaKompresiaPynktVILevelLineEdit.setFixedWidth(30)
         self.ElastychnaKompresiaPynktVILevelLineEdit.hide()
 
@@ -2033,13 +2023,11 @@ class PrimaryWindow(QWidget):
             self.ElastychnaKompresiaPynktVILevelLineEdit)
 
         # 2)	Медикаментозна профілактика 	а) так б)ні
-
         self.MedukamentoznaProfilaktukaPynktVILabel = QLabel(
             '    2. Медикаментозна профілактика:')
         self.MedukamentoznaProfilaktukaPynktVILabel.setFixedHeight(15)
         self.MedukamentoznaProfilaktukaPynktVILabel.setFixedWidth(400)
         self.MedukamentoznaProfilaktukaPynktVILabel.setEnabled(0)
-        # self.MedukamentoznaProfilaktukaPynktVILabel.setEnabled(0)
 
         self.MedukamentoznaProfilaktukaPynktVIYesCheckBox = QCheckBox('Так')
         self.MedukamentoznaProfilaktukaPynktVIYesCheckBox.setFixedWidth(40)
@@ -2180,8 +2168,7 @@ class PrimaryWindow(QWidget):
         self.TryvalistProvedennoiProfilaktykyPynktVISplitter.addWidget(
             self.TryvalistProvedennoiProfilaktykyPynktVILineEdit)
 
-        # 5)	Наявність ускладнень від проведеної профілактики: а) так б)ні Ускладення:_______________________________________________
-
+        # 5)	Наявність ускладнень від проведеної профілактики: а) так б)ні Ускладення:_____________
         self.YskladneenaVidProfilaktykuPynktVILabel = QLabel(
             '    5. Наявність ускладнень від проведеної профілактики:')
         self.YskladneenaVidProfilaktykuPynktVILabel.setFixedHeight(15)
@@ -2252,7 +2239,6 @@ class PrimaryWindow(QWidget):
             self.TerapiyVidminenoZaGodDoPologivPynktVILabel2)
 
         # Финальный срдыттер пункта VІ Проведення профілактики/терапії ТЕУ під час вагітності
-
         self.PynktVISplitter = QSplitter(Qt.Vertical)
         self.PynktVISplitter.addWidget(
             self.ProvedennaProfilaktukuTerapiiTEYPidChasVagitnostiSplitter)
@@ -2271,7 +2257,6 @@ class PrimaryWindow(QWidget):
             self.TerapiyVidminenoZaGodDoPologivPynktVISplitter)
 
         # VII. Перебіг даних пологів.
-
         self.PerebigDannuhPologivLabel = QLabel(
             '  VІI) Перебіг даних пологів.')
         self.PerebigDannuhPologivLabel.setFixedHeight(30)
@@ -2299,8 +2284,6 @@ class PrimaryWindow(QWidget):
         self.PologuVaginalniIndykovaniCheckBox.setEnabled(0)
         self.PologuVaginalniIndykovaniCheckBox.stateChanged.connect(
             self.PologuVaginalniIndykovaniFunc)
-
-        # PologuVaginalniNoFunc PologuVaginalniSpomtanniFunc PologuVaginalniIndykovaniFunc
 
         self.PologuVaginalniSplitter = QSplitter(Qt.Horizontal)
         self.PologuVaginalniSplitter.addWidget(self.PologuVaginalniILabel)
@@ -2397,7 +2380,8 @@ class PrimaryWindow(QWidget):
         self.PoryshennaPologovoiDialnostiSplitter.addWidget(
             self.PoryshennaPologovoiDialnostiSlabkistCheckBox)
 
-        # 5)	Корекція аномалій пологової діяльності а) ні, б) бета-міметики, в) окситоцин, г) ензапрост, д) окситоцин з ензапростом.
+        # 5)Корекція аномалій пологової діяльності а) ні, б) бета-міметики, в) окситоцин, г) ензапрос
+        # т, д) окситоцин з ензапростом.
 
         self.KorekciaAnomaliiPologovoiDialnostiLabel = QLabel(
             '    5. Корекція аномалій пологової діяльності:')
@@ -2517,7 +2501,8 @@ class PrimaryWindow(QWidget):
         self.DustressPlodaVPologahSplitter.addWidget(
             self.DustressPlodaVPologahVIIPeriodiCheckBox)
 
-        #  8)    Гіпотонічна кровотеча    а) ні, б) в ІІІ  періоді, в) в  ранньому  післяпологовому  періоді, г) в пізньому  післяпологовому періоді.
+        #  8)    Гіпотонічна кровотеча    а) ні, б) в ІІІ  періоді, в) в  ранньому  післяпологовому  періоді,
+        #  г) в пізньому  післяпологовому періоді.
         self.GipotonichnaKrovotechaLabel = QLabel(
             '    8. Гіпотонічна кровотеча:')
         self.GipotonichnaKrovotechaLabel.setFixedHeight(15)
@@ -2642,7 +2627,7 @@ class PrimaryWindow(QWidget):
         self.DefektObolonokSplitter.addWidget(self.DefektObolonokNoCheckBox)
         self.DefektObolonokSplitter.addWidget(self.DefektObolonokYesCheckBox)
 
-        #    12) Аномалії прикріплення пуповини: а) ні, б) оболонкове
+        #  12) Аномалії прикріплення пуповини: а) ні, б) оболонкове
         self.AnomaliiPrukriplennaPypovunuLabel = QLabel(
             '    12. Аномалії прикріплення пуповини:')
         self.AnomaliiPrukriplennaPypovunuLabel.setFixedHeight(15)
@@ -2668,10 +2653,10 @@ class PrimaryWindow(QWidget):
         self.AnomaliiPrukriplennaPypovunuSplitter.addWidget(
             self.AnomaliiPrukriplennaPypovunuObolonkoveCheckBox)
 
-        # 13) Оперативна допомога: а) ні б) ручна ревізія стінок порожнини матки в) інструментальна ревізія стінок порожнини матки г) ручне відокремлення плаценти та видалення посліду
+        # 13) Оперативна допомога: а) ні б) ручна ревізія стінок порожнини матки
+        # в) інструментальна ревізія стінок порожнини матки г) ручне відокремлення плаценти та видалення посліду
         self.OperatuvnaDopomogaLabel = QLabel('    13. Оперативна допомога:')
         self.OperatuvnaDopomogaLabel.setFixedHeight(15)
-        # self.OperatuvnaDopomogaLabel.setFixedWidth(400)
 
         self.OperatuvnaDopomogaNoCheckBox = QCheckBox('Ні')
         self.OperatuvnaDopomogaNoCheckBox.setChecked(1)
@@ -2682,17 +2667,14 @@ class PrimaryWindow(QWidget):
         self.OperatuvnaDopomogaRychnaReviziaCheckBox = QCheckBox(
             'Ручна ревізія стінок порожнини матки')
         self.OperatuvnaDopomogaRychnaReviziaCheckBox.setEnabled(0)
-        # self.OperatuvnaDopomogaRychnaReviziaCheckBox.stateChanged.connect(self.OperatuvnaDopomogaRychnaReviziaFunc)
 
         self.OperatuvnaDopomogaInstrymentalnaReviziaCheckBox = QCheckBox(
             'Інструментальна ревізія стінок порожнини матки')
         self.OperatuvnaDopomogaInstrymentalnaReviziaCheckBox.setEnabled(0)
-        # self.OperatuvnaDopomogaInstrymentalnaReviziaCheckBox.stateChanged.connect(self.OperatuvnaDopomogaInstrymentalnaReviziaFunc)
 
         self.OperatuvnaDopomogaRychneVidokremlennaCheckBox = QCheckBox(
             'Ручне відокремлення плаценти та видалення посліду')
         self.OperatuvnaDopomogaRychneVidokremlennaCheckBox.setEnabled(0)
-        # self.OperatuvnaDopomogaRychneVidokremlennaCheckBox.stateChanged.connect(self.OperatuvnaDopomogaRychneVidokremlennaFunc)
 
         self.OperatuvnaDopomogaSplitter = QSplitter(Qt.Horizontal)
         self.OperatuvnaDopomogaSplitter.addWidget(self.OperatuvnaDopomogaLabel)
@@ -2823,7 +2805,7 @@ class PrimaryWindow(QWidget):
         self.TruvalistPologivZagalnaSplitter.addWidget(
             self.TruvalistPologivZagalnaHvulunLabel)
 
-        #      - Ι період: 	____год. ____хв.
+        #    - Ι період: 	____год. ____хв.
         self.TruvalistPologiIPeriodLabel = QLabel('      - Ι період:')
         self.TruvalistPologiIPeriodLabel.setFixedHeight(15)
         self.TruvalistPologiIPeriodLabel.setFixedWidth(400)
@@ -4185,7 +4167,7 @@ class PrimaryWindow(QWidget):
         # кнопка записи информации в БД
         self.InsertToDBButton = QPushButton('Внести інформацію в базу данних')
         self.InsertToDBButton.clicked.connect(self.InsertToDBFunc)
-        # self.InsertToDBButton.clicked.connect(self.ResetToDefaultValue)
+        self.InsertToDBButton.setMinimumHeight(35)
 
         # Финальный сплиттер вкладки
         self.splitterFinal = QSplitter(Qt.Vertical)
@@ -4203,36 +4185,32 @@ class PrimaryWindow(QWidget):
         self.splitterFinal.addWidget(self.PynktIXSplitter)
         self.splitterFinal.addWidget(self.InsertToDBButton)
 
-        # self.splitterFinal.setStyleSheet("QSplitter::handle{background: green;}")
-        # self.splitterFinal.setStyleSheet("QSplitter{background: white;}")
-
         ######Часть для форматирования при раскрытии на весь экран
-        self.Label1forTestSplitters = QLabel(" ")
-        self.Label1forTestSplitters.show()
-        self.Label2forTestSplitters = QLabel(" ")
+        self.label1_for_boarder_splitters = QLabel(" ")
+        self.label2_for_boarder_splitters = QLabel(" ")
 
-        self.TestSplitter1 = QSplitter(Qt.Horizontal)
-        self.TestSplitter1.addWidget(self.Label1forTestSplitters)
+        self.left_border_splitter = QSplitter(Qt.Horizontal)
+        self.left_border_splitter.addWidget(self.label1_for_boarder_splitters)
+        self.left_border_splitter.setStyleSheet("background-color:white;")
 
-        self.TestSplitter2 = QSplitter(Qt.Horizontal)
-        self.TestSplitter2.addWidget(self.Label2forTestSplitters)
+        self.right_border_splitter = QSplitter(Qt.Horizontal)
+        self.right_border_splitter.addWidget(self.label2_for_boarder_splitters)
+        self.right_border_splitter.setStyleSheet("background-color:white;")
 
         self.SplitterForFormating = QSplitter(Qt.Horizontal)
-        self.SplitterForFormating.addWidget(self.TestSplitter1)
+        self.SplitterForFormating.addWidget(self.left_border_splitter)
         self.SplitterForFormating.addWidget(self.splitterFinal)
-        self.SplitterForFormating.addWidget(self.TestSplitter2)
+        self.SplitterForFormating.addWidget(self.right_border_splitter)
         self.SplitterForFormating.setObjectName('SplitterForFormating')
         self.SplitterForFormating.setStyleSheet(
             """QSplitter#SplitterForFormating::handle {background: #DCDCDC; border-style:
             outset; border-width: 1px; border-color: #828282; border-radius: 3px;}"""
         )
-        ######
 
         self.scroll1tab = QScrollArea()
         self.scroll1tab.setWidgetResizable(1)
         self.scroll1tab.setEnabled(1)
         self.scroll1tab.setWidget(self.SplitterForFormating)
-        #self.scroll1tab.setWidget(self.splitterFinal)
 
         self.tab1hbox = QHBoxLayout()
         self.tab1hbox.setContentsMargins(5, 5, 5, 5)
@@ -4297,8 +4275,6 @@ class PrimaryWindow(QWidget):
         self.SeachHeaderSplitter.addWidget(self.SeachSplitter1)
         self.SeachHeaderSplitter.addWidget(self.SeachSplitter2)
         self.SeachHeaderSplitter.addWidget(self.SeachSplitter3)
-
-        # self.SeachHeaderSplitter.setStyleSheet()
 
         self.WievDataButton = QPushButton("Показати виділений рядок")
         self.WievDataButton.clicked.connect(self.SeachWievData)
@@ -4382,9 +4358,6 @@ class PrimaryWindow(QWidget):
         self.scroll = QScrollArea()
         self.scroll.setWidgetResizable(1)
         self.scroll.setEnabled(1)
-
-        # self.scroll.setStyleSheet("""QScrollArea{background: #32CC99;}""")
-        # self.splitter60.setStyleSheet("{background: #32CC99;}")
 
         self.scroll.setWidget(self.tab3FinalSplitter)
         self.tab3hbox = QHBoxLayout()
@@ -4779,9 +4752,8 @@ GROUP BY YskladnennaVidProfilaktukyPynktIX;""")
         self.PynktIXStatystykaTable_2.setSortingEnabled(1)
         cnx.close()
 
-        # Валидатор данных и запись в БД
-
     def InsertToDBFunc(self):
+        "Валидатор данных и запись в БД"
         self.ErrorCount = 0
 
         self.PasportniDaniTitle = '\nI. Паспортні дані.'
@@ -5525,8 +5497,6 @@ GROUP BY YskladnennaVidProfilaktukyPynktIX;""")
                 self.Error_mesage(
                     'Необхідно вказати термін на якому відбулися пологи в пункті "V. Перебіг даної вагітності."!'
                 )
-            # else:
-            #     self.ZavershennaDannoiVagitnostiPologuVTermini = self.ZavershennaDannoiVagitnostiPologuVTermini
             self.ZavershennaDannoiVagitnosti = self.ZavershennaDannoiVagitnosti + self.ZavershennaDannoiVagitnostiPologuVTermini + ' тижнів'
 
         elif self.ZavershennaDannoiVagitnostiPereryvannaZaMedPokCheckBox.isChecked(
@@ -5541,8 +5511,6 @@ GROUP BY YskladnennaVidProfilaktukyPynktIX;""")
                 self.Error_mesage(
                     'Необхідно вказати термін на якому відбулося переривання вагітності за медичними показаннями в пункті "V. Перебіг даної вагітності."!'
                 )
-            # else:
-            #     self.ZavershennaDannoiVagitnostiPereryvannaZaMedPok = self.ZavershennaDannoiVagitnostiPereryvannaZaMedPok
             self.ZavershennaDannoiVagitnosti = self.ZavershennaDannoiVagitnosti + self.ZavershennaDannoiVagitnostiPereryvannaZaMedPok + ' тижнів'
 
         elif self.ZavershennaDannoiVagitnostiSamovilnuiVukudenCheckBox.isChecked(
@@ -5557,8 +5525,6 @@ GROUP BY YskladnennaVidProfilaktukyPynktIX;""")
                 self.Error_mesage(
                     'Необхідно вказати термін на якому самовільний викидень в пункті "V. Перебіг даної вагітності."!'
                 )
-            # else:
-            #     self.ZavershennaDannoiVagitnostiSamovilnuiVukuden = self.ZavershennaDannoiVagitnostiSamovilnuiVukuden
             self.ZavershennaDannoiVagitnosti = self.ZavershennaDannoiVagitnosti + self.ZavershennaDannoiVagitnostiSamovilnuiVukuden + ' тижнів'
 
         else:
@@ -5608,8 +5574,6 @@ GROUP BY YskladnennaVidProfilaktukyPynktIX;""")
                 self.Error_mesage(
                     'Необхідно заповнити клас еластичної компрессії в пункті "VІ Проведення профілактики/терапії ТЕУ під час вагітності"!'
                 )
-            # else:
-            #     self.ElastychnaKompresiaPynktVILevel = self.ElastychnaKompresiaPynktVILevel
             self.ElastychnaKompresiaPynktVI = self.ElastychnaKompresiaPynktVI + self.ElastychnaKompresiaPynktVILevel
         self.ElastychnaKompresiaPynktVI = self.ElastychnaKompresiaPynktVI.replace(
             "'", "''")
@@ -5682,8 +5646,6 @@ GROUP BY YskladnennaVidProfilaktukyPynktIX;""")
                 self.Error_mesage(
                     'Необхідно заповнити назву операції та дату в пункті "VІ Проведення профілактики/терапії ТЕУ під час вагітності"!'
                 )
-            # else:
-            #     self.HiryrgichneLikyvannaNazvaOpericiiPynktVI = self.HiryrgichneLikyvannaNazvaOpericiiPynktVI
             self.HiryrgichneLikyvannaPynktVI = self.HiryrgichneLikyvannaPynktVI + self.HiryrgichneLikyvannaNazvaOpericiiPynktVI
         self.HiryrgichneLikyvannaPynktVI = self.HiryrgichneLikyvannaPynktVI.replace(
             "'", "''")
@@ -5702,7 +5664,6 @@ GROUP BY YskladnennaVidProfilaktukyPynktIX;""")
                     'Необхідно заповнити тривалість проведеної профілактики в пункті "VІ Проведення профілактики/терапії ТЕУ під час вагітності"!'
                 )
             else:
-                # self.TryvalistProvedennoiProfilaktykyPynktVIText = self.TryvalistProvedennoiProfilaktykyPynktVIText
                 self.TryvalistProvedennoiProfilaktykyPynktVI = "4. Тривалість проведеної профілактики: " + self.TryvalistProvedennoiProfilaktykyPynktVIText
         self.TryvalistProvedennoiProfilaktykyPynktVI = self.TryvalistProvedennoiProfilaktykyPynktVI.replace(
             "'", "''")
@@ -5721,8 +5682,6 @@ GROUP BY YskladnennaVidProfilaktukyPynktIX;""")
                 self.Error_mesage(
                     'Необхідно заповнити наявність ускладнень від проведеної профілактики в пункті "VІ Проведення профілактики/терапії ТЕУ під час вагітності"!'
                 )
-            # else:
-            # self.YskladneenaVidProfilaktykuPynktVIText = self.YskladneenaVidProfilaktykuPynktVIText
             self.YskladneenaVidProfilaktykuPynktVI = self.YskladneenaVidProfilaktykuPynktVI + self.YskladneenaVidProfilaktykuPynktVIText
         self.YskladneenaVidProfilaktykuPynktVI = self.YskladneenaVidProfilaktykuPynktVI.replace(
             "'", "''")
@@ -5740,7 +5699,6 @@ GROUP BY YskladnennaVidProfilaktukyPynktIX;""")
                     'Необхідно за скільки годин до пологів було відмінено терапію в пункті "VІ Проведення профілактики/терапії ТЕУ під час вагітності"!'
                 )
             else:
-                # self.TerapiyVidminenoZaGodDoPologivPynktVIText = self.TerapiyVidminenoZaGodDoPologivPynktVIText
                 self.TerapiyVidminenoZaGodDoPologivPynktVI = '6. Терапію відмінено за: ' + self.TerapiyVidminenoZaGodDoPologivPynktVIText
 
         self.PerebigDanuhPologiv = "\nVII. Перебіг даних пологів."
@@ -6196,24 +6154,6 @@ GROUP BY YskladnennaVidProfilaktukyPynktIX;""")
                 'Необхідно вказати підходящий варіант анемії в пункті "VIII. Стан новонародженого та перебіг раннього неонатального періоду"!'
             )
 
-        # self.GiperBilirybinemia = ''
-        # self.GiperBilirybinemiaRivenBilirybiny = self.GiperBilirybinemiaRivenBilirybinyLineEdit.text(
-        # )
-        # self.GiperBilirybinemiaRivenBilirybiny = self.GiperBilirybinemiaRivenBilirybiny.strip(
-        # )
-        # if self.GiperBilirybinemiaRivenBilirybiny == '':
-        #     self.ErrorCount = self.ErrorCount + 1
-        #     self.Error_mesage(
-        #         'Необхідно вказати рівень білірубіну в пункті "VIII. Стан новонародженого та перебіг раннього неонатального періоду"!'
-        #     )
-        # else:
-        #     if self.GiperBilirybinemiaNoCheckBox.isChecked():
-        #         self.GiperBilirybinemia = '12. Гіпербілірубінемія: ні; рівень білірубіну: ' + self.GiperBilirybinemiaRivenBilirybiny + '.'
-        #
-        #     else:
-        #         self.GiperBilirybinemia = '12. Гіпербілірубінемія: так; рівень білірубіну: ' + self.GiperBilirybinemiaRivenBilirybiny + '.'
-        # self.GiperBilirybinemia = self.GiperBilirybinemia.replace("'", "''")
-
         self.GiperBilirybinemia = ''
         if self.GiperBilirybinemiaNoCheckBox.isChecked():
             self.GiperBilirybinemia = '12. Гіпербілірубінемія: ні;'
@@ -6597,8 +6537,6 @@ GROUP BY YskladnennaVidProfilaktukyPynktIX;""")
         self.WhoChangeRow = self.WhoChangeRow.replace("'", "''")
 
         if self.ErrorCount == 0:
-            #self.Error_mesage('Реєстраційну картку заповнено повністю!')
-
             try:
                 cnx = self.ConnectToPregnantBD()
             except mysql.connector.DatabaseError as e:
@@ -6938,9 +6876,8 @@ GROUP BY YskladnennaVidProfilaktukyPynktIX;""")
 
             self.ResetToDefaultValue()
 
-            # Сброс полей на стартовые позиции при правильно заполнении всех полей self.ErrorCount = 0
-
     def ResetToDefaultValue(self):
+        "Сброс полей на стартовые позиции при правильно заполнении всех полей self.ErrorCount = 0"
         self.FirstNameLineEdit.setText('')
         self.LastNameLineEdit.setText('')
         self.FatherNameLineEdit.setText('')
@@ -6985,37 +6922,11 @@ GROUP BY YskladnennaVidProfilaktukyPynktIX;""")
         self.SimeinuiAnamnezTromboemboliiNoCheckBox.setEnabled(1)
         self.SimeinuiAnamnezTromboemboliiYesCheckBox.setEnabled(0)
         self.SimeinuiAnamnezTromboemboliiYesCheckBox.setChecked(0)
-
         self.VstanovlennaTrombofiliaNoCheckBox.setChecked(1)
         self.VstanovlennaTrombofiliaNoCheckBox.setEnabled(1)
         self.VstanovlennaTrombofiliaYesCheckBox.setEnabled(0)
         self.VstanovlennaTrombofiliaYesCheckBox.setChecked(0)
-
-        # self.SypytniZahvoryvannaNoCheckBox.setChecked(1)
-        # self.SypytniZahvoryvannaNoCheckBox.setEnabled(1)
-        # self.SypytniZahvoryvannaYesCheckBox.setEnabled(0)
         self.SypytniZahvoryvannaYesCheckBox.setChecked(0)
-        # self.SypytniZahvoryvannaLabel.setFixedWidth(400)
-        # self.SypytniZahvoryvannaYesCheckBox.setFixedWidth(100)
-        # self.SypytniSercevoSydunniCheckBox.hide()
-        # self.SypytniSercevoSydunniCheckBox.setChecked(0)
-        # self.SypytniBronhoLegeneviCheckBox.hide()
-        # self.SypytniBronhoLegeneviCheckBox.setChecked(0)
-        # self.SypytniSCHVCheckBox.hide()
-        # self.SypytniSCHVCheckBox.setChecked(0)
-        # self.SypytniRAKCheckBox.hide()
-        # self.SypytniRAKCheckBox.setChecked(0)
-        # self.SypytniNefrotuchnuiSundromCheckBox.hide()
-        # self.SypytniNefrotuchnuiSundromCheckBox.setChecked(0)
-        # self.SypytniSerpovudnoKlitynnaAnemiaCheckBox.hide()
-        # self.SypytniSerpovudnoKlitynnaAnemiaCheckBox.setChecked(0)
-        # self.SypytniVnytrishnoVenneVvedennaMedukamentivCheckBox.hide()
-        # self.SypytniVnytrishnoVenneVvedennaMedukamentivCheckBox.setChecked(0)
-        # self.SypytniOtherLineEdit.hide()
-        # self.SypytniOtherLineEdit.setText('')
-        # self.SypytniOtherCheckBox.hide()
-        # self.SypytniOtherCheckBox.setChecked(0)
-
         self.OldMore35YesCheckBox.setChecked(0)
         self.OgirinnaYesCheckBox.setChecked(0)
         self.VagitnistMore3YesCheckBox.setChecked(0)
@@ -7023,25 +6934,20 @@ GROUP BY YskladnennaVidProfilaktukyPynktIX;""")
         self.VelykiVarikozniVenuYesCheckBox.setChecked(0)
         self.ProvedennaProfTEYdpVagitnostiLabelYesCheckBox.setChecked(0)
         self.ProvedennaProfTEYdpVagitnostiLabelYesCheckBox.setEnabled(0)
-
         self.DanaVagitnisPryrodnaCheckBox.setEnabled(1)
         self.DanaVagitnisPryrodnaCheckBox.setChecked(1)
         self.DanaVagitnisIndykovanaCheckBox.setChecked(0)
         self.DanaVagitnisIndykovanaCheckBox.setEnabled(0)
         self.DanaVagitnisEKZCheckBox.setChecked(0)
         self.DanaVagitnisEKZCheckBox.setEnabled(0)
-
         self.DanaVagitnistZaRahynkomLineEdit.setText('')
-
         self.DaniPologuZaRahynkomLineEdit.setText('')
-
         self.PoperedniPologuZavershulusPologamuCheckBox.setEnabled(1)
         self.PoperedniPologuZavershulusPologamuCheckBox.setChecked(1)
         self.PoperedniPologuZavershulusAbortomSamovilnumCheckBox.setChecked(0)
         self.PoperedniPologuZavershulusAbortomSamovilnumCheckBox.setEnabled(0)
         self.PoperedniPologuZavershulusAbortomShtychnumCheckBox.setChecked(0)
         self.PoperedniPologuZavershulusAbortomShtychnumCheckBox.setEnabled(0)
-
         self.PoperedniPologuFiziologichniCheckBox.setChecked(1)
         self.PoperedniPologuFiziologichniCheckBox.setEnabled(1)
         self.PoperedniPologuPatologichniCheckBox.setChecked(0)
@@ -7289,7 +7195,6 @@ GROUP BY YskladnennaVidProfilaktukyPynktIX;""")
 
         try:
             seach_cursor = cnx.cursor()
-            # seach_cursor = cnx.cursor(buffered=True)
         except mysql.connector.DatabaseError as e:
             self.Info_mesage(str(e))
             cnx.close()
@@ -7334,11 +7239,6 @@ GROUP BY YskladnennaVidProfilaktukyPynktIX;""")
                 self.Info_mesage(str(e))
 
         else:
-
-            # query_to_seach = (
-            #     """select * from Registry R where R.PasportniDani """ +
-            #     self.PasportniDaniToSelect + " and R.HistoryNumber " +
-            #     self.HistoryNumberToSelect + " and R.Age " + self.AgeToSelect)
             query_to_seach = (
                 """SELECT
 id AS "№ в БД", 		 	
@@ -7508,16 +7408,13 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.SeachResultTable.hideColumn(111)
             self.SeachResultTable.hideColumn(73)
             self.SeachResultTable.hideColumn(1)
-            self.SeachResultTable.hideColumn(0)  #8,91, 111, 73
-            #self.SeachResultTable.horizontalHeader().setStretchLastSection(0)
+            self.SeachResultTable.hideColumn(0)
 
             for row, form in enumerate(seach_cursor):
                 self.SeachResultTable.insertRow(row)
                 for column, item in enumerate(form):
                     self.SeachResultTable.setItem(row, column,
                                                   QTableWidgetItem(str(item)))
-            # self.SeachResultTable.resizeColumnsToContents()
-            # self.SeachResultTable.setColumnWidth(1, 300)
 
             try:
                 seach_cursor.close()
@@ -7540,9 +7437,6 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
                     CellText = self.SeachResultTable.item(j, i)
                     OrderItemText = CellText.text()
                     try:
-                        # if str(OrderItemText[1]) == 'V' or str(OrderItemText[1]) == 'I' \
-                        #         or str(OrderItemText).find('ІX.Післяпологовий') != -1 \
-                        #         or str(OrderItemText).find('ІV. Акушерський анамнез.') != -1:
                         if str(OrderItemText).find('I. Паспортні дані.') != -1\
                                 or str(OrderItemText).find('II. Наявність постійних факторів ризику ТЕУ.') != -1 \
                                 or str(OrderItemText).find('III. Проведення профілактики/терапії ТЕУ до вагітності:') != -1 \
@@ -7565,7 +7459,6 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
 
                 self.WievText.CloseBigDataTextButton.clicked.connect(
                     self.WievText.close)
-                #self.WievText.BigDataText.adjustSize()
 
             else:
                 self.Error_mesage("Виділений рядок порожній!")
@@ -7575,9 +7468,9 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
     def CreateUser(self):
         self.CreatingUserErrorCount = 0
 
-        self.LiginToCreate = self.CreateUserLoginLineEdit.text()
-        self.LiginToCreate = self.LiginToCreate.strip()
-        if self.LiginToCreate == '':
+        self.login_to_create = self.CreateUserLoginLineEdit.text()
+        self.login_to_create = self.login_to_create.strip()
+        if self.login_to_create == '':
             self.Error_mesage(
                 "Необхідно заповнити логін майбутнього користувача!")
             self.CreatingUserErrorCount = self.CreatingUserErrorCount + 1
@@ -7610,7 +7503,6 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             except mysql.connector.DatabaseError as e:
                 self.Info_mesage(str(e))
                 cnx.close()
-            # #query = ("SELECT s.Role from authorization s where s.Login="+"'"+self.Login+"' and s.Password='"+self.Password+"'")
             query_to_insert = ("""
                                 INSERT INTO authorization
                                     (
@@ -7618,7 +7510,7 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
                                     )
                                     VALUES
                                     (
-                                    '""" + self.LiginToCreate + """',
+                                    '""" + self.login_to_create + """',
                                     '""" + self.PasswordToCreate + """',
                                     '""" + self.RoleToCreate + """',
                                     '""" + self.PIBToCreate + """'
@@ -7688,9 +7580,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.ProffesionalWhiteCollarWorkerCheckBox.setEnabled(1)
             self.ProffesionalDontWorkCheckBox.setEnabled(1)
 
-            # Обработчик событий по инвалидности
-
     def DisabilityNoneFunc(self):
+        "Обработчик событий по инвалидности"
         if self.DisabilityNoneCheckBox.isChecked():
             self.DisabilityILevelCheckBox.setEnabled(0)
             self.DisabilityIILevelCheckBox.setEnabled(0)
@@ -7730,9 +7621,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.DisabilityIILevelCheckBox.setEnabled(1)
             self.DisabilityILevelCheckBox.setEnabled(1)
 
-            # обработчик событий по рецедивам тромбоемболии в прошлом
-
     def ReceduvyTromboemboliiYesFunc(self):
+        "обработчик событий по рецедивам тромбоемболии в прошлом"
         if self.ReceduvyTromboemboliiYesCheckBox.isChecked():
             self.ReceduvyTromboemboliiNoCheckBox.setEnabled(0)
         else:
@@ -7746,9 +7636,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.ReceduvyTromboemboliiYesCheckBox.setEnabled(1)
             self.ReceduvyTromboemboliiYesCheckBox.setChecked(1)
 
-            # обработчик событий 2.	Тромбоемболії, неспровоковані або пов'язані з прийомом естрогенів
-
     def TromboemboliiAndEstrogensYesFunc(self):
+        "обработчик событий 2.	Тромбоемболії, неспровоковані або пов'язані з прийомом естрогенів"
         if self.TromboemboliiAndEstrogensYesCheckBox.isChecked():
             self.TromboemboliiAndEstrogensNoCheckBox.setEnabled(0)
         else:
@@ -7762,9 +7651,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.TromboemboliiAndEstrogensYesCheckBox.setEnabled(1)
             self.TromboemboliiAndEstrogensYesCheckBox.setChecked(1)
 
-            # обработчик событий 3.	тромбоемболія спровокована
-
     def TromboemboliaSprovokovanaYesFunc(self):
+        "обработчик событий 3.	тромбоемболія спровокована"
         if self.TromboemboliaSprovokovanaYesCheckBox.isChecked():
             self.TromboemboliaSprovokovanaNoCheckBox.setEnabled(0)
         else:
@@ -7778,9 +7666,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.TromboemboliaSprovokovanaYesCheckBox.setEnabled(1)
             self.TromboemboliaSprovokovanaYesCheckBox.setChecked(1)
 
-            # обработчик событий 4.	Сімейний анамнез тромбоемболії
-
     def SimeinuiAnamnezTromboemboliiNoFunc(self):
+        "обработчик событий 4.	Сімейний анамнез тромбоемболії"
         if self.SimeinuiAnamnezTromboemboliiNoCheckBox.isChecked():
             self.SimeinuiAnamnezTromboemboliiYesCheckBox.setEnabled(0)
         else:
@@ -7794,9 +7681,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.SimeinuiAnamnezTromboemboliiNoCheckBox.setEnabled(1)
             self.SimeinuiAnamnezTromboemboliiNoCheckBox.setChecked(1)
 
-            # обработчик событий 5.	встановлена тромбофілія
-
     def VstanovlennaTrombofiliaNoFunc(self):
+        "обработчик событий 5.	встановлена тромбофілія"
         if self.VstanovlennaTrombofiliaNoCheckBox.isChecked():
             self.VstanovlennaTrombofiliaYesCheckBox.setEnabled(0)
         else:
@@ -7877,9 +7763,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
         self.SypytniOtherLineEdit.show()
         self.SypytniOtherLineEdit.setText(self.data)
 
-    # обработчик событий 7.	Вік> 35 років
-
     def OldMore35YesFunc(self):
+        "обработчик событий 7.	Вік> 35 років"
         if self.OldMore35YesCheckBox.isChecked():
             self.OldMore35NoCheckBox.setEnabled(0)
         else:
@@ -7893,9 +7778,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.OldMore35YesCheckBox.setEnabled(1)
             self.OldMore35YesCheckBox.setChecked(1)
 
-            # обработчик событий 8.	Ожиріння (ІМТ> 30)
-
     def OgirinnaYesFunc(self):
+        "обработчик событий 8.	Ожиріння (ІМТ> 30)"
         if self.OgirinnaYesCheckBox.isChecked():
             self.OgirinnaNoCheckBox.setEnabled(0)
         else:
@@ -7909,9 +7793,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.OgirinnaYesCheckBox.setEnabled(1)
             self.OgirinnaYesCheckBox.setChecked(1)
 
-            # обработчик событий       9.     Вагітність  ≥3
-
     def VagitnistMore3YesFunc(self):
+        "обработчик событий  9.Вагітність  ≥3"
         if self.VagitnistMore3YesCheckBox.isChecked():
             self.VagitnistMore3NoCheckBox.setEnabled(0)
         else:
@@ -7925,9 +7808,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.VagitnistMore3YesCheckBox.setEnabled(1)
             self.VagitnistMore3YesCheckBox.setChecked(1)
 
-            # обработчик событий   10.	Куріння
-
     def KyrinnaYesFunc(self):
+        "обработчик событий   10.Куріння"
         if self.KyrinnaYesCheckBox.isChecked():
             self.KyrinnaNoCheckBox.setEnabled(0)
         else:
@@ -7941,9 +7823,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.KyrinnaYesCheckBox.setEnabled(1)
             self.KyrinnaYesCheckBox.setChecked(1)
 
-            # обработчик событий 11. Великі варикозні вени
-
     def VelykiVarikozniVenuYesFunc(self):
+        "обработчик событий 11. Великі варикозні вени"
         if self.VelykiVarikozniVenuYesCheckBox.isChecked():
             self.VelykiVarikozniVenuNoCheckBox.setEnabled(0)
         else:
@@ -7957,9 +7838,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.VelykiVarikozniVenuYesCheckBox.setEnabled(1)
             self.VelykiVarikozniVenuYesCheckBox.setChecked(1)
 
-            # Обработчик ІІІ. Проведення профілактики/терапії ТЕУ до вагітності: а) так б)ні
-
     def ProvedennaProfTEYdpVagitnostiLabelYesFunc(self):
+        "Обработчик ІІІ. Проведення профілактики/терапії ТЕУ до вагітності: а) так б)ні"
         if self.ProvedennaProfTEYdpVagitnostiLabelYesCheckBox.isChecked():
             pass
         else:
@@ -8047,9 +7927,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.YskladneenaVidProfilaktykuLabel.setEnabled(1)
             self.YskladneenaVidProfilaktykuNoCheckBox.setEnabled(1)
 
-            # 1)Обработчик	Еластична компресія ElastychnaKompresiaYesYesFunc
-
     def ElastychnaKompresiaYesFunc(self):
+        "Обработчик	Еластична компресія ElastychnaKompresiaYesYesFunc"
         if self.ElastychnaKompresiaYesCheckBox.isChecked():
             pass
         else:
@@ -8073,9 +7952,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.ElastychnaKompresiaLevelLineEdit.setFixedWidth(30)
             self.ElastychnaKompresiaLevelLineEdit.setFixedHeight(15)
 
-            # Обработчик MedukamentoznaProfilaktukaYesFunc 2)	Медикаментозна профілактика
-
     def MedukamentoznaProfilaktukaYesFunc(self):
+        "Обработчик MedukamentoznaProfilaktukaYesFunc 2)	Медикаментозна профілактика"
         if self.MedukamentoznaProfilaktukaYesCheckBox.isChecked():
             pass
         else:
@@ -8111,9 +7989,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
                 200)
             self.MedukamentoznaProfilaktukaRegymPrujomyLineEdit.show()
 
-            # Обработчик ElastychnaKompresiaYesFunc 3)	Хірургічне лікування :		          а) так б)ні
-
     def HiryrgichneLikyvannaYesFunc(self):
+        "Обработчик ElastychnaKompresiaYesFunc 3)Хірургічне лікування : а) так б)ні"
         if self.HiryrgichneLikyvannaYesCheckBox.isChecked():
             pass
         else:
@@ -8141,9 +8018,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.HiryrgichneLikyvannaNazvaOpericiiLineEdit.setMinimumWidth(200)
             self.HiryrgichneLikyvannaNazvaOpericiiLineEdit.show()
 
-            # Обработчик 5)	Наявність ускладнень від проведеної профілактики: а) так б)ні Ускладення:_______________________________________________
-
     def YskladneenaVidProfilaktykuYesFunc(self):
+        "Обработчик 5)	Наявність ускладнень від проведеної профілактики: а) так б)ні Ускладення:___"
         if self.YskladneenaVidProfilaktykuYesCheckBox.isChecked():
             self.YskladneenaVidProfilaktykuNoCheckBox.setEnabled(0)
         else:
@@ -8175,9 +8051,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.YskladneenaVidProfilaktykuNajavnistLineEdit.show()
             self.YskladneenaVidProfilaktykuNajavnistLineEdit.show()
 
-            # Обработчик 1)	Дана вагітність: а) природна  б) індукована  в) ЕКЗ. DanaVagitnisPryrodnaFunc
-
     def DanaVagitnisPryrodnaFunc(self):
+        "Обработчик 1)	Дана вагітність: а) природна  б) індукована  в) ЕКЗ."
         if self.DanaVagitnisPryrodnaCheckBox.isChecked():
             self.DanaVagitnisIndykovanaCheckBox.setEnabled(0)
             self.DanaVagitnisEKZCheckBox.setEnabled(0)
@@ -8201,9 +8076,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.DanaVagitnisPryrodnaCheckBox.setEnabled(1)
             self.DanaVagitnisIndykovanaCheckBox.setEnabled(1)
 
-            # Обработчик 4)	Попередні вагітності завершились
-
     def PoperedniPologuZavershulusPologamuFunc(self):
+        "Обработчик 4)	Попередні вагітності завершились"
         if self.PoperedniPologuZavershulusPologamuCheckBox.isChecked():
             self.PoperedniPologuZavershulusAbortomSamovilnumCheckBox.setEnabled(
                 0)
@@ -8256,9 +8130,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.PoperedniPologuZavershulusAbortomShtychnumCheckBox.setEnabled(
                 1)
 
-            # Обработчик 5)	Попередні пологи а) фізіологічні б) патологічні в)ускладені
-
     def PoperedniPologuFiziologichniFunc(self):
+        "Обработчик 5)	Попередні пологи а) фізіологічні б) патологічні в)ускладені"
         if self.PoperedniPologuFiziologichniCheckBox.isChecked():
             self.PoperedniPologuPatologichniCheckBox.setEnabled(0)
             self.PoperedniPologuYskladneniCheckBox.setEnabled(0)
@@ -8300,9 +8173,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.PoperedniPologuPatologichniCheckBox.setEnabled(1)
             self.PoperedniPologuYskladneniCheckBox.setEnabled(1)
 
-            # Обработчик 6)	Наявність живих дітей а) так б) ні
-
     def NayavnistGuvyhDiteyYesFunc(self):
+        "Обработчик 6)	Наявність живих дітей а) так б) ні"
         if self.NayavnistGuvyhDiteyYesCheckBox.isChecked():
             self.NayavnistGuvyhDiteyNoCheckBox.setEnabled(0)
             self.NayavnistGuvyhDiteyNoCheckBox.setChecked(0)
@@ -8320,9 +8192,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.NayavnistGuvyhDiteyNoCheckBox.setEnabled(0)
             self.NayavnistGuvyhDiteyNoCheckBox.setChecked(0)
 
-            # Обработчик 1) Вагітність: а) одноплідна;  б) багатоплідна
-
     def VagitnistOdnoplidnaFunc(self):
+        "Обработчик 1) Вагітність: а) одноплідна;  б) багатоплідна"
         if self.VagitnistOdnoplidnaCheckBox.isChecked():
             self.VagitnistBagatodnoplidnaCheckBox.setEnabled(0)
             self.VagitnistBagatodnoplidnaCheckBox.setChecked(0)
@@ -8341,9 +8212,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.VagitnistBagatodnoplidnaCheckBox.setEnabled(0)
             self.VagitnistBagatodnoplidnaCheckBox.setChecked(0)
 
-            # Обработчик Загроза переривання вагітності: а) ні  б) в терміні вагітності ____.
-
     def ZagrozaPereruvannaVagitnostiYesFunc(self):
+        "Обработчик Загроза переривання вагітності: а) ні  б) в терміні вагітності ____."
         if self.ZagrozaPereruvannaVagitnostiYesCheckBox.isChecked():
             self.ZagrozaPereruvannaVagitnostiNoCheckBox.setChecked(0)
             self.ZagrozaPereruvannaVagitnostiNoCheckBox.setEnabled(0)
@@ -8366,10 +8236,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.ZagrozaPereruvannaVagitnostiYTerminiLineEdit.show()
             self.ZagrozaPereruvannaVagitnostiYTerminiLineEdit.setFixedWidth(30)
 
-            # Обработчик Загроза передчасних пологів:    а) ні  б) в терміні вагітності  ____. ZagrozaPeredchasnuhPologivNoFunc
-            # 4.1 а відшарування хоріона; б) кровомазання в) ІЦН
-
     def ZagrozaPeredchasnuhPologivYesFunc(self):
+        "Обработчик Загроза передчасних пологів:   а) ні  б) в терміні вагітності  ____.  4.1 а відшарування хоріона; б) кровомазання в) ІЦН"
         if self.ZagrozaPeredchasnuhPologivYesCheckBox.isChecked():
             self.ZagrozaPeredchasnuhPologivNoCheckBox.setChecked(0)
             self.ZagrozaPeredchasnuhPologivNoCheckBox.setEnabled(0)
@@ -8406,8 +8274,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.ZagrozaPereruvannaVagitnostiICNCheckBox.setEnabled(1)
         self.ZagrozaPereruvannaVagitnostiP41Label.setEnabled(1)
 
-    # Обработчик 5) Гестоз І половини вагітності: а) так  б) ні.
     def GestozIPolovunuVagitnostiNoFunc(self):
+        "Обработчик 5) Гестоз І половини вагітності: а) так  б) ні."
         if self.GestozIPolovunuVagitnostiNoCheckBox.isChecked():
             self.GestozIPolovunuVagitnostiYesCheckBox.setChecked(0)
             self.GestozIPolovunuVagitnostiYesCheckBox.setEnabled(0)
@@ -8423,9 +8291,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.GestozIPolovunuVagitnostiNoCheckBox.setEnabled(1)
             self.GestozIPolovunuVagitnostiNoCheckBox.setChecked(1)
 
-            # Обработчик 6) Інші причини зневоднення: а) так  б) ні; в)____________________ InshiPruchynyZnevodnennaVarVFunc
-
     def InshiPruchynyZnevodnennaNoFunc(self):
+        "Обработчик 6) Інші причини зневоднення: а) так  б) ні; в)__"
         if self.InshiPruchynyZnevodnennaNoCheckBox.isChecked():
             self.InshiPruchynyZnevodnennaYesCheckBox.setDisabled(1)
             self.InshiPruchynyZnevodnennaVarVCheckBox.setDisabled(1)
@@ -8453,9 +8320,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.InshiPruchynyZnevodnennaVarVLineEdit.setDisabled(1)
             self.InshiPruchynyZnevodnennaVarVLineEdit.hide()
 
-            # Обработчик Гестоз II половини вагітності GestozIIPolovunuVagitnostiNoFunc
-
     def GestozIIPolovunuVagitnostiNoFunc(self):
+        "Обработчик Гестоз II половини вагітності GestozIIPolovunuVagitnostiNoFunc"
         if self.GestozIIPolovunuVagitnostiNoCheckBox.isChecked():
             self.GestozIIPolovunuVagitnostiProeklampsiaLegkogoStCheckBox.setChecked(
                 0)
@@ -8542,12 +8408,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
                 1)
             self.GestozIIPolovunuVagitnostiNoCheckBox.setEnabled(1)
 
-            # Обработчик 9) Винекнення ТЕУ а) так  б) ні.
-
-        # 9.1. Вид ТЕУ______________________________________________
-        # 9.2. термін вагітності __________тиж
-
     def VunuknennaTEYYesFunc(self):
+        "9.1. Вид ТЕУ___ 9.2. термін вагітності _______тиж"
         if self.VunuknennaTEYYesCheckBox.isChecked():
             self.VunuknennaTEYYesCheckBox.setChecked(1)
         else:
@@ -8575,9 +8437,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.VudTEYLabel.setEnabled(1)
             self.VudTEYLineEdit.setEnabled(1)
 
-            # Обработчик 10) Багатоводдя: а) ні  б) помірне в) виражене   BagatovoddaVurageneFunc BagatovoddaPomirneFunc BagatovoddaNoFunc
-
     def BagatovoddaVurageneFunc(self):
+        "Обработчик 10) Багатоводдя: а) ні  б) помірне в) виражене"
         if self.BagatovoddaVurageneCheckBox.isChecked():
             self.BagatovoddaPomirneCheckBox.setEnabled(0)
             self.BagatovoddaPomirneCheckBox.setChecked(0)
@@ -8617,9 +8478,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.BagatovoddaPomirneCheckBox.setEnabled(1)
             self.BagatovoddaVurageneCheckBox.setEnabled(1)
 
-            # Обработчик 11) Маловоддя: а) ні  б) помірне  в) виражене
-
     def MaloVoddaVurageneFunc(self):
+        "Обработчик 11) Маловоддя: а) ні  б) помірне  в) виражене"
         if self.MaloVoddaVurageneCheckBox.isChecked():
             self.MaloVoddaPomirneCheckBox.setEnabled(0)
             self.MaloVoddaPomirneCheckBox.setChecked(0)
@@ -8656,11 +8516,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.MaloVoddaPomirneCheckBox.setEnabled(1)
             self.MaloVoddaVurageneCheckBox.setEnabled(1)
 
-            # Обработчик 12) Дистрес плода (за доплерометрією): а) ні;
-            # б) в ст. компенсації; в) в ст. субкомпенсації; г) в ст. декомпенсації
-            # DustressPlodaNoFunc DustressPlodaVKompensaciiFunc DustressPlodaVSubKompensaciiFunc DustressPlodaVSubKompensaciiFunc
-
     def DustressPlodaNoFunc(self):
+        "Обработчик 12) Дистрес плода (за доплерометрією): а) ні; б) в ст. компенсації; в) в ст. субкомпенсації; г) в ст. декомпенсації"
         if self.DustressPlodaNoCheckBox.isChecked():
             self.DustressPlodaVDekompensaciiCheckBox.setEnabled(0)
             self.DustressPlodaVKompensaciiCheckBox.setEnabled(0)
@@ -8700,9 +8557,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.DustressPlodaVSubKompensaciiCheckBox.setEnabled(1)
             self.DustressPlodaVKompensaciiCheckBox.setEnabled(1)
 
-            # обработчик 13) Затримка росту плода: 		в терміні _______тиж ZatrumkaRozvutkyPlodaNoFunc ZatrumkaRozvutkyPlodaSumetrychnaFormaFunc ZatrumkaRozvutkyPlodaAsumetruchnaFormaFunc
-
     def ZatrumkaRozvutkyPlodaNoFunc(self):
+        "обработчик 13) Затримка росту плода: 		в терміні _______тиж "
         if self.ZatrumkaRozvutkyPlodaNoCheckBox.isChecked():
             self.ZatrumkaRozvutkyPlodaSumetrychnaFormaCheckBox.setEnabled(0)
             self.ZatrumkaRozvutkyPlodaSumetrychnaFormaCheckBox.setChecked(0)
@@ -8755,9 +8611,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.ZatrumkaRozvutkyPlodaVTerminiLineEdit.hide()
             self.ZatrumkaRozvutkyPlodaVTerminiLineEdit.setEnabled(0)
 
-            # Обработчик 14) Наявність системної інфекції : 		а) так; б) ні NajavnistSustemnoiInfekciiYesFunc NajavnistSustemnoiInfekciiNoFunc
-
     def NajavnistSustemnoiInfekciiYesFunc(self):
+        "Обработчик 14) Наявність системної інфекції "
         if self.NajavnistSustemnoiInfekciiYesCheckBox.isChecked():
             self.NajavnistSustemnoiInfekciiNoCheckBox.setEnabled(0)
             self.NajavnistSustemnoiInfekciiNoCheckBox.setChecked(0)
@@ -8773,9 +8628,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.NajavnistSustemnoiInfekciiYesCheckBox.setEnabled(1)
             self.NajavnistSustemnoiInfekciiYesCheckBox.setChecked(1)
 
-            # Обработчик 15) Патологія плаценти 			а) ні б) гіпоплазія в) гіперплазія PatologiaPlacentuNoFunc PatologiaPlacentuGipoplaziaFunc  PatologiaPlacentuGiperplaziaFunc
-
     def PatologiaPlacentuNoFunc(self):
+        "Обработчик 15) Патологія плаценти "
         if self.PatologiaPlacentuNoCheckBox.isChecked():
             self.PatologiaPlacentuGiperplaziaCheckBox.setEnabled(0)
             self.PatologiaPlacentuGiperplaziaCheckBox.setChecked(0)
@@ -8805,10 +8659,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.PatologiaPlacentuGipoplaziaCheckBox.setEnabled(1)
             self.PatologiaPlacentuNoCheckBox.setEnabled(1)
 
-            # Обработчик15.1. Паталогія  локалізації плаценти:        а) ні;
-            #  #PatologiaLocalizaciiPlacentuNoFunc  PatologiaLocalizaciiPlacentuNuzkaPlacentaciaFunc PatologiaLocalizaciiPlacentuKrajovePeredlegannaFunc  PatologiaLocalizaciiPlacentuPovnePeredlegannaFunc
-
     def PatologiaLocalizaciiPlacentuNoFunc(self):
+        "Обработчик15.1. Паталогія  локалізації плаценти:"
         if self.PatologiaLocalizaciiPlacentuNoCheckBox.isChecked():
             self.PatologiaLocalizaciiPlacentuKrajovePeredlegannaCheckBox.setEnabled(
                 0)
@@ -8890,9 +8742,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.PatologiaLocalizaciiPlacentuKrajovePeredlegannaCheckBox.setEnabled(
                 1)
 
-            # Обработчик 16) Передчасне відшарування плаценти 	а) ні б) так PeredchasneVadsharyvannaPlacentuNoFunc PeredchasneVadsharyvannaPlacentuYesFunc
-
     def PeredchasneVadsharyvannaPlacentuNoFunc(self):
+        "Обработчик 16) Передчасне відшарування плаценти 	а) ні б) так"
         if self.PeredchasneVadsharyvannaPlacentuNoCheckBox.isChecked():
             pass
         else:
@@ -8908,9 +8759,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.PeredchasneVadsharyvannaPlacentuNoCheckBox.setChecked(1)
             self.PeredchasneVadsharyvannaPlacentuYesCheckBox.setEnabled(0)
 
-            # Обработчик 17) Хірургічні втручання під час вагітності: а) так; б) ні PeredchasneVadsharyvannaPlacentuNoFunc PeredchasneVadsharyvannaPlacentuYesFunc
-
     def HiryrgichniVtyrchannaPidChasVagitnostiNoFunc(self):
+        "Обработчик 17) Хірургічні втручання під час вагітності"
         if self.HiryrgichniVtyrchannaPidChasVagitnostiNoCheckBox.isChecked():
             pass
         else:
@@ -8929,8 +8779,6 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.HiryrgichniVtyrchannaPidChasVagitnostiYesCheckBox.setEnabled(
                 0)
 
-            # Обработчик 18) Тривала іммобілізація: а) так; б) ні  TruvalaImmobilizaciaNoFunc TruvalaImmobilizaciaYesFunc
-
     def TruvalaImmobilizaciaNoFunc(self):
         """18) Тривала іммобілізація а) так"""
         if self.TruvalaImmobilizaciaNoCheckBox.isChecked():
@@ -8948,12 +8796,6 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.TruvalaImmobilizaciaNoCheckBox.setEnabled(1)
             self.TruvalaImmobilizaciaNoCheckBox.setChecked(1)
             self.TruvalaImmobilizaciaYesCheckBox.setEnabled(0)
-
-            # Обработчик 19) Завершення даної вагітності
-            # а) переривання за медичними показаннями в терміні_______.
-            # б) самовільний викидень в терміні_______.
-            # в) пологи в терміні_______.
-            # ZavershennaDannoiVagitnostiPologuVTerminiFunc ZavershennaDannoiVagitnostiPereryvannaZaMedPokFunc ZavershennaDannoiVagitnostiSamovilnuiVukudenFunc
 
     def ZavershennaDannoiVagitnostiPologuVTerminiFunc(self):
         if self.ZavershennaDannoiVagitnostiPologuVTerminiCheckBox.isChecked():
@@ -9041,9 +8883,9 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
                 1)
             self.ZavershennaDannoiVagitnostiPereryvannaZaMedPokLineEdit.setEnabled(
                 1)
-            # Обработчик VІ Проведення профілактики/терапії ТЕУ під час вагітності: а) так б)ні ProvedennaProfilaktukuTerapiiTEYPidChasVagitnostiYesFunc ProvedennaProfilaktukuTerapiiTEYPidChasVagitnostiNoFunc
 
     def ProvedennaProfilaktukuTerapiiTEYPidChasVagitnostiNoFunc(self):
+        "Обработчик VІ Проведення профілактики/терапії ТЕУ під час вагітності"
         if self.ProvedennaProfilaktukuTerapiiTEYPidChasVagitnostiNoCheckBox.isChecked(
         ):
             self.ProvedennaProfilaktukuTerapiiTEYPidChasVagitnostiYesCheckBox.setEnabled(
@@ -9058,20 +8900,16 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.PokazuDlaProvedennaProfilaktukyLabel.setEnabled(1)
             self.PokazuDlaProvedennaProfilaktukyLineEdit.setEnabled(1)
             self.ElastychnaKompresiaPynktVILabel.setEnabled(1)
-            # self.ElastychnaKompresiaPynktVIYesCheckBox.setEnabled(1)
             self.ElastychnaKompresiaPynktVINoCheckBox.setEnabled(1)
             self.ElastychnaKompresiaPynktVILevelLabel.setEnabled(1)
             self.ElastychnaKompresiaPynktVILevelLineEdit.setEnabled(1)
             self.MedukamentoznaProfilaktukaPynktVILabel.setEnabled(1)
-            # self.MedukamentoznaProfilaktukaPynktVIYesCheckBox.setEnabled(1)
             self.MedukamentoznaProfilaktukaPynktVINoCheckBox.setEnabled(1)
             self.HiryrgichneLikyvannaPynktVILabel.setEnabled(1)
-            # self.HiryrgichneLikyvannaPynktVIYesCheckBox.setEnabled(1)
             self.HiryrgichneLikyvannaPynktVINoCheckBox.setEnabled(1)
             self.TryvalistProvedennoiProfilaktykyPynktVILabel.setEnabled(1)
             self.TryvalistProvedennoiProfilaktykyPynktVILineEdit.setEnabled(1)
             self.YskladneenaVidProfilaktykuPynktVILabel.setEnabled(1)
-            # self.YskladneenaVidProfilaktykuPynktVIYesCheckBox.setEnabled(1)
             self.YskladneenaVidProfilaktykuPynktVINoCheckBox.setEnabled(1)
             self.YskladneenaVidProfilaktykuNajavnistPynktVILabel.setEnabled(1)
             self.YskladneenaVidProfilaktykuNajavnistPynktVILineEdit.setEnabled(
@@ -9191,7 +9029,6 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.ElastychnaKompresiaPynktVIYesCheckBox.setEnabled(0)
             self.ElastychnaKompresiaPynktVILevelLabel.hide()
             self.ElastychnaKompresiaPynktVILevelLineEdit.hide()
-            # self.ElastychnaKompresiaPynktVILevelLineEdit.setText('')
 
     def MedukamentoznaProfilaktukaPynktVINoFunc(self):
         if self.MedukamentoznaProfilaktukaPynktVINoCheckBox.isChecked():
@@ -9279,10 +9116,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.YskladneenaVidProfilaktykuNajavnistPynktVILabel.hide()
             self.YskladneenaVidProfilaktykuNajavnistPynktVILineEdit.hide()
 
-            # Обработчик 1)	Пологи вагінальні а) ні, б) спонтанні, в) індуковані
-            # PologuVaginalniNoFunc PologuVaginalniSpomtanniFunc PologuVaginalniIndykovaniFunc
-
     def PologuVaginalniNoFunc(self):
+        "Обработчик 1)	Пологи вагінальні а) ні, б) спонтанні, в) індуковані"
         if self.PologuVaginalniNoCheckBox.isChecked():
             self.PologuVaginalniSpomtanniCheckBox.setEnabled(0)
             self.PologuVaginalniIndykovaniCheckBox.setEnabled(0)
@@ -9306,9 +9141,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.PologuVaginalniNoCheckBox.setEnabled(1)
             self.PologuVaginalniSpomtanniCheckBox.setEnabled(1)
 
-            # Обработчик 2)	Пологи абдомінальні а) ні, б) плановий КР, в) ургентний КР
-
     def PologuAbdominalniNoFunc(self):
+        "Обработчик 2)	Пологи абдомінальні а) ні, б) плановий КР, в) ургентний КР"
         if self.PologuAbdominalniNoCheckBox.isChecked():
             self.PologuAbdominalniPlanovuiKRCheckBox.setEnabled(0)
             self.PologuAbdominalniYrgentbuiKRCheckBox.setEnabled(0)
@@ -9332,10 +9166,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.PologuAbdominalniNoCheckBox.setEnabled(1)
             self.PologuAbdominalniPlanovuiKRCheckBox.setEnabled(1)
 
-            # Обработчик 4)	Порушення пологової діяльності а) ні, б) стрімкі пологи, в) дискоординація, г) слабкість
-            # PoryshennaPologovoiDialnostiNoFunc PoryshennaPologovoiDialnostiStrimkiPologuFunc PoryshennaPologovoiDialnostiDuskoordunaciaFunc PoryshennaPologovoiDialnostiSlabkistFunc
-
     def PoryshennaPologovoiDialnostiNoFunc(self):
+        "Обработчик 4)	Порушення пологової діяльності а) ні, б) стрімкі пологи, в) дискоординація, г) слабкість"
         if self.PoryshennaPologovoiDialnostiNoCheckBox.isChecked():
             self.PoryshennaPologovoiDialnostiStrimkiPologuCheckBox.setEnabled(
                 0)
@@ -9405,11 +9237,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.PoryshennaPologovoiDialnostiDuskoordunaciaCheckBox.setEnabled(
                 1)
 
-            # Обработчик 5)	Корекція аномалій пологової діяльності а) ні, б) бета-міметики, в) окситоцин, г) ензапрост, д) окситоцин з ензапростом.
-            # KorekciaAnomaliiPologovoiDialnostiNoFunc  KorekciaAnomaliiPologovoiDialnostiBetaMimetukuFunc
-            # KorekciaAnomaliiPologovoiDialnostiOksutocunFunc KorekciaAnomaliiPologovoiDialnostiOksutocunZEnzaprostomFunc
-
     def KorekciaAnomaliiPologovoiDialnostiNoFunc(self):
+        "Обработчик 5)	Корекція аномалій пологової діяльності"
         if self.KorekciaAnomaliiPologovoiDialnostiNoCheckBox.isChecked():
             self.KorekciaAnomaliiPologovoiDialnostiBetaMimetukuCheckBox.setChecked(
                 0)
@@ -9556,10 +9385,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.KorekciaAnomaliiPologovoiDialnostiOksutocunCheckBox.setEnabled(
                 1)
 
-            # Обработчик 6)	Вилив навколоплодових вод а) своєчасний, б) ранній, в) передчасний
-            # VuluvNavkoloplodovuhVodSvoechasnuiFunc VuluvNavkoloplodovuhVodRaniiFunc  VuluvNavkoloplodovuhVodPeredchasnuiFunc
-
     def VuluvNavkoloplodovuhVodSvoechasnuiFunc(self):
+        "Обработчик 6)	Вилив навколоплодових вод а) своєчасний, б) ранній, в) передчасний"
         if self.VuluvNavkoloplodovuhVodSvoechasnuiCheckBox.isChecked():
             self.VuluvNavkoloplodovuhVodRaniiCheckBox.setEnabled(0)
             self.VuluvNavkoloplodovuhVodRaniiCheckBox.setChecked(0)
@@ -9589,10 +9416,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.VuluvNavkoloplodovuhVodSvoechasnuiCheckBox.setEnabled(1)
             self.VuluvNavkoloplodovuhVodRaniiCheckBox.setEnabled(1)
 
-            # Обработчик 7)	Дистрес плода в пологах а) ні, б) в І періоді, в) в ІІ періоді
-            # DustressPlodaVPologahNoFunc DustressPlodaVPologahVIPeriodiFunc DustressPlodaVPologahVIIPeriodiFunc
-
     def DustressPlodaVPologahNoFunc(self):
+        "Обработчик 7)	Дистрес плода в пологах а) ні, б) в І періоді, в) в ІІ періоді"
         if self.DustressPlodaVPologahNoCheckBox.isChecked():
             self.DustressPlodaVPologahVIPeriodiCheckBox.setChecked(0)
             self.DustressPlodaVPologahVIPeriodiCheckBox.setEnabled(0)
@@ -9622,9 +9447,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.DustressPlodaVPologahNoCheckBox.setEnabled(1)
             self.DustressPlodaVPologahVIPeriodiCheckBox.setEnabled(1)
 
-            # Обработчик 8)	Гіпотонічна кровотеча а) ні, б) в ІІІ періоді, в) в ранньому післяпологовому періоді, г) в пізньому післяпологовому періоді.
-
     def GipotonichnaKrovotechaNoFunc(self):
+        "Обработчик 8)	Гіпотонічна кровотеча"
         if self.GipotonichnaKrovotechaNoCheckBox.isChecked():
             self.GipotonichnaKrovotechaVIIIPeriodiCheckBox.setChecked(0)
             self.GipotonichnaKrovotechaVIIIPeriodiCheckBox.setEnabled(0)
@@ -9696,9 +9520,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.GipotonichnaKrovotechaVRannomyPislapologovomyPeriodiCheckBox.setEnabled(
                 1)
 
-            # Обработчик 9)	Аномалії прикріплення плаценти а) ні, б) adherens, в) acreta, г) percreta.
-
     def AnomaliiPrukriplennaPlacentuNoFunc(self):
+        "Обработчик 9)	Аномалії прикріплення плаценти а) ні, б) adherens, в) acreta, г) percreta."
         if self.AnomaliiPrukriplennaPlacentuNoCheckBox.isChecked():
             self.AnomaliiPrukriplennaPlacentuAdherensCheckBox.setEnabled(0)
             self.AnomaliiPrukriplennaPlacentuAdherensCheckBox.setChecked(0)
@@ -9750,10 +9573,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.AnomaliiPrukriplennaPlacentuAdherensCheckBox.setEnabled(1)
             self.AnomaliiPrukriplennaPlacentuAcretaCheckBox.setEnabled(1)
 
-            # Обработчик   10) Дефект посліду: а) ні  б) так
-            # DefektPoslidyNoFunc DefektPoslidyYesFunc
-
     def DefektPoslidyNoFunc(self):
+        "Обработчик   10) Дефект посліду: а) ні  б) так"
         if self.DefektPoslidyNoCheckBox.isChecked():
             pass
         else:
@@ -9767,10 +9588,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.DefektPoslidyNoCheckBox.setEnabled(1)
             self.DefektPoslidyNoCheckBox.setChecked(1)
 
-            # Обработчик     11) Дефект оболонок: а) ні  б) так
-            # DefektObolonokNoFunc
-
     def DefektObolonokNoFunc(self):
+        "Обработчик     11) Дефект оболонок: а) ні  б) так"
         if self.DefektObolonokNoCheckBox.isChecked():
             pass
         else:
@@ -9784,10 +9603,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.DefektObolonokNoCheckBox.setEnabled(1)
             self.DefektObolonokNoCheckBox.setChecked(1)
 
-            # обработчик     12) Аномалії прикріплення пуповини: а) ні, б) оболонкове
-            # AnomaliiPrukriplennaPypovunuNoFunc AnomaliiPrukriplennaPypovunuObolonkoveFunc
-
     def AnomaliiPrukriplennaPypovunuNoFunc(self):
+        "обработчик     12) Аномалії прикріплення пуповини:"
         if self.AnomaliiPrukriplennaPypovunuNoCheckBox.isChecked():
             self.AnomaliiPrukriplennaPypovunuObolonkoveCheckBox.setChecked(0)
         else:
@@ -9801,10 +9618,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.AnomaliiPrukriplennaPypovunuNoCheckBox.setEnabled(1)
             self.AnomaliiPrukriplennaPypovunuNoCheckBox.setChecked(1)
 
-            #    13) Оперативна допомога: а) ні б) ручна ревізія стінок порожнини маткив) інструментальна ревізія стінок порожнини маткиг) ручне відокремлення плаценти та видалення посліду
-            # OperatuvnaDopomogaNoFunc
-
     def OperatuvnaDopomogaNoFunc(self):
+        "13) Оперативна допомога:"
         if self.OperatuvnaDopomogaNoCheckBox.isChecked():
             self.OperatuvnaDopomogaRychnaReviziaCheckBox.setChecked(0)
             self.OperatuvnaDopomogaRychnaReviziaCheckBox.setEnabled(0)
@@ -9817,9 +9632,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.OperatuvnaDopomogaInstrymentalnaReviziaCheckBox.setEnabled(1)
             self.OperatuvnaDopomogaRychneVidokremlennaCheckBox.setEnabled(1)
 
-            # Обработчик Розриви пологових шляхів: а) ні б) промежини в) піхви г) шийки матки
-
     def RozruvuPologovuhShlahivNoFunc(self):
+        "Обработчик Розриви пологових шляхів: "
         if self.RozruvuPologovuhShlahivNoCheckBox.isChecked():
             self.RozruvuPologovuhShlahivPromejunuCheckBox.setEnabled(0)
             self.RozruvuPologovuhShlahivPromejunuCheckBox.setChecked(0)
@@ -9836,10 +9650,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.StypinRozruvyPologovuhShlahivLabel.show()
             self.StypinRozruvyPologovuhShlahivLineEdit.show()
 
-            # Обработчик 15) Епізіо- або перінеотомія: а) так  б) ні
-            # EpizoAboPerineotomiayNoFunc EpizoAboPerineotomiaYesFunc
-
     def EpizoAboPerineotomiaNoFunc(self):
+        "Обработчик 15) Епізіо- або перінеотомія: а) так  б) ні"
         if self.EpizoAboPerineotomiaNoCheckBox.isChecked():
             pass
         else:
@@ -9853,10 +9665,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.EpizoAboPerineotomiaNoCheckBox.setEnabled(1)
             self.EpizoAboPerineotomiaNoCheckBox.setChecked(1)
 
-            # Обработчик 1)	Народився а) живий, б) мертвий
-            # NaroduvsaGuvuiFunc NaroduvsaMertvuiFunc
-
     def NaroduvsaGuvuiFunc(self):
+        "Обработчик 1)	Народився а) живий, б) мертвий"
         if self.NaroduvsaGuvuiCheckBox.isChecked():
             pass
         else:
@@ -9881,10 +9691,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.PruchunaMertvonarodgennaInternatalnaCheckBox.setEnabled(0)
             self.PruchunaMertvonarodgennaAntenatalnaCheckBox.setEnabled(0)
 
-            # Обработчик 2)	Причина мертвонародження а) антенатальна, б) інтранатальна
-            # PruchunaMertvonarodgennaAntenatalnaFunc PruchunaMertvonarodgennaInternatalnaFunc
-
     def PruchunaMertvonarodgennaAntenatalnaFunc(self):
+        "Обработчик 2)	Причина мертвонародження а) антенатальна, б) інтранатальна"
         if self.PruchunaMertvonarodgennaAntenatalnaCheckBox.isChecked():
             pass
         else:
@@ -9900,10 +9708,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.PruchunaMertvonarodgennaAntenatalnaCheckBox.setChecked(1)
             self.PruchunaMertvonarodgennaInternatalnaCheckBox.setEnabled(0)
 
-            # Обработчик 3)	Зрілість новонародженого: а) доношений; б)недоношений; в) переношений
-            ##ZrilistNovonarodgennogoDonoshenuiFunc ZrilistNovonarodgennogoNedonoshenuiFunc ZrilistNovonarodgennogoPerenoshenuiFunc
-
     def ZrilistNovonarodgennogoDonoshenuiFunc(self):
+        "Обработчик 3)	Зрілість новонародженого: а) доношений; б)недоношений; в) переношений"
         if self.ZrilistNovonarodgennogoDonoshenuiCheckBox.isChecked():
             self.ZrilistNovonarodgennogoNedonoshenuiCheckBox.setEnabled(0)
             self.ZrilistNovonarodgennogoPerenoshenuiCheckBox.setEnabled(0)
@@ -9927,10 +9733,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.ZrilistNovonarodgennogoDonoshenuiCheckBox.setEnabled(1)
             self.ZrilistNovonarodgennogoNedonoshenuiCheckBox.setEnabled(1)
 
-            # Обработчик        4.1. Гіпотрофія плода:  а) ні  б) так
-            # GipotrofiaPlodaNoFunc GipotrofiaPlodaYesFunc
-
     def GipotrofiaPlodaNoFunc(self):
+        "Обработчик  4.1. Гіпотрофія плода:  а) ні  б) так"
         if self.GipotrofiaPlodaNoCheckBox.isChecked():
             pass
         else:
@@ -9946,10 +9750,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.GipotrofiaPlodaNoCheckBox.setChecked(1)
             self.GipotrofiaPlodaYesCheckBox.setEnabled(0)
 
-            # обработчик 6) новонароджений з вадами розвиту: а) ні  б) так  в) які саме
-            # NovonarodjenuiZVadamuRozvutkyNoFunc NovonarodjenuiZVadamuRozvutkyYesFunc
-
     def NovonarodjenuiZVadamuRozvutkyNoFunc(self):
+        "обработчик 6) новонароджений з вадами розвиту: а) ні  б) так  в) які саме"
         if self.NovonarodjenuiZVadamuRozvutkyNoCheckBox.isChecked():
             pass
         else:
@@ -9970,10 +9772,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.NovonarodjenuiZVadamuRozvutkyJakiSameLineEdit.setText('')
             self.NovonarodjenuiZVadamuRozvutkyJakiSameLabel.hide()
 
-            # Обработчик 7) пологова травма: а) ні  б) так  в) яка саме ____________________
-            # PologovaTravmaNoFunc PologovaTravmaYesFunc
-
     def PologovaTravmaNoFunc(self):
+        "Обработчик 7) пологова травма: а) ні  б) так  в) яка саме __"
         if self.PologovaTravmaNoCheckBox.isChecked():
             pass
         else:
@@ -9993,10 +9793,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.PologovaTravmaJakaSameLineEdit.hide()
             self.PologovaTravmaJakaSameLabel.hide()
 
-            # Обработчик 8) СДР: 					а) ні  б) так
-            # SDRNoFunc SDRYesFunc
-
     def SDRNoFunc(self):
+        "Обработчик 8) СДР: а) ні  б) так"
         if self.SDRNoCheckBox.isChecked():
             pass
         else:
@@ -10012,10 +9810,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.SDRNoCheckBox.setChecked(1)
             self.SDRYesCheckBox.setEnabled(0)
 
-            # Обработчик 9) внутрішньоутробне інфікування: а) ні  б) так
-            # VnytrishnoytrobneInfikyvannaNoFunc VnytrishnoytrobneInfikyvannaYesFunc
-
     def VnytrishnoytrobneInfikyvannaNoFunc(self):
+        "Обработчик 9) внутрішньоутробне інфікування: а) ні  б) так"
         if self.VnytrishnoytrobneInfikyvannaNoCheckBox.isChecked():
             pass
         else:
@@ -10031,10 +9827,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.VnytrishnoytrobneInfikyvannaNoCheckBox.setChecked(1)
             self.VnytrishnoytrobneInfikyvannaYesCheckBox.setEnabled(0)
 
-            # Обработчик 10) геморагічні ускладнення:		а) ні  б) так
-            # GemoragichniYskladnennaNoFunc GemoragichniYskladnennaYesFunc
-
     def GemoragichniYskladnennaNoFunc(self):
+        "Обработчик 10) геморагічні ускладнення: а) ні  б) так"
         if self.GemoragichniYskladnennaNoCheckBox.isChecked():
             pass
         else:
@@ -10050,10 +9844,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.GemoragichniYskladnennaNoCheckBox.setEnabled(1)
             self.GemoragichniYskladnennaNoCheckBox.setChecked(1)
 
-            # Обработчик 11) анемія: а) ні  б) І ступеня  в) II ступеня  г) IIІ ступеня
-            # AnemiaNoFunc AnemiaIStypenaFunc  AnemiaIIStypenaFunc AnemiaIIIStypenaFunc
-
     def AnemiaNoFunc(self):
+        "Обработчик 11) анемія: а) ні  б) І ступеня  в) II ступеня  г) IIІ ступеня"
         if self.AnemiaNoCheckBox.isChecked():
             self.AnemiaIStypenaCheckBox.setEnabled(0)
             self.AnemiaIIIStypenaCheckBox.setEnabled(0)
@@ -10093,9 +9885,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.AnemiaIIStypenaCheckBox.setEnabled(1)
             self.AnemiaIStypenaCheckBox.setEnabled(1)
 
-            # Обработчик 12) гіпербілірубінемія: а) ні  б) так  в) рівень білірубіну___________
-
     def GiperBilirybinemiaNoFunc(self):
+        "Обработчик 12) гіпербілірубінемія: а) ні  б) так  в) рівень білірубіну_"
         if self.GiperBilirybinemiaNoCheckBox.isChecked():
             pass
         else:
@@ -10114,8 +9905,6 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.GiperBilirybinemiaYesCheckBox.setEnabled(0)
             self.GiperBilirybinemiaRivenBilirybinyLineEdit.hide()
             self.GiperBilirybinemiaRivenBilirybinyLabel.hide()
-
-            # AsfiksiaNoFunc AsfiksiaLegkaFunc AsfiksiaSerednaFunc  AsfiksiaVajkaFunc
 
     def AsfiksiaNoFunc(self):
         if self.AsfiksiaNoCheckBox.isChecked():
@@ -10157,10 +9946,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.AsfiksiaNoCheckBox.setEnabled(1)
             self.AsfiksiaSerednaCheckBox.setEnabled(1)
 
-            # Обработчик 14) порушення кардіо-респіраторної адаптації: а)ні   б) так.
-            # PoryshennaKardioRespiratornoiAdaptaciiNoFunc PoryshennaKardioRespiratornoiAdaptaciiYesFunc
-
     def PoryshennaKardioRespiratornoiAdaptaciiNoFunc(self):
+        "Обработчик 14) порушення кардіо-респіраторної адаптації: а)ні   б) так."
         if self.PoryshennaKardioRespiratornoiAdaptaciiNoCheckBox.isChecked():
             pass
         else:
@@ -10179,10 +9966,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.PoryshennaKardioRespiratornoiAdaptaciiYesCheckBox.setEnabled(
                 0)
 
-            # 16) Вітамін К введено 				а) так б)ні	термін ________
-            # VitaminKVvedenoNoFunc VitaminKVvedenoYesFunc
-
     def VitaminKVvedenoNoFunc(self):
+        "16) Вітамін К введено "
         if self.VitaminKVvedenoNoCheckBox.isChecked():
             pass
         else:
@@ -10203,10 +9988,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.VitaminKVvedenoTerminLineEdit.hide()
             self.VitaminKVvedenoTerminLineEdit.setText('')
 
-            # Обработчик 18) неонатальна смерть: 			а) ні  б) на ______добу
-            # NeonatalnaSmertNoFunc NeonatalnaSmertYesFunc
-
     def NeonatalnaSmertNoFunc(self):
+        "Обработчик 18) неонатальна смерть: а) ні  б) на ____добу"
         if self.NeonatalnaSmertNoCheckBox.isChecked():
             pass
         else:
@@ -10232,10 +10015,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.PruchunaSmertiZaRezyltatomAytopsiiLineEdit.setEnabled(0)
             self.PruchunaSmertiZaRezyltatomAytopsiiLineEdit.setText('')
 
-            # Обработчик 1.	Перебіг: а)  нормальний , б) ускладнений
-            ##PislapologovuiPerebigNoFunc  PislapologovuiPerebigYesFunc
-
     def PislapologovuiPerebigNoFunc(self):
+        "Обработчик 1.	Перебіг: а)  нормальний , б) ускладнений"
         if self.PislapologovuiPerebigNoCheckBox.isChecked():
             pass
         else:
@@ -10251,10 +10032,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.PislapologovuiPerebigNoCheckBox.setEnabled(1)
             self.PislapologovuiPerebigNoCheckBox.setChecked(1)
 
-            # Обработчик 2.	Чи проводилась профілактика/терапія ТЕУ: а) так б)ні
-            # ProfilaktukaTerapiaTEYPynktIXNoFunc ProfilaktukaTerapiaTEYPynktIXYesFunc
-
     def ProfilaktukaTerapiaTEYPynktIXNoFunc(self):
+        "Обработчик 2.	Чи проводилась профілактика/терапія ТЕУ: а) так б)ні"
         if self.ProfilaktukaTerapiaTEYPynktIXNoCheckBox.isChecked():
             pass
         else:
@@ -10269,10 +10048,9 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.ProfilaktukaTerapiaTEYPynktIXYesCheckBox.setEnabled(0)
             self.ProfilaktukaTerapiaTEYPynktIXNoCheckBox.setEnabled(1)
             self.ProfilaktukaTerapiaTEYPynktIXNoCheckBox.setChecked(1)
-            # Обработчик 2.1. Еластична компресія: 				    а) так б)ні	в) клас __
-            # ElastuchnaKompressiaPynktIXNoFunc ElastuchnaKompressiaPynktIXYesFunc
 
     def ElastuchnaKompressiaPynktIXNoFunc(self):
+        "Обработчик 2.1. Еластична компресія: а) так б)ні	в) клас __"
         if self.ElastuchnaKompressiaPynktIXNoCheckBox.isChecked():
             pass
         else:
@@ -10292,10 +10070,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.ElastuchnaKompressiaPynktIXKlasLabel.hide()
             self.ElastuchnaKompressiaPynktIXKlasLineEdit.hide()
 
-            # Обработчик Медикаментозна профілактика / терапія	    а) так б)ні .......
-            # MedukamentoznaProfilaktukaPynktIXNoFunc MedukamentoznaProfilaktukaPynktIXYesFunc
-
     def MedukamentoznaProfilaktukaPynktIXNoFunc(self):
+        "Обработчик Медикаментозна профілактика / терапія	    а) так б)ні"
         if self.MedukamentoznaProfilaktukaPynktIXNoCheckBox.isChecked():
             pass
         else:
@@ -10337,10 +10113,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.MedukamentoznaProfilaktukaPynktIXTerminKoluPruznachenoLineEdit.setText(
                 '')
 
-            # Обработчик 2.3Хірургічне лікування : а) так б)ні
-            # HiryrgichneLikyvannaPynktIXNoFunc  HiryrgichneLikyvannaPynktIXYesFunc
-
     def HiryrgichneLikyvannaPynktIXNoFunc(self):
+        "Обработчик 2.3Хірургічне лікування : а) так б)ні"
         if self.HiryrgichneLikyvannaPynktIXNoCheckBox.isChecked():
             pass
         else:
@@ -10362,10 +10136,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.HiryrgichneLikyvannaPynktIXTerminNazvaOperaciiLineEdit.setText(
                 '')
 
-            # Обработчик 4.	Наявність ускладнень від проведеної профілактики: а) так б)ні
-            # YskladnennaVidProfilaktukyPynktIXNoFunc YskladnennaVidProfilaktukyPynktIXYesFunc
-
     def YskladnennaVidProfilaktukyPynktIXNoFunc(self):
+        "Обработчик 4.	Наявність ускладнень від проведеної профілактики: а) так б)ні"
         if self.YskladnennaVidProfilaktukyPynktIXNoCheckBox.isChecked():
             pass
         else:
@@ -10387,10 +10159,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.YskladnennaVidProfilaktukyPynktIXYskladnennaLineEdit.setText(
                 '')
 
-            # Обработчик 5.	Тромбоемболічні ускладнення :
-            # TromboembolichniYskladnennaPynktIXNoFunc  TromboembolichniYskladnennaPynktIXYesFunc
-
     def TromboembolichniYskladnennaPynktIXNoFunc(self):
+        "Обработчик 5.	Тромбоемболічні ускладнення :"
         if self.TromboembolichniYskladnennaPynktIXNoCheckBox.isChecked():
             pass
         else:
@@ -10431,9 +10201,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.TromboembolichniYskladnennaPynktIXTerapiaTEYLabel.hide()
             self.TromboembolichniYskladnennaPynktIXTerapiaTEYLineEdit.hide()
 
-            # Обработчик 6.	Мастит:   а) так; б) ні
-
     def MastutPynktIXNoFunc(self):
+        "Обработчик 6.	Мастит:   а) так; б) ні"
         if self.MastutPynktIXNoCheckBox.isChecked():
             pass
         else:
@@ -10449,9 +10218,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.MastutPynktIXNoCheckBox.setEnabled(1)
             self.MastutPynktIXNoCheckBox.setChecked(1)
 
-            #     Обработчик    7.	Субінволюція матки:     а) так; б) ні
-
     def SubinvolyciaMatkuPynktIXNoFunc(self):
+        "Обработчик    7.Субінволюція матки:     а) так; б) ні"
         if self.SubinvolyciaMatkuPynktIXNoCheckBox.isChecked():
             pass
         else:
@@ -10467,9 +10235,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.SubinvolyciaMatkuPynktIXNoCheckBox.setEnabled(1)
             self.SubinvolyciaMatkuPynktIXNoCheckBox.setChecked(1)
 
-            # Обработчик 8.	Ендометрит:  а) так; б) ні
-
     def EndometrutPynktIXNoFunc(self):
+        "Обработчик 8.	Ендометрит:  а) так; б) ні"
         if self.EndometrutPynktIXNoCheckBox.isChecked():
             pass
         else:
@@ -10485,9 +10252,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.EndometrutPynktIXNoCheckBox.setEnabled(1)
             self.EndometrutPynktIXNoCheckBox.setChecked(1)
 
-            # Обработчик 9.	Пізня післяпологова кровотеча:  а) так; б) ні
-
     def PiznaPologovaKrovotechaPynktIXNoFunc(self):
+        "Обработчик 9.	Пізня післяпологова кровотеча:  а) так; б) ні"
         if self.PiznaPologovaKrovotechaPynktIXNoCheckBox.isChecked():
             pass
         else:
@@ -10503,9 +10269,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.PiznaPologovaKrovotechaPynktIXNoCheckBox.setEnabled(1)
             self.PiznaPologovaKrovotechaPynktIXNoCheckBox.setChecked(1)
 
-            # Обработчик 10.	Сепсис:  а) так; б) ні
-
     def SepsusPynktIXNoFunc(self):
+        " Обработчик 10.	Сепсис:  а) так; б) ні"
         if self.SepsusPynktIXNoCheckBox.isChecked():
             pass
         else:
@@ -10521,9 +10286,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.SepsusPynktIXNoCheckBox.setEnabled(1)
             self.SepsusPynktIXNoCheckBox.setChecked(1)
 
-            # Обработчик 11.	Розходження швів:   а) так; б) ні
-
     def RoshodgennaShvivPynktIXNoFunc(self):
+        "Обработчик 11.	Розходження швів:   а) так; б) ні"
         if self.RoshodgennaShvivPynktIXNoCheckBox.isChecked():
             pass
         else:
@@ -10539,9 +10303,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.RoshodgennaShvivPynktIXNoCheckBox.setEnabled(1)
             self.RoshodgennaShvivPynktIXNoCheckBox.setChecked(1)
 
-            # Обработчик 13.	Хірургічні втручання в перші 6 тиж після пологів: а) так; б) ні
-
     def HirVtyrchannaVPershi6TugnivPynktIXNoFunc(self):
+        "Обработчик 13.	Хірургічні втручання в перші 6 тиж після пологів: а) так; б) ні"
         if self.HirVtyrchannaVPershi6TugnivPynktIXNoCheckBox.isChecked():
             pass
         else:
@@ -10557,9 +10320,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.HirVtyrchannaVPershi6TugnivPynktIXNoCheckBox.setEnabled(1)
             self.HirVtyrchannaVPershi6TugnivPynktIXNoCheckBox.setChecked(1)
 
-            # Обработчик 14.	Виписка додому:    а) так; б) ні;                          _______добу
-
     def VupuskaDodomyPynktIXYesFunc(self):
+        "Обработчик 14.	Виписка додому:  а) так; б) ні;   __добу"
         if self.VupuskaDodomyPynktIXYesCheckBox.isChecked():
             pass
         else:
@@ -10581,9 +10343,8 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             self.VupuskaDodomyPynktIXDobyLabel.setEnabled(1)
             self.VupuskaDodomyPynktIXDobyLineEdit.setEnabled(1)
 
-            # Обработчик 15.	Переведена в інший стаціонар: а) так; б) ні                           _______добу
-
     def PerevedennaVInshuiStacionarPynktIXNoFunc(self):
+        "Обработчик 15.	Переведена в інший стаціонар: а) так; б) ні  ____добу"
         if self.PerevedennaVInshuiStacionarPynktIXNoCheckBox.isChecked():
             pass
         else:
