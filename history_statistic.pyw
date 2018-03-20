@@ -6,6 +6,7 @@
 import sys
 import mysql.connector
 import datetime
+from PyQt5 import QtGui
 from PyQt5.QtCore import Qt, QDateTime
 from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtWidgets import (QWidget, QLabel, QLineEdit, QTextEdit,
@@ -26,173 +27,195 @@ db_database_name = 'pregnant_application'
 
 
 class BigTextRedactor(QWidget):
+
     def __init__(self):
-        super().__init__()
-        self.initUI()
+        try:
+            super().__init__()
+            self.initUI()
+        except Exception  as e:
+            print (e)
 
     def initUI(self):
-        self.BigDataText = QTextEdit()
-        self.CloseBigDataTextButton = QPushButton('Ok')
+        try:
+            self.BigDataText = QTextEdit()
+            self.CloseBigDataTextButton = QPushButton('Ok')
 
-        grid = QGridLayout()
-        grid.setSpacing(10)
-        grid.addWidget(self.BigDataText, 0, 0, 2, 2)
-        grid.addWidget(self.CloseBigDataTextButton, 2, 1)
-        self.setLayout(grid)
+            grid = QGridLayout()
+            grid.setSpacing(10)
+            grid.addWidget(self.BigDataText, 0, 0, 2, 2)
+            grid.addWidget(self.CloseBigDataTextButton, 2, 1)
+            self.setLayout(grid)
 
-        self.setGeometry(300, 300, 400, 200)
-        self.setWindowTitle('Редактор великих даних')
-        self.show()
+            self.setGeometry(300, 300, 400, 200)
+            self.setWindowIcon(QtGui.QIcon('icon.JPG'))
+            self.setWindowTitle('Редактор великих даних')
+            self.show()
+        except Exception  as e:
+            print (e)
+
 
 
 class Authorization(QWidget):
+
     def __init__(self):
-        super().__init__()
-        self.initUI()
+        try:
+            super().__init__()
+            self.initUI()
+        except Exception  as e:
+            print (e)
 
     def initUI(self):
-        self.CloseTextFromTableButton = QPushButton('Ok')
+        try:
+            self.CloseTextFromTableButton = QPushButton('Ok')
+            self.PasswordTitle = QLabel()
+            self.PasswordTitle.setText('Введіть пароль:')
+            self.PasswordLine = QLineEdit()
+            self.PasswordLine.setText('')
+            self.PasswordLine.setEchoMode(2)
+            self.LoginTitle = QLabel()
+            self.LoginTitle.setText('Логін:')
+            self.LoginLine = QLineEdit()
+            self.LoginLine.setText('')
+            self.AuthorizationButton = QPushButton('Ok')
+            self.ExitButton = QPushButton('Exit')
+            self.grid = QGridLayout()
+            self.grid.setSpacing(10)
+            self.grid.addWidget(self.LoginTitle, 0, 0, 1, 2)
+            self.grid.addWidget(self.LoginLine, 1, 0, 1, 2)
+            self.grid.addWidget(self.PasswordTitle, 2, 0, 1, 2)
+            self.grid.addWidget(self.PasswordLine, 3, 0, 1, 2)
+            self.grid.addWidget(self.AuthorizationButton, 4, 0)
+            self.grid.addWidget(self.ExitButton, 4, 1)
 
-        self.PasswordTitle = QLabel()
-        self.PasswordTitle.setText('Введіть пароль:')
-        self.PasswordLine = QLineEdit()
-        self.PasswordLine.setText('')
-        self.PasswordLine.setEchoMode(2)
+            self.setLayout(self.grid)
 
-        self.LoginTitle = QLabel()
-        self.LoginTitle.setText('Логін:')
-        self.LoginLine = QLineEdit()
-        self.LoginLine.setText('')
+            self.setGeometry(300, 300, 450, 100)
+            self.setWindowIcon(QtGui.QIcon('icon.JPG'))
+            self.setWindowTitle("Необхідно виконати авторизацію у програмі!")
+            self.show()
 
-        self.AuthorizationButton = QPushButton('Ok')
-        self.ExitButton = QPushButton('Exit')
-
-        self.grid = QGridLayout()
-        self.grid.setSpacing(10)
-        self.grid.addWidget(self.LoginTitle, 0, 0, 1, 2)
-        self.grid.addWidget(self.LoginLine, 1, 0, 1, 2)
-        self.grid.addWidget(self.PasswordTitle, 2, 0, 1, 2)
-        self.grid.addWidget(self.PasswordLine, 3, 0, 1, 2)
-        self.grid.addWidget(self.AuthorizationButton, 4, 0)
-        self.grid.addWidget(self.ExitButton, 4, 1)
-
-        self.setLayout(self.grid)
-
-        self.setGeometry(300, 300, 450, 100)
-        self.setWindowTitle("Необхідно виконати авторизацію у програмі!")
-        self.show()
-
-        self.ExitButton.clicked.connect(QCoreApplication.instance().quit)
+            self.ExitButton.clicked.connect(QCoreApplication.instance().quit)
+        except Exception  as e:
+            print (e)
 
 
 class PrimaryWindow(QWidget):
     def __init__(self):
-        super().__init__()
+        try:
+            super().__init__(
+            self.initUI())
+        except Exception  as e:
+            print(e)
 
-        self.initUI()
-
-    def SetPrivileges(self, *privileges):
-        self.privileges = privileges
-        return privileges
+    # def SetPrivileges(self, *privileges):
+    #     self.privileges = privileges
+    #     return privileges
 
     def initUI(self):
-        self.d = Authorization()
-        self.d.AuthorizationButton.clicked.connect(self.ParsCredential)
-        self.d.PasswordLine.returnPressed.connect(self.ParsCredential)
-        self.d.LoginLine.returnPressed.connect(self.ParsCredential)
+        try:
+            self.d = Authorization()
+            self.d.AuthorizationButton.clicked.connect(self.ParsCredential)
+            self.d.PasswordLine.returnPressed.connect(self.ParsCredential)
+            self.d.LoginLine.returnPressed.connect(self.ParsCredential)
+        except Exception  as e:
+            print (e)
 
     def ParsCredential(self):
-        self.Login = self.d.LoginLine.text()
-        self.Login = self.Login.strip()
-
-        self.Password = self.d.PasswordLine.text()
-        self.Password = self.Password.strip()
-        self.exception = "no exception"
-
-        def get_str_for_connection_attempt_log(self, permission):
-            self.log_connection_attempt = ("""
-                           INSERT INTO authorization_attempt
-                               (Login, 
-                               Password, 
-                               Attempt_date, 
-                               Result)
-                               VALUES
-                               (
-                               '""" + self.Login + """',                     
-                               '""" + self.Password + """',
-                               '""" + str(datetime.datetime.today()) + """',
-                               '""" + self.permission + """'
-                               )
-                               """)
-            return self.log_connection_attempt
-
         try:
-            cnx = mysql.connector.connect(
-                user=db_user,
-                password=db_user_pass,
-                host=db_host,
-                database=db_database_name)
+            self.Login = self.d.LoginLine.text()
+            self.Login = self.Login.strip()
 
-        except mysql.connector.DatabaseError as e:
-            self.Error_mesage(str(e))
-            self.exception = "error"
+            self.Password = self.d.PasswordLine.text()
+            self.Password = self.Password.strip()
+            self.exception = "no exception"
 
-        if self.exception == 'no exception':
-            cursor = cnx.cursor()
-            query = ("SELECT s.Role from authorization s where s.Login=" + "'"
-                     + self.Login + "' and s.Password='" + self.Password + "'")
-            cursor.execute(query)
-            mass = []
-            for row in cursor:
-                mass.append("""{:s}""".format(*row))
+            def get_str_for_connection_attempt_log(self, permission):
+                self.log_connection_attempt = ("""
+                               INSERT INTO authorization_attempt
+                                   (Login, 
+                                   Password, 
+                                   Attempt_date, 
+                                   Result)
+                                   VALUES
+                                   (
+                                   '""" + self.Login + """',                     
+                                   '""" + self.Password + """',
+                                   '""" + str(datetime.datetime.today()) + """',
+                                   '""" + self.permission + """'
+                                   )
+                                   """)
+                return self.log_connection_attempt
 
-            if mass != []:
-                if mass[0] == 'Administrator':
-                    self.permission = 'Administrator'
-                    cursor = cnx.cursor()
-                    query = ("SELECT s.pib from authorization s where s.Login="
-                             + "'" + self.Login + "' and s.Password='" +
-                             self.Password + "'")
-                    cursor.execute(query)
-                    pibmass = []
-                    for row in cursor:
-                        pibmass.append("""{:s}""".format(*row))
+            try:
+                cnx = mysql.connector.connect(
+                    user=db_user,
+                    password=db_user_pass,
+                    host=db_host,
+                    database=db_database_name)
 
-                    cursor.execute(
-                        get_str_for_connection_attempt_log(
-                            self, self.permission))
-                    cnx.commit()
+            except mysql.connector.DatabaseError as e:
+                self.Error_mesage(str(e))
+                self.exception = "error"
 
-                    self.Window('App_admin', str(pibmass[0]))
-
-                    self.d.close()
-
-                elif mass[0] == 'User':
-                    self.Window('App_user', 'Дмитро Горавський')
-
-                    self.permission = 'User'
-
-                    cursor = cnx.cursor()
-                    cursor.execute(
-                        get_str_for_connection_attempt_log(
-                            self, self.permission))
-                    cnx.commit()
-
-                    self.d.close()
-
-            else:
-                self.Error_mesage('Некоректний логін чи пароль!')
-                self.permission = 'Acess deny'
+            if self.exception == 'no exception':
                 cursor = cnx.cursor()
-                cursor.execute(
-                    get_str_for_connection_attempt_log(self, self.permission))
-                cnx.commit()
-            cursor.close()
-            cnx.close()
-        else:
-            self.Error_mesage(
-                "Помилка у доступі до БД для можливості перевірки даних авторизації.\nЗверніться до адміністратора.\n"
-            )
+                query = ("SELECT s.Role from authorization s where s.Login=" + "'"
+                         + self.Login + "' and s.Password='" + self.Password + "'")
+                cursor.execute(query)
+                mass = []
+                for row in cursor:
+                    mass.append("""{:s}""".format(*row))
+
+                if mass != []:
+                    if mass[0] == 'Administrator':
+                        self.permission = 'Administrator'
+                        cursor = cnx.cursor()
+                        query = ("SELECT s.pib from authorization s where s.Login="
+                                 + "'" + self.Login + "' and s.Password='" +
+                                 self.Password + "'")
+                        cursor.execute(query)
+                        pibmass = []
+                        for row in cursor:
+                            pibmass.append("""{:s}""".format(*row))
+
+                        cursor.execute(
+                            get_str_for_connection_attempt_log(
+                                self, self.permission))
+                        cnx.commit()
+
+                        self.Window('App_admin', str(pibmass[0]))
+
+                        self.d.close()
+
+                    elif mass[0] == 'User':
+                        self.Window('App_user', 'Дмитро Горавський')
+
+                        self.permission = 'User'
+
+                        cursor = cnx.cursor()
+                        cursor.execute(
+                            get_str_for_connection_attempt_log(
+                                self, self.permission))
+                        cnx.commit()
+
+                        self.d.close()
+
+                else:
+                    self.Error_mesage('Некоректний логін чи пароль!')
+                    self.permission = 'Acess deny'
+                    cursor = cnx.cursor()
+                    cursor.execute(
+                        get_str_for_connection_attempt_log(self, self.permission))
+                    cnx.commit()
+                cursor.close()
+                cnx.close()
+            else:
+                self.Error_mesage(
+                    "Помилка у доступі до БД для можливості перевірки даних авторизації.\nЗверніться до адміністратора.\n"
+                )
+        except Exception  as e:
+            self.Error_mesage(str(e))
+            #print (e)
 
     def Error_mesage(self, message):
         QMessageBox.information(self, "Помилка!", message)
@@ -213,10 +236,11 @@ class PrimaryWindow(QWidget):
                 database=db_database_name)
             return cnx
         except mysql.connector.DatabaseError as e:
+            self.Error_mesage(str(e))
             return 'Error in connection'
 
     def Window(self, privileges, WhoCangeParam):
-
+        "primary window"
         widget = QTabWidget()
         self.bottomLeftTabWidget = widget
 
@@ -1168,7 +1192,7 @@ class PrimaryWindow(QWidget):
 
         self.ZagrozaPereruvannaVagitnostiYTerminiLabel = QLabel(
             'В терміні вагітності:')
-        self.ZagrozaPereruvannaVagitnostiYTerminiLabel.setFixedWidth(40)
+        #self.ZagrozaPereruvannaVagitnostiYTerminiLabel.setFixedWidth(40)
         self.ZagrozaPereruvannaVagitnostiYTerminiLabel.hide()
 
         self.ZagrozaPereruvannaVagitnostiYTerminiLineEdit = QLineEdit()
@@ -3266,7 +3290,7 @@ class PrimaryWindow(QWidget):
 
         self.AnemiaNoCheckBox = QCheckBox('Ні')
         self.AnemiaNoCheckBox.setChecked(1)
-        # self.AnemiaNoCheckBox.setFixedWidth(100)
+        self.AnemiaNoCheckBox.setFixedWidth(100)
         self.AnemiaNoCheckBox.stateChanged.connect(self.AnemiaNoFunc)
 
         self.AnemiaIStypenaCheckBox = QCheckBox('І ступеня')
@@ -3335,7 +3359,7 @@ class PrimaryWindow(QWidget):
 
         self.AsfiksiaNoCheckBox = QCheckBox('Ні')
         self.AsfiksiaNoCheckBox.setChecked(1)
-        # self.AnemiaNoCheckBox.setFixedWidth(100)
+        self.AnemiaNoCheckBox.setFixedWidth(100)
         self.AsfiksiaNoCheckBox.stateChanged.connect(self.AsfiksiaNoFunc)
 
         self.AsfiksiaLegkaCheckBox = QCheckBox('Легка')
@@ -4493,6 +4517,7 @@ class PrimaryWindow(QWidget):
         self.setLayout(self.grid)
 
         self.setGeometry(500, 30, 1000, 900)
+        self.setWindowIcon(QtGui.QIcon('icon.JPG'))
         self.setWindowTitle('Реєстраційна карта')
         self.show()
         if privileges == 'App_user':
@@ -4517,6 +4542,9 @@ class PrimaryWindow(QWidget):
             """SELECT COUNT(*) AS Кількість ,REPLACE(MedukamentoznaProfilaktukaNazvaPreperaty, '2.1. Назва препарата:', '') AS "Назва препарату" FROM Registry 
 WHERE MedukamentoznaProfilaktukaNazvaPreperaty != '2.1. Медикаментозна профілактика не проводилась.'
 GROUP BY MedukamentoznaProfilaktukaNazvaPreperaty;""")
+
+        self.PynktIIIStatystykaTable.setRowCount(0)
+
         try:
             pynkt_III_stat_cursor.execute(query_to_stat)
         except mysql.connector.DatabaseError as e:
@@ -4535,8 +4563,6 @@ GROUP BY MedukamentoznaProfilaktukaNazvaPreperaty;""")
             self.Info_mesage(str(e))
             cnx.close()
 
-        self.PynktIIIStatystykaTable.setRowCount(0)
-
         for row, form in enumerate(pynkt_III_stat_cursor):
             self.PynktIIIStatystykaTable.insertRow(row)
             for column, item in enumerate(form):
@@ -4551,6 +4577,7 @@ GROUP BY MedukamentoznaProfilaktukaNazvaPreperaty;""")
         except mysql.connector.DatabaseError as e:
             self.Info_mesage(str(e))
             cnx.close()
+
         cnx.close()
 
     def PynktVIStatystykaFunk1(self):
@@ -4754,2127 +4781,2131 @@ GROUP BY YskladnennaVidProfilaktukyPynktIX;""")
 
     def InsertToDBFunc(self):
         "Валидатор данных и запись в БД"
-        self.ErrorCount = 0
+        try:
+            self.ErrorCount = 0
 
-        self.PasportniDaniTitle = '\nI. Паспортні дані.'
+            self.PasportniDaniTitle = '\nI. Паспортні дані.'
 
-        self.FirstName = self.FirstNameLineEdit.text()
-        self.FirstName = self.FirstName.strip()
-        if self.FirstName == '':
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage('Необхідно ввести ім"я пацієнта!')
-        else:
-            self.FirstName = "Ім'я: " + self.FirstName
-        self.FirstName = self.FirstName.strip()
+            self.FirstName = self.FirstNameLineEdit.text()
+            self.FirstName = self.FirstName.strip()
+            if self.FirstName == '':
+                self.ErrorCount = self.ErrorCount + 1
+                self.Error_mesage('Необхідно ввести ім"я пацієнта!')
+            else:
+                self.FirstName = "Ім'я: " + self.FirstName
+            self.FirstName = self.FirstName.strip()
 
-        self.LastName = self.LastNameLineEdit.text()
-        self.LastName = self.LastName.strip()
-        if self.LastName == '':
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage('Необхідно ввести прізвище пацієнта!')
-        else:
-            self.LastName = "Прізвище: " + self.LastName
-        self.LastName = self.LastName.strip()
+            self.LastName = self.LastNameLineEdit.text()
+            self.LastName = self.LastName.strip()
+            if self.LastName == '':
+                self.ErrorCount = self.ErrorCount + 1
+                self.Error_mesage('Необхідно ввести прізвище пацієнта!')
+            else:
+                self.LastName = "Прізвище: " + self.LastName
+            self.LastName = self.LastName.strip()
 
-        self.FatherName = self.FatherNameLineEdit.text()
-        self.FatherName = self.FatherName.strip()
-        if self.FatherName == '':
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage('Необхідно ввести по батькові пацієнта!')
-        else:
-            self.FatherName = "По батькові: " + self.FatherName
-        self.FatherName = self.FatherName.strip()
+            self.FatherName = self.FatherNameLineEdit.text()
+            self.FatherName = self.FatherName.strip()
+            if self.FatherName == '':
+                self.ErrorCount = self.ErrorCount + 1
+                self.Error_mesage('Необхідно ввести по батькові пацієнта!')
+            else:
+                self.FatherName = "По батькові: " + self.FatherName
+            self.FatherName = self.FatherName.strip()
 
-        self.PasportniDani = "1. П.І.Б.:" + self.FirstName + "; " + self.LastName + "; " + self.FatherName + "."
-        self.PasportniDani = self.PasportniDani.replace("'", "''")
+            self.PasportniDani = "1. П.І.Б.:" + self.FirstName + "; " + self.LastName + "; " + self.FatherName + "."
+            self.PasportniDani = self.PasportniDani.replace("'", "''")
 
-        self.HistoryNumber = self.HistoryNumberLineEdit.text()
-        self.HistoryNumber = self.HistoryNumber.strip()
-        if self.HistoryNumber == '':
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage('Необхідно ввести № історії вагітності/пологів!')
-        else:
-            self.HistoryNumber = '2. № Історії вагітності/пологів: ' + self.HistoryNumber
-        self.HistoryNumber = self.HistoryNumber.replace("'", "''")
+            self.HistoryNumber = self.HistoryNumberLineEdit.text()
+            self.HistoryNumber = self.HistoryNumber.strip()
+            if self.HistoryNumber == '':
+                self.ErrorCount = self.ErrorCount + 1
+                self.Error_mesage('Необхідно ввести № історії вагітності/пологів!')
+            else:
+                self.HistoryNumber = '2. № Історії вагітності/пологів: ' + self.HistoryNumber
+            self.HistoryNumber = self.HistoryNumber.replace("'", "''")
 
-        self.Age = self.AgeLineEdit.text()
-        self.Age = self.Age.strip()
-        if self.Age == '':
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage('Необхідно ввести вік пацієнта!')
-        else:
-            self.Age = '3. Вік: ' + self.Age
+            self.Age = self.AgeLineEdit.text()
+            self.Age = self.Age.strip()
+            if self.Age == '':
+                self.ErrorCount = self.ErrorCount + 1
+                self.Error_mesage('Необхідно ввести вік пацієнта!')
+            else:
+                self.Age = '3. Вік: ' + self.Age
 
-        self.Address = ''
-        self.Address = self.AddressLineEdit.text()
-        self.Address = self.Address.strip()
-        if self.Address == '':
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage('Необхідно ввести адресу пацієнта!')
-        else:
-            self.Address = '4. Адреса: ' + self.Address
-        self.Address = self.Address.replace("'", "''")
+            self.Address = ''
+            self.Address = self.AddressLineEdit.text()
+            self.Address = self.Address.strip()
+            if self.Address == '':
+                self.ErrorCount = self.ErrorCount + 1
+                self.Error_mesage('Необхідно ввести адресу пацієнта!')
+            else:
+                self.Address = '4. Адреса: ' + self.Address
+            self.Address = self.Address.replace("'", "''")
 
-        self.Proffesional = ''
-        if self.ProffesionalDontWorkCheckBox.isChecked():
-            self.Proffesional = 'не працює.'
-        elif self.ProffesionalStadyCheckBox.isChecked():
-            self.Proffesional = 'навчається.'
-        elif self.ProffesionalWhiteCollarWorkerCheckBox.isChecked():
-            self.Proffesional = 'службовець.'
-        elif self.ProffesionalEmployeeCheckBox.isChecked():
-            self.Proffesional = 'робітник.'
-        else:
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage('Необхідно вибрати професійну діяльність!')
-        self.Proffesional = '5. Професійна діяльність: ' + self.Proffesional
+            self.Proffesional = ''
+            if self.ProffesionalDontWorkCheckBox.isChecked():
+                self.Proffesional = 'не працює.'
+            elif self.ProffesionalStadyCheckBox.isChecked():
+                self.Proffesional = 'навчається.'
+            elif self.ProffesionalWhiteCollarWorkerCheckBox.isChecked():
+                self.Proffesional = 'службовець.'
+            elif self.ProffesionalEmployeeCheckBox.isChecked():
+                self.Proffesional = 'робітник.'
+            else:
+                self.ErrorCount = self.ErrorCount + 1
+                self.Error_mesage('Необхідно вибрати професійну діяльність!')
+            self.Proffesional = '5. Професійна діяльність: ' + self.Proffesional
 
-        self.Disability = ''
-        if self.DisabilityNoneCheckBox.isChecked():
-            self.Disability = 'немає.'
-        elif self.DisabilityILevelCheckBox.isChecked():
-            self.Disability = 'I група.'
-        elif self.DisabilityIILevelCheckBox.isChecked():
-            self.Disability = 'II група.'
-        elif self.DisabilityIIILevelCheckBox.isChecked():
-            self.Disability = 'III група.'
-        else:
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage('Необхідно вибрати інвалідність!')
-        self.Disability = '6. Інвалідність: ' + self.Disability
+            self.Disability = ''
+            if self.DisabilityNoneCheckBox.isChecked():
+                self.Disability = 'немає.'
+            elif self.DisabilityILevelCheckBox.isChecked():
+                self.Disability = 'I група.'
+            elif self.DisabilityIILevelCheckBox.isChecked():
+                self.Disability = 'II група.'
+            elif self.DisabilityIIILevelCheckBox.isChecked():
+                self.Disability = 'III група.'
+            else:
+                self.ErrorCount = self.ErrorCount + 1
+                self.Error_mesage('Необхідно вибрати інвалідність!')
+            self.Disability = '6. Інвалідність: ' + self.Disability
 
-        self.ReceduvyTromboemboliiTitle = '\nII. Наявність постійних факторів ризику ТЕУ.'
+            self.ReceduvyTromboemboliiTitle = '\nII. Наявність постійних факторів ризику ТЕУ.'
 
-        self.ReceduvyTromboembolii = ''
-        if self.ReceduvyTromboemboliiNoCheckBox.isChecked():
-            self.ReceduvyTromboembolii = '1. Рецедиви тромбоемболіі в минулому: ні.'
-        else:
-            self.ReceduvyTromboembolii = '1. Рецедиви тромбоемболіі в минулому: так.'
+            self.ReceduvyTromboembolii = ''
+            if self.ReceduvyTromboemboliiNoCheckBox.isChecked():
+                self.ReceduvyTromboembolii = '1. Рецедиви тромбоемболіі в минулому: ні.'
+            else:
+                self.ReceduvyTromboembolii = '1. Рецедиви тромбоемболіі в минулому: так.'
 
-        self.TromboemboliiAndEstrogens = ''
-        if self.TromboemboliiAndEstrogensNoCheckBox.isChecked():
-            self.TromboemboliiAndEstrogens = "2. Тромбоемболії, неспровоковані або пов'язані з прийомом естрогенів: ні."
-        else:
-            self.TromboemboliiAndEstrogens = "2. Тромбоемболії, неспровоковані або пов'язані з прийомом естрогенів: так."
-        self.TromboemboliiAndEstrogens = self.TromboemboliiAndEstrogens.replace(
-            "'", "''")
+            self.TromboemboliiAndEstrogens = ''
+            if self.TromboemboliiAndEstrogensNoCheckBox.isChecked():
+                self.TromboemboliiAndEstrogens = "2. Тромбоемболії, неспровоковані або пов'язані з прийомом естрогенів: ні."
+            else:
+                self.TromboemboliiAndEstrogens = "2. Тромбоемболії, неспровоковані або пов'язані з прийомом естрогенів: так."
+            self.TromboemboliiAndEstrogens = self.TromboemboliiAndEstrogens.replace(
+                "'", "''")
 
-        self.TromboemboliaSprovokovana = ''
-        if self.TromboemboliaSprovokovanaNoCheckBox.isChecked():
-            self.TromboemboliaSprovokovana = '3. Тромбоемболія спровокована: ні.'
-        else:
-            self.TromboemboliaSprovokovana = '3. Тромбоемболія спровокована: так.'
+            self.TromboemboliaSprovokovana = ''
+            if self.TromboemboliaSprovokovanaNoCheckBox.isChecked():
+                self.TromboemboliaSprovokovana = '3. Тромбоемболія спровокована: ні.'
+            else:
+                self.TromboemboliaSprovokovana = '3. Тромбоемболія спровокована: так.'
 
-        self.SimeinuiAnamnezTromboembolii = ''
-        if self.SimeinuiAnamnezTromboemboliiNoCheckBox.isChecked():
-            self.SimeinuiAnamnezTromboembolii = '4. Сімейний анамнез тромбоемболії: ні.'
-        else:
-            self.SimeinuiAnamnezTromboembolii = '4. Сімейний анамнез тромбоемболії: так.'
+            self.SimeinuiAnamnezTromboembolii = ''
+            if self.SimeinuiAnamnezTromboemboliiNoCheckBox.isChecked():
+                self.SimeinuiAnamnezTromboembolii = '4. Сімейний анамнез тромбоемболії: ні.'
+            else:
+                self.SimeinuiAnamnezTromboembolii = '4. Сімейний анамнез тромбоемболії: так.'
 
-        self.VstanovlennaTrombofilia = ''
-        if self.VstanovlennaTrombofiliaNoCheckBox.isChecked():
-            self.VstanovlennaTrombofilia = '5. Встановлена тромбофілія: ні.'
-        else:
-            self.VstanovlennaTrombofilia = '5. Встановлена тромбофілія: так.'
+            self.VstanovlennaTrombofilia = ''
+            if self.VstanovlennaTrombofiliaNoCheckBox.isChecked():
+                self.VstanovlennaTrombofilia = '5. Встановлена тромбофілія: ні.'
+            else:
+                self.VstanovlennaTrombofilia = '5. Встановлена тромбофілія: так.'
 
-        self.SypytniZahvoryvanna = ''
-        if self.SypytniZahvoryvannaNoCheckBox.isChecked():
-            self.SypytniZahvoryvanna = 'ні'
-        else:
-            self.SypytniZahvoryvanna = self.SypytniZahvoryvanna + 'так'
-            if self.SypytniSercevoSydunniCheckBox.isChecked():
-                self.SypytniZahvoryvanna = self.SypytniZahvoryvanna + '; серцево-судинні'
+            self.SypytniZahvoryvanna = ''
+            if self.SypytniZahvoryvannaNoCheckBox.isChecked():
+                self.SypytniZahvoryvanna = 'ні'
+            else:
+                self.SypytniZahvoryvanna = self.SypytniZahvoryvanna + 'так'
+                if self.SypytniSercevoSydunniCheckBox.isChecked():
+                    self.SypytniZahvoryvanna = self.SypytniZahvoryvanna + '; серцево-судинні'
 
-            if self.SypytniBronhoLegeneviCheckBox.isChecked():
-                self.SypytniZahvoryvanna = self.SypytniZahvoryvanna + '; бронхо-легеневі'
+                if self.SypytniBronhoLegeneviCheckBox.isChecked():
+                    self.SypytniZahvoryvanna = self.SypytniZahvoryvanna + '; бронхо-легеневі'
 
-            if self.SypytniSCHVCheckBox.isChecked():
-                self.SypytniZahvoryvanna = self.SypytniZahvoryvanna + '; СЧВ'
+                if self.SypytniSCHVCheckBox.isChecked():
+                    self.SypytniZahvoryvanna = self.SypytniZahvoryvanna + '; СЧВ'
 
-            if self.SypytniRAKCheckBox.isChecked():
-                self.SypytniZahvoryvanna = self.SypytniZahvoryvanna + '; Рак'
+                if self.SypytniRAKCheckBox.isChecked():
+                    self.SypytniZahvoryvanna = self.SypytniZahvoryvanna + '; Рак'
 
-            if self.SypytniNefrotuchnuiSundromCheckBox.isChecked():
-                self.SypytniZahvoryvanna = self.SypytniZahvoryvanna + '; Нефротичний синдром'
+                if self.SypytniNefrotuchnuiSundromCheckBox.isChecked():
+                    self.SypytniZahvoryvanna = self.SypytniZahvoryvanna + '; Нефротичний синдром'
 
-            if self.SypytniSerpovudnoKlitynnaAnemiaCheckBox.isChecked():
-                self.SypytniZahvoryvanna = self.SypytniZahvoryvanna + '; Серповидно-клітинна анемія'
+                if self.SypytniSerpovudnoKlitynnaAnemiaCheckBox.isChecked():
+                    self.SypytniZahvoryvanna = self.SypytniZahvoryvanna + '; Серповидно-клітинна анемія'
 
-            if self.SypytniVnytrishnoVenneVvedennaMedukamentivCheckBox.isChecked(
+                if self.SypytniVnytrishnoVenneVvedennaMedukamentivCheckBox.isChecked(
+                ):
+                    self.SypytniZahvoryvanna = self.SypytniZahvoryvanna + '; Внутрішньовенне введення медикаментів'
+
+                if self.SypytniOtherCheckBox.isChecked():
+                    self.SypytniZahvoryvanna = self.SypytniZahvoryvanna + '; інші:'
+                    self.SypytniOther = self.SypytniOtherLineEdit.text()
+                    self.SypytniOther = self.SypytniOther.strip()
+                    self.SypytniZahvoryvanna = self.SypytniZahvoryvanna + self.SypytniOther
+            self.SypytniZahvoryvanna = '6. Супутні захворювання: ' + self.SypytniZahvoryvanna
+            self.SypytniZahvoryvanna = self.SypytniZahvoryvanna.replace("'", "''")
+
+            self.OldMore35 = ''
+            if self.OldMore35NoCheckBox.isChecked():
+                self.OldMore35 = '7. Вік > 35 років: ні.'
+            else:
+                self.OldMore35 = '7. Вік > 35 років: так.'
+
+            self.Ogirinna = ''
+            if self.OgirinnaNoCheckBox.isChecked():
+                self.Ogirinna = '8. Ожиріння: ні.'
+            else:
+                self.Ogirinna = '8. Ожиріння: так.'
+
+            self.VagitnistMore3 = ''
+            if self.VagitnistMore3NoCheckBox.isChecked():
+                self.VagitnistMore3 = '9. Вагітність ≥ 3: ні.'
+            else:
+                self.VagitnistMore3 = '9. Вагітність ≥ 3: так.'
+
+            self.Kyrinna = ''
+            if self.KyrinnaNoCheckBox.isChecked():
+                self.Kyrinna = '10. Куріння: ні.'
+            else:
+                self.Kyrinna = '10. Куріння: так.'
+
+            self.VelykiVarikozniVenu = ''
+            if self.VelykiVarikozniVenuNoCheckBox.isChecked():
+                self.VelykiVarikozniVenu = '11. Великі варикозні вени: ні.'
+            else:
+                self.VelykiVarikozniVenu = '11. Великі варикозні вени: так.'
+
+            self.ProvedennaProfTEYdpVagitnosti = ''
+            if self.ProvedennaProfTEYdpVagitnostiLabelNoCheckBox.isChecked():
+                self.ProvedennaProfTEYdpVagitnosti = '\nIII. Проведення профілактики/терапії ТЕУ до вагітності: ні.'
+            else:
+                self.ProvedennaProfTEYdpVagitnosti = '\nIII. Проведення профілактики/терапії ТЕУ до вагітності: так.'
+
+            self.ElastychnaKompresia = ''
+            if self.ElastychnaKompresiaNoCheckBox.isChecked():
+                self.ElastychnaKompresia = '1. Еластична компресія: ні.'
+            else:
+                self.ElastychnaKompresia = '1. Еластична компресія: так; клас: '
+                self.ElastychnaKompresiaLevel = ''
+                self.ElastychnaKompresiaLevel = self.ElastychnaKompresiaLevelLineEdit.text(
+                )
+                self.ElastychnaKompresiaLevel = self.ElastychnaKompresiaLevel.strip(
+                )
+                if self.ElastychnaKompresiaLevel == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно заповнити клас еластичної компресії в пункті "ІІІ. Проведення профілактики/терапії ТЕУ до вагітності"!'
+                    )
+                else:
+                    self.ElastychnaKompresia = self.ElastychnaKompresia + self.ElastychnaKompresiaLevel
+            self.ElastychnaKompresia = self.ElastychnaKompresia.replace("'", "''")
+
+            self.MedukamentoznaProfilaktuka = ''
+            if self.MedukamentoznaProfilaktukaNoCheckBox.isChecked():
+                self.MedukamentoznaProfilaktuka = self.MedukamentoznaProfilaktuka + '2. Медикаментозна профілактика: ні.'
+            else:
+                self.MedukamentoznaProfilaktuka = self.MedukamentoznaProfilaktuka + '2. Медикаментозна профілактика: так.'
+
+            self.MedukamentoznaProfilaktukaNazvaPreperaty = '2.1. Медикаментозна профілактика не проводилась.'
+            if self.MedukamentoznaProfilaktukaYesCheckBox.isChecked():
+                self.MedukamentoznaProfilaktukaNazvaPreperatyText = ''
+                self.MedukamentoznaProfilaktukaNazvaPreperatyText = self.MedukamentoznaProfilaktukaNazvaPreperatyLineEdit.text(
+                )
+                self.MedukamentoznaProfilaktukaNazvaPreperatyText = self.MedukamentoznaProfilaktukaNazvaPreperatyText.strip(
+                )
+
+                if self.MedukamentoznaProfilaktukaNazvaPreperatyText == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно заповнити назву препарату для медикаментозної профілактики в пункті "ІІІ. Проведення профілактики/терапії ТЕУ до вагітності"!'
+                    )
+                else:
+                    self.MedukamentoznaProfilaktukaNazvaPreperaty = '2.1. Назва препарата: ' + self.MedukamentoznaProfilaktukaNazvaPreperatyText
+            self.MedukamentoznaProfilaktukaNazvaPreperaty = self.MedukamentoznaProfilaktukaNazvaPreperaty.replace(
+                "'", "''")
+
+            self.MedukamentoznaProfilaktukaRegymPrujomy = '2.2. Медикаментозна профілактика не проводилась.'
+            if self.MedukamentoznaProfilaktukaYesCheckBox.isChecked():
+                self.MedukamentoznaProfilaktukaRegymPrujomyText = ''
+                self.MedukamentoznaProfilaktukaRegymPrujomyText = self.MedukamentoznaProfilaktukaRegymPrujomyLineEdit.text(
+                )
+                self.MedukamentoznaProfilaktukaRegymPrujomyText = self.MedukamentoznaProfilaktukaRegymPrujomyText.strip(
+                )
+
+                if self.MedukamentoznaProfilaktukaRegymPrujomy == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно заповнити режим прийому препарату для медикаментозної профілактики в пункті "ІІІ. Проведення профілактики/терапії ТЕУ до вагітності"!'
+                    )
+                else:
+                    self.MedukamentoznaProfilaktukaRegymPrujomy = '2.2. Режим прийому: ' + self.MedukamentoznaProfilaktukaRegymPrujomyText
+            self.MedukamentoznaProfilaktukaRegymPrujomy = self.MedukamentoznaProfilaktukaRegymPrujomy.replace(
+                "'", "''")
+
+            self.HiryrgichneLikyvanna = ''
+            if self.HiryrgichneLikyvannaNoCheckBox.isChecked():
+                self.HiryrgichneLikyvanna = self.HiryrgichneLikyvanna + '3. Хірургічне лікування: ні.'
+            else:
+                self.HiryrgichneLikyvanna = '3. Хірургічне лікування: так; назва операції та рік: '
+                self.HiryrgichneLikyvannaNazvaOpericii = ''
+                self.HiryrgichneLikyvannaNazvaOpericii = self.HiryrgichneLikyvannaNazvaOpericiiLineEdit.text(
+                )
+                self.HiryrgichneLikyvannaNazvaOpericii = self.HiryrgichneLikyvannaNazvaOpericii.strip(
+                )
+                if self.HiryrgichneLikyvannaNazvaOpericii == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно заповнити назву операції та рік її проведення в пункті "ІІІ. Проведення профілактики/терапії ТЕУ до вагітності"!'
+                    )
+                else:
+                    self.HiryrgichneLikyvanna = self.HiryrgichneLikyvanna + self.HiryrgichneLikyvannaNazvaOpericii
+            self.HiryrgichneLikyvanna = self.HiryrgichneLikyvanna.replace(
+                "'", "''")
+
+            self.TryvalistProvedennoiProfilaktyky = '4. Тривалість проведеної профілактики: профілактика не проводилась.'
+            if self.ProvedennaProfTEYdpVagitnostiLabelYesCheckBox.isChecked():
+                self.TryvalistProvedennoiProfilaktyky = self.TryvalistProvedennoiProfilaktykyLineEdit.text(
+                )
+                self.TryvalistProvedennoiProfilaktyky = self.TryvalistProvedennoiProfilaktyky.strip(
+                )
+                if self.TryvalistProvedennoiProfilaktyky == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно заповнити тривалість проведеної профілактики в пункті "ІІІ. Проведення профілактики/терапії ТЕУ до вагітності"!'
+                    )
+                else:
+                    self.TryvalistProvedennoiProfilaktyky = '4. Тривалість проведеної профілактики: ' + self.TryvalistProvedennoiProfilaktyky
+            self.TryvalistProvedennoiProfilaktyky = self.TryvalistProvedennoiProfilaktyky.replace(
+                "'", "''")
+
+            self.YskladneenaVidProfilaktyku = ''
+            if self.YskladneenaVidProfilaktykuNoCheckBox.isChecked():
+                self.YskladneenaVidProfilaktyku = '5. Наявність ускладнень від проведеної профілактики: ні.'
+            else:
+                self.YskladneenaVidProfilaktyku = '5. Наявність ускладнень від проведеної профілактики: так; ускладнення: '
+                self.YskladneenaVidProfilaktykuNajavnist = ''
+                self.YskladneenaVidProfilaktykuNajavnist = self.YskladneenaVidProfilaktykuNajavnistLineEdit.text(
+                )
+                self.YskladneenaVidProfilaktykuNajavnist = self.YskladneenaVidProfilaktykuNajavnist.strip(
+                )
+                if self.YskladneenaVidProfilaktykuNajavnist == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно заповнити ускладнення від проведеної профілактики в пункті "ІІІ. Проведення профілактики/терапії ТЕУ до вагітності"!'
+                    )
+                else:
+                    self.YskladneenaVidProfilaktyku = self.YskladneenaVidProfilaktyku + self.YskladneenaVidProfilaktykuNajavnist
+            self.YskladneenaVidProfilaktyku = self.YskladneenaVidProfilaktyku.replace(
+                "'", "''")
+
+            self.AkysherskiiAnamnez = '\nІV. Акушерський анамнез.'
+
+            self.DanaVagitnist = ''
+            if self.DanaVagitnisPryrodnaCheckBox.isChecked():
+                self.DanaVagitnist = '1. Дана вагітність: природна.'
+            elif self.DanaVagitnisIndykovanaCheckBox.isChecked():
+                self.DanaVagitnist = '1. Дана вагітність: індукована.'
+            elif self.DanaVagitnisEKZCheckBox.isChecked():
+                self.DanaVagitnist = '1. Дана вагітність: ЕКЗ.'
+            else:
+                self.ErrorCount = self.ErrorCount + 1
+                self.Error_mesage(
+                    'Необхідно вибрати вид даної вагітності в пункті "ІV. Акушерський анамнез."!'
+                )
+
+            self.DanaVagitnistZaRahynkom = ''
+            self.DanaVagitnistZaRahynkom = self.DanaVagitnistZaRahynkomLineEdit.text(
+            )
+            self.DanaVagitnistZaRahynkom = self.DanaVagitnistZaRahynkom.strip()
+            if self.DanaVagitnistZaRahynkom == '':
+                self.ErrorCount = self.ErrorCount + 1
+                self.Error_mesage(
+                    'Необхідно заповнити рахунок даної вагітності в пункті "ІV. Акушерський анамнез."!'
+                )
+            self.DanaVagitnistZaRahynkom = "1. Дана вагітність за рахунком: " + self.DanaVagitnistZaRahynkom
+
+            self.DaniPologuZaRahynkom = ''
+            self.DaniPologuZaRahynkom = self.DaniPologuZaRahynkomLineEdit.text()
+            self.DaniPologuZaRahynkom = self.DaniPologuZaRahynkom.strip()
+            if self.DaniPologuZaRahynkom == '':
+                self.ErrorCount = self.ErrorCount + 1
+                self.Error_mesage(
+                    'Необхідно заповнити рахунок даних пологів в пункті "ІV. Акушерський анамнез."!'
+                )
+            self.DaniPologuZaRahynkom = "3. Дані пологи за рахунком: " + self.DaniPologuZaRahynkom
+
+            self.PoperedniPologuZavershulus = ''
+            if self.PoperedniPologuZavershulusPologamuCheckBox.isChecked():
+                self.PoperedniPologuZavershulus = '4. Попередні вагітності завершились: пологами.'
+            elif self.PoperedniPologuZavershulusAbortomShtychnumCheckBox.isChecked(
             ):
-                self.SypytniZahvoryvanna = self.SypytniZahvoryvanna + '; Внутрішньовенне введення медикаментів'
-
-            if self.SypytniOtherCheckBox.isChecked():
-                self.SypytniZahvoryvanna = self.SypytniZahvoryvanna + '; інші:'
-                self.SypytniOther = self.SypytniOtherLineEdit.text()
-                self.SypytniOther = self.SypytniOther.strip()
-                self.SypytniZahvoryvanna = self.SypytniZahvoryvanna + self.SypytniOther
-        self.SypytniZahvoryvanna = '6. Супутні захворювання: ' + self.SypytniZahvoryvanna
-        self.SypytniZahvoryvanna = self.SypytniZahvoryvanna.replace("'", "''")
-
-        self.OldMore35 = ''
-        if self.OldMore35NoCheckBox.isChecked():
-            self.OldMore35 = '7. Вік > 35 років: ні.'
-        else:
-            self.OldMore35 = '7. Вік > 35 років: так.'
-
-        self.Ogirinna = ''
-        if self.OgirinnaNoCheckBox.isChecked():
-            self.Ogirinna = '8. Ожиріння: ні.'
-        else:
-            self.Ogirinna = '8. Ожиріння: так.'
-
-        self.VagitnistMore3 = ''
-        if self.VagitnistMore3NoCheckBox.isChecked():
-            self.VagitnistMore3 = '9. Вагітність ≥ 3: ні.'
-        else:
-            self.VagitnistMore3 = '9. Вагітність ≥ 3: так.'
-
-        self.Kyrinna = ''
-        if self.KyrinnaNoCheckBox.isChecked():
-            self.Kyrinna = '10. Куріння: ні.'
-        else:
-            self.Kyrinna = '10. Куріння: так.'
-
-        self.VelykiVarikozniVenu = ''
-        if self.VelykiVarikozniVenuNoCheckBox.isChecked():
-            self.VelykiVarikozniVenu = '11. Великі варикозні вени: ні.'
-        else:
-            self.VelykiVarikozniVenu = '11. Великі варикозні вени: так.'
-
-        self.ProvedennaProfTEYdpVagitnosti = ''
-        if self.ProvedennaProfTEYdpVagitnostiLabelNoCheckBox.isChecked():
-            self.ProvedennaProfTEYdpVagitnosti = '\nIII. Проведення профілактики/терапії ТЕУ до вагітності: ні.'
-        else:
-            self.ProvedennaProfTEYdpVagitnosti = '\nIII. Проведення профілактики/терапії ТЕУ до вагітності: так.'
-
-        self.ElastychnaKompresia = ''
-        if self.ElastychnaKompresiaNoCheckBox.isChecked():
-            self.ElastychnaKompresia = '1. Еластична компресія: ні.'
-        else:
-            self.ElastychnaKompresia = '1. Еластична компресія: так; клас: '
-            self.ElastychnaKompresiaLevel = ''
-            self.ElastychnaKompresiaLevel = self.ElastychnaKompresiaLevelLineEdit.text(
-            )
-            self.ElastychnaKompresiaLevel = self.ElastychnaKompresiaLevel.strip(
-            )
-            if self.ElastychnaKompresiaLevel == '':
-                self.ErrorCount = self.ErrorCount + 1
-                self.Error_mesage(
-                    'Необхідно заповнити клас еластичної компресії в пункті "ІІІ. Проведення профілактики/терапії ТЕУ до вагітності"!'
-                )
-            else:
-                self.ElastychnaKompresia = self.ElastychnaKompresia + self.ElastychnaKompresiaLevel
-        self.ElastychnaKompresia = self.ElastychnaKompresia.replace("'", "''")
-
-        self.MedukamentoznaProfilaktuka = ''
-        if self.MedukamentoznaProfilaktukaNoCheckBox.isChecked():
-            self.MedukamentoznaProfilaktuka = self.MedukamentoznaProfilaktuka + '2. Медикаментозна профілактика: ні.'
-        else:
-            self.MedukamentoznaProfilaktuka = self.MedukamentoznaProfilaktuka + '2. Медикаментозна профілактика: так.'
-
-        self.MedukamentoznaProfilaktukaNazvaPreperaty = '2.1. Медикаментозна профілактика не проводилась.'
-        if self.MedukamentoznaProfilaktukaYesCheckBox.isChecked():
-            self.MedukamentoznaProfilaktukaNazvaPreperatyText = ''
-            self.MedukamentoznaProfilaktukaNazvaPreperatyText = self.MedukamentoznaProfilaktukaNazvaPreperatyLineEdit.text(
-            )
-            self.MedukamentoznaProfilaktukaNazvaPreperatyText = self.MedukamentoznaProfilaktukaNazvaPreperatyText.strip(
-            )
-
-            if self.MedukamentoznaProfilaktukaNazvaPreperatyText == '':
-                self.ErrorCount = self.ErrorCount + 1
-                self.Error_mesage(
-                    'Необхідно заповнити назву препарату для медикаментозної профілактики в пункті "ІІІ. Проведення профілактики/терапії ТЕУ до вагітності"!'
-                )
-            else:
-                self.MedukamentoznaProfilaktukaNazvaPreperaty = '2.1. Назва препарата: ' + self.MedukamentoznaProfilaktukaNazvaPreperatyText
-        self.MedukamentoznaProfilaktukaNazvaPreperaty = self.MedukamentoznaProfilaktukaNazvaPreperaty.replace(
-            "'", "''")
-
-        self.MedukamentoznaProfilaktukaRegymPrujomy = '2.2. Медикаментозна профілактика не проводилась.'
-        if self.MedukamentoznaProfilaktukaYesCheckBox.isChecked():
-            self.MedukamentoznaProfilaktukaRegymPrujomyText = ''
-            self.MedukamentoznaProfilaktukaRegymPrujomyText = self.MedukamentoznaProfilaktukaRegymPrujomyLineEdit.text(
-            )
-            self.MedukamentoznaProfilaktukaRegymPrujomyText = self.MedukamentoznaProfilaktukaRegymPrujomyText.strip(
-            )
-
-            if self.MedukamentoznaProfilaktukaRegymPrujomy == '':
-                self.ErrorCount = self.ErrorCount + 1
-                self.Error_mesage(
-                    'Необхідно заповнити режим прийому препарату для медикаментозної профілактики в пункті "ІІІ. Проведення профілактики/терапії ТЕУ до вагітності"!'
-                )
-            else:
-                self.MedukamentoznaProfilaktukaRegymPrujomy = '2.2. Режим прийому: ' + self.MedukamentoznaProfilaktukaRegymPrujomyText
-        self.MedukamentoznaProfilaktukaRegymPrujomy = self.MedukamentoznaProfilaktukaRegymPrujomy.replace(
-            "'", "''")
-
-        self.HiryrgichneLikyvanna = ''
-        if self.HiryrgichneLikyvannaNoCheckBox.isChecked():
-            self.HiryrgichneLikyvanna = self.HiryrgichneLikyvanna + '3. Хірургічне лікування: ні.'
-        else:
-            self.HiryrgichneLikyvanna = '3. Хірургічне лікування: так; назва операції та рік: '
-            self.HiryrgichneLikyvannaNazvaOpericii = ''
-            self.HiryrgichneLikyvannaNazvaOpericii = self.HiryrgichneLikyvannaNazvaOpericiiLineEdit.text(
-            )
-            self.HiryrgichneLikyvannaNazvaOpericii = self.HiryrgichneLikyvannaNazvaOpericii.strip(
-            )
-            if self.HiryrgichneLikyvannaNazvaOpericii == '':
-                self.ErrorCount = self.ErrorCount + 1
-                self.Error_mesage(
-                    'Необхідно заповнити назву операції та рік її проведення в пункті "ІІІ. Проведення профілактики/терапії ТЕУ до вагітності"!'
-                )
-            else:
-                self.HiryrgichneLikyvanna = self.HiryrgichneLikyvanna + self.HiryrgichneLikyvannaNazvaOpericii
-        self.HiryrgichneLikyvanna = self.HiryrgichneLikyvanna.replace(
-            "'", "''")
-
-        self.TryvalistProvedennoiProfilaktyky = '4. Тривалість проведеної профілактики: профілактика не проводилась.'
-        if self.ProvedennaProfTEYdpVagitnostiLabelYesCheckBox.isChecked():
-            self.TryvalistProvedennoiProfilaktyky = self.TryvalistProvedennoiProfilaktykyLineEdit.text(
-            )
-            self.TryvalistProvedennoiProfilaktyky = self.TryvalistProvedennoiProfilaktyky.strip(
-            )
-            if self.TryvalistProvedennoiProfilaktyky == '':
-                self.ErrorCount = self.ErrorCount + 1
-                self.Error_mesage(
-                    'Необхідно заповнити тривалість проведеної профілактики в пункті "ІІІ. Проведення профілактики/терапії ТЕУ до вагітності"!'
-                )
-            else:
-                self.TryvalistProvedennoiProfilaktyky = '4. Тривалість проведеної профілактики: ' + self.TryvalistProvedennoiProfilaktyky
-        self.TryvalistProvedennoiProfilaktyky = self.TryvalistProvedennoiProfilaktyky.replace(
-            "'", "''")
-
-        self.YskladneenaVidProfilaktyku = ''
-        if self.YskladneenaVidProfilaktykuNoCheckBox.isChecked():
-            self.YskladneenaVidProfilaktyku = '5. Наявність ускладнень від проведеної профілактики: ні.'
-        else:
-            self.YskladneenaVidProfilaktyku = '5. Наявність ускладнень від проведеної профілактики: так; ускладнення: '
-            self.YskladneenaVidProfilaktykuNajavnist = ''
-            self.YskladneenaVidProfilaktykuNajavnist = self.YskladneenaVidProfilaktykuNajavnistLineEdit.text(
-            )
-            self.YskladneenaVidProfilaktykuNajavnist = self.YskladneenaVidProfilaktykuNajavnist.strip(
-            )
-            if self.YskladneenaVidProfilaktykuNajavnist == '':
-                self.ErrorCount = self.ErrorCount + 1
-                self.Error_mesage(
-                    'Необхідно заповнити ускладнення від проведеної профілактики в пункті "ІІІ. Проведення профілактики/терапії ТЕУ до вагітності"!'
-                )
-            else:
-                self.YskladneenaVidProfilaktyku = self.YskladneenaVidProfilaktyku + self.YskladneenaVidProfilaktykuNajavnist
-        self.YskladneenaVidProfilaktyku = self.YskladneenaVidProfilaktyku.replace(
-            "'", "''")
-
-        self.AkysherskiiAnamnez = '\nІV. Акушерський анамнез.'
-
-        self.DanaVagitnist = ''
-        if self.DanaVagitnisPryrodnaCheckBox.isChecked():
-            self.DanaVagitnist = '1. Дана вагітність: природна.'
-        elif self.DanaVagitnisIndykovanaCheckBox.isChecked():
-            self.DanaVagitnist = '1. Дана вагітність: індукована.'
-        elif self.DanaVagitnisEKZCheckBox.isChecked():
-            self.DanaVagitnist = '1. Дана вагітність: ЕКЗ.'
-        else:
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage(
-                'Необхідно вибрати вид даної вагітності в пункті "ІV. Акушерський анамнез."!'
-            )
-
-        self.DanaVagitnistZaRahynkom = ''
-        self.DanaVagitnistZaRahynkom = self.DanaVagitnistZaRahynkomLineEdit.text(
-        )
-        self.DanaVagitnistZaRahynkom = self.DanaVagitnistZaRahynkom.strip()
-        if self.DanaVagitnistZaRahynkom == '':
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage(
-                'Необхідно заповнити рахунок даної вагітності в пункті "ІV. Акушерський анамнез."!'
-            )
-        self.DanaVagitnistZaRahynkom = "1. Дана вагітність за рахунком: " + self.DanaVagitnistZaRahynkom
-
-        self.DaniPologuZaRahynkom = ''
-        self.DaniPologuZaRahynkom = self.DaniPologuZaRahynkomLineEdit.text()
-        self.DaniPologuZaRahynkom = self.DaniPologuZaRahynkom.strip()
-        if self.DaniPologuZaRahynkom == '':
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage(
-                'Необхідно заповнити рахунок даних пологів в пункті "ІV. Акушерський анамнез."!'
-            )
-        self.DaniPologuZaRahynkom = "3. Дані пологи за рахунком: " + self.DaniPologuZaRahynkom
-
-        self.PoperedniPologuZavershulus = ''
-        if self.PoperedniPologuZavershulusPologamuCheckBox.isChecked():
-            self.PoperedniPologuZavershulus = '4. Попередні вагітності завершились: пологами.'
-        elif self.PoperedniPologuZavershulusAbortomShtychnumCheckBox.isChecked(
-        ):
-            self.PoperedniPologuZavershulus = '4. Попередні вагітності завершились: аборт самовільний.'
-        elif self.PoperedniPologuZavershulusAbortomSamovilnumCheckBox.isChecked(
-        ):
-            self.PoperedniPologuZavershulus = '4. Попередні вагітності завершились: аборт штучний.'
-        elif self.PoperednihPologivNeByloP4CheckBox.isChecked():
-            self.PoperedniPologuZavershulus = '4. Попередні вагітності завершились: попередніх пологів не було.'
-        else:
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage(
-                'Необхідно вибрати завершення попередньої вагітності в пункті "ІV. Акушерський анамнез."!'
-            )
-
-        self.PoperedniPologu = ''
-        if self.PoperedniPologuFiziologichniCheckBox.isChecked():
-            self.PoperedniPologu = 'фізіологічні.'
-        elif self.PoperedniPologuPatologichniCheckBox.isChecked():
-            self.PoperedniPologu = 'патологічні.'
-        elif self.PoperednihPologivNeByloP5CheckBox.isChecked():
-            self.PoperedniPologu = 'попередніх пологів не було.'
-        elif self.PoperedniPologuYskladneniCheckBox.isChecked():
-            self.PoperedniPologu = 'ускладені.'
-            self.PoperedniPologuYskladneni = ''
-            self.PoperedniPologuYskladneni = self.PoperedniPologuYskladneniLineEdit.text(
-            )
-            self.PoperedniPologuYskladneni = self.PoperedniPologuYskladneni.strip(
-            )
-            if self.PoperedniPologuYskladneni == '':
-                self.ErrorCount = self.ErrorCount + 1
-                self.Error_mesage(
-                    'Необхідно заповнити ускладнення попередніх пологів в пункті "ІV. Акушерський анамнез."!'
-                )
-            else:
-                self.PoperedniPologu = self.PoperedniPologu + ': ' + str(
-                    self.PoperedniPologuYskladneni)
-        else:
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage(
-                'Необхідно вибрати завершення попередньої вагітності в пункті "ІV. Акушерський анамнез."!'
-            )
-        self.PoperedniPologu = "5. Попередні пологи: " + self.PoperedniPologu
-
-        self.NayavnistGuvyhDitey = ''
-        if self.NayavnistGuvyhDiteyNoCheckBox.isChecked():
-            self.NayavnistGuvyhDitey = self.NayavnistGuvyhDitey + '6. Наявність живих дітей: ні.'
-        else:
-            self.NayavnistGuvyhDitey = self.NayavnistGuvyhDitey + '6. Наявність живих дітей: так.'
-
-        self.VPerebigDannoiVagitnosti = '\nV. Перебіг даної вагітності.'
-
-        self.Vagitnist = ''
-        if self.VagitnistOdnoplidnaCheckBox.isChecked():
-            self.Vagitnist = '1. Вагітність: одноплідна.'
-        else:
-            self.Vagitnist = '1. Вагітність: багатоплідна.'
-
-        self.NaOblikyVGinochiiKonsyltacii = ''
-        self.NaOblikyVGinochiiKonsyltacii = self.NaOblikyVGinochiiKonsyltaciiLineEdit.text(
-        )
-        self.NaOblikyVGinochiiKonsyltacii = self.NaOblikyVGinochiiKonsyltacii.strip(
-        )
-        if self.NaOblikyVGinochiiKonsyltacii == '':
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage(
-                'Необхідно вказати термін, з якого вагітна знаходиться на обліку в жіночій консультації в пункті "V. Перебіг даної вагітності."!'
-            )
-        self.NaOblikyVGinochiiKonsyltacii = "2. На обліку в жіночій консультації з: " + self.NaOblikyVGinochiiKonsyltacii + " тижнів."
-
-        self.ZagrozaPereruvannaVagitnosti = ''
-        if self.ZagrozaPereruvannaVagitnostiNoCheckBox.isChecked():
-            self.ZagrozaPereruvannaVagitnosti = self.ZagrozaPereruvannaVagitnosti + 'ні.'
-        else:
-            self.ZagrozaPereruvannaVagitnosti = self.ZagrozaPereruvannaVagitnosti + 'так; в терміні вагітності:'
-            self.ZagrozaPereruvannaVagitnostiYTermini = self.ZagrozaPereruvannaVagitnostiYTerminiLineEdit.text(
-            )
-            self.ZagrozaPereruvannaVagitnostiYTermini = self.ZagrozaPereruvannaVagitnostiYTermini.strip(
-            )
-            if self.ZagrozaPereruvannaVagitnostiYTermini == '':
-                self.ErrorCount = self.ErrorCount + 1
-                self.Error_mesage(
-                    'Необхідно вказати термін на якому була загроза переривання вагітності, в пункті "V. Перебіг даної вагітності."!'
-                )
-            else:
-                self.ZagrozaPereruvannaVagitnosti = self.ZagrozaPereruvannaVagitnosti + self.ZagrozaPereruvannaVagitnostiYTermini + " тижнів."
-        self.ZagrozaPereruvannaVagitnosti = "3. Загроза переривання вагітності: " + self.ZagrozaPereruvannaVagitnosti
-
-        self.ZagrozaPeredchasnuhPologiv = ''
-        if self.ZagrozaPeredchasnuhPologivNoCheckBox.isChecked():
-            self.ZagrozaPeredchasnuhPologiv = self.ZagrozaPeredchasnuhPologiv + 'ні.'
-        else:
-            self.ZagrozaPeredchasnuhPologiv = self.ZagrozaPeredchasnuhPologiv + 'так; в терміні вагітності:'
-            self.ZagrozaPeredchasnuhPologivYTermini = self.ZagrozaPeredchasnuhPologivYTerminiLineEdit.text(
-            )
-            self.ZagrozaPeredchasnuhPologivYTermini = self.ZagrozaPeredchasnuhPologivYTermini.strip(
-            )
-            if self.ZagrozaPeredchasnuhPologivYTermini == '':
-                self.ErrorCount = self.ErrorCount + 1
-                self.Error_mesage(
-                    'Необхідно вказати термін на якому була загроза передчасних пологів, в пункті "V. Перебіг даної вагітності."!'
-                )
-            else:
-                self.ZagrozaPeredchasnuhPologiv = self.ZagrozaPeredchasnuhPologiv + self.ZagrozaPeredchasnuhPologivYTermini + " тижнів."
-        self.ZagrozaPeredchasnuhPologiv = '4. Загроза передчасних пологів: ' + self.ZagrozaPeredchasnuhPologiv
-
-        self.ZagrozaPeredchasnuhPologivP4_1 = ''
-        if self.ZagrozaPeredchasnuhPologivYesCheckBox.isChecked():
-            if self.ZagrozaPereruvannaVagitnostiVidsharyvannaHorionaCheckBox.isChecked(
+                self.PoperedniPologuZavershulus = '4. Попередні вагітності завершились: аборт самовільний.'
+            elif self.PoperedniPologuZavershulusAbortomSamovilnumCheckBox.isChecked(
             ):
-                self.ZagrozaPeredchasnuhPologivP4_1 = self.ZagrozaPeredchasnuhPologivP4_1 + " Відшарування хоріона;"
+                self.PoperedniPologuZavershulus = '4. Попередні вагітності завершились: аборт штучний.'
+            elif self.PoperednihPologivNeByloP4CheckBox.isChecked():
+                self.PoperedniPologuZavershulus = '4. Попередні вагітності завершились: попередніх пологів не було.'
+            else:
+                self.ErrorCount = self.ErrorCount + 1
+                self.Error_mesage(
+                    'Необхідно вибрати завершення попередньої вагітності в пункті "ІV. Акушерський анамнез."!'
+                )
 
-            if self.ZagrozaPereruvannaVagitnostiKrovomazannaCheckBox.isChecked(
+            self.PoperedniPologu = ''
+            if self.PoperedniPologuFiziologichniCheckBox.isChecked():
+                self.PoperedniPologu = 'фізіологічні.'
+            elif self.PoperedniPologuPatologichniCheckBox.isChecked():
+                self.PoperedniPologu = 'патологічні.'
+            elif self.PoperednihPologivNeByloP5CheckBox.isChecked():
+                self.PoperedniPologu = 'попередніх пологів не було.'
+            elif self.PoperedniPologuYskladneniCheckBox.isChecked():
+                self.PoperedniPologu = 'ускладені.'
+                self.PoperedniPologuYskladneni = ''
+                self.PoperedniPologuYskladneni = self.PoperedniPologuYskladneniLineEdit.text(
+                )
+                self.PoperedniPologuYskladneni = self.PoperedniPologuYskladneni.strip(
+                )
+                if self.PoperedniPologuYskladneni == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно заповнити ускладнення попередніх пологів в пункті "ІV. Акушерський анамнез."!'
+                    )
+                else:
+                    self.PoperedniPologu = self.PoperedniPologu + ': ' + str(
+                        self.PoperedniPologuYskladneni)
+            else:
+                self.ErrorCount = self.ErrorCount + 1
+                self.Error_mesage(
+                    'Необхідно вибрати завершення попередньої вагітності в пункті "ІV. Акушерський анамнез."!'
+                )
+            self.PoperedniPologu = "5. Попередні пологи: " + self.PoperedniPologu
+
+            self.NayavnistGuvyhDitey = ''
+            if self.NayavnistGuvyhDiteyNoCheckBox.isChecked():
+                self.NayavnistGuvyhDitey = self.NayavnistGuvyhDitey + '6. Наявність живих дітей: ні.'
+            else:
+                self.NayavnistGuvyhDitey = self.NayavnistGuvyhDitey + '6. Наявність живих дітей: так.'
+
+            self.VPerebigDannoiVagitnosti = '\nV. Перебіг даної вагітності.'
+
+            self.Vagitnist = ''
+            if self.VagitnistOdnoplidnaCheckBox.isChecked():
+                self.Vagitnist = '1. Вагітність: одноплідна.'
+            else:
+                self.Vagitnist = '1. Вагітність: багатоплідна.'
+
+            self.NaOblikyVGinochiiKonsyltacii = ''
+            self.NaOblikyVGinochiiKonsyltacii = self.NaOblikyVGinochiiKonsyltaciiLineEdit.text(
+            )
+            self.NaOblikyVGinochiiKonsyltacii = self.NaOblikyVGinochiiKonsyltacii.strip(
+            )
+            if self.NaOblikyVGinochiiKonsyltacii == '':
+                self.ErrorCount = self.ErrorCount + 1
+                self.Error_mesage(
+                    'Необхідно вказати термін, з якого вагітна знаходиться на обліку в жіночій консультації в пункті "V. Перебіг даної вагітності."!'
+                )
+            self.NaOblikyVGinochiiKonsyltacii = "2. На обліку в жіночій консультації з: " + self.NaOblikyVGinochiiKonsyltacii + " тижнів."
+
+            self.ZagrozaPereruvannaVagitnosti = ''
+            if self.ZagrozaPereruvannaVagitnostiNoCheckBox.isChecked():
+                self.ZagrozaPereruvannaVagitnosti = self.ZagrozaPereruvannaVagitnosti + 'ні.'
+            else:
+                self.ZagrozaPereruvannaVagitnosti = self.ZagrozaPereruvannaVagitnosti + 'так; в терміні вагітності:'
+                self.ZagrozaPereruvannaVagitnostiYTermini = self.ZagrozaPereruvannaVagitnostiYTerminiLineEdit.text(
+                )
+                self.ZagrozaPereruvannaVagitnostiYTermini = self.ZagrozaPereruvannaVagitnostiYTermini.strip(
+                )
+                if self.ZagrozaPereruvannaVagitnostiYTermini == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно вказати термін на якому була загроза переривання вагітності, в пункті "V. Перебіг даної вагітності."!'
+                    )
+                else:
+                    self.ZagrozaPereruvannaVagitnosti = self.ZagrozaPereruvannaVagitnosti + self.ZagrozaPereruvannaVagitnostiYTermini + " тижнів."
+            self.ZagrozaPereruvannaVagitnosti = "3. Загроза переривання вагітності: " + self.ZagrozaPereruvannaVagitnosti
+
+            self.ZagrozaPeredchasnuhPologiv = ''
+            if self.ZagrozaPeredchasnuhPologivNoCheckBox.isChecked():
+                self.ZagrozaPeredchasnuhPologiv = self.ZagrozaPeredchasnuhPologiv + 'ні.'
+            else:
+                self.ZagrozaPeredchasnuhPologiv = self.ZagrozaPeredchasnuhPologiv + 'так; в терміні вагітності:'
+                self.ZagrozaPeredchasnuhPologivYTermini = self.ZagrozaPeredchasnuhPologivYTerminiLineEdit.text(
+                )
+                self.ZagrozaPeredchasnuhPologivYTermini = self.ZagrozaPeredchasnuhPologivYTermini.strip(
+                )
+                if self.ZagrozaPeredchasnuhPologivYTermini == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно вказати термін на якому була загроза передчасних пологів, в пункті "V. Перебіг даної вагітності."!'
+                    )
+                else:
+                    self.ZagrozaPeredchasnuhPologiv = self.ZagrozaPeredchasnuhPologiv + self.ZagrozaPeredchasnuhPologivYTermini + " тижнів."
+            self.ZagrozaPeredchasnuhPologiv = '4. Загроза передчасних пологів: ' + self.ZagrozaPeredchasnuhPologiv
+
+            self.ZagrozaPeredchasnuhPologivP4_1 = ''
+            if self.ZagrozaPeredchasnuhPologivYesCheckBox.isChecked():
+                if self.ZagrozaPereruvannaVagitnostiVidsharyvannaHorionaCheckBox.isChecked(
+                ):
+                    self.ZagrozaPeredchasnuhPologivP4_1 = self.ZagrozaPeredchasnuhPologivP4_1 + " Відшарування хоріона;"
+
+                if self.ZagrozaPereruvannaVagitnostiKrovomazannaCheckBox.isChecked(
+                ):
+                    self.ZagrozaPeredchasnuhPologivP4_1 = self.ZagrozaPeredchasnuhPologivP4_1 + " Кровомазання;"
+
+                if self.ZagrozaPereruvannaVagitnostiICNCheckBox.isChecked():
+                    self.ZagrozaPeredchasnuhPologivP4_1 = self.ZagrozaPeredchasnuhPologivP4_1 + " ІЦН;"
+            else:
+                self.ZagrozaPeredchasnuhPologivP4_1 = 'Загроза передчасних пологів відсутня'
+            self.ZagrozaPeredchasnuhPologivP4_1 = '4.1. : ' + self.ZagrozaPeredchasnuhPologivP4_1
+
+            self.GestozIPolovunuVagitnosti = ''
+            if self.GestozIPolovunuVagitnostiNoCheckBox.isChecked():
+                self.GestozIPolovunuVagitnosti = self.GestozIPolovunuVagitnosti + '5. Гестоз І половини вагітності: ні.'
+            else:
+                self.GestozIPolovunuVagitnosti = self.GestozIPolovunuVagitnosti + '5. Гестоз І половини вагітності: так.'
+
+            self.InshiPruchynyZnevodnenna = ''
+            if self.InshiPruchynyZnevodnennaNoCheckBox.isChecked():
+                self.InshiPruchynyZnevodnenna = self.InshiPruchynyZnevodnenna + 'ні.'
+            elif self.InshiPruchynyZnevodnennaYesCheckBox.isChecked():
+                self.InshiPruchynyZnevodnenna = self.InshiPruchynyZnevodnenna + 'так.'
+            elif self.InshiPruchynyZnevodnennaVarVCheckBox.isChecked():
+                self.InshiPruchynyZnevodnenna = self.InshiPruchynyZnevodnenna + 'Інше: '
+                self.InshiPruchynyZnevodnennaText = self.InshiPruchynyZnevodnennaVarVLineEdit.text(
+                )
+                self.InshiPruchynyZnevodnennaText = self.InshiPruchynyZnevodnennaText.strip(
+                )
+                if self.InshiPruchynyZnevodnennaText == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно вказати інші причини зневоднення в пункті "V. Перебіг даної вагітності."!'
+                    )
+                else:
+                    self.InshiPruchynyZnevodnenna = self.InshiPruchynyZnevodnenna + self.InshiPruchynyZnevodnennaText
+            else:
+                self.ErrorCount = self.ErrorCount + 1
+                self.Error_mesage(
+                    'Необхідно вибрати підходящий варіант в інших причинах зневоднення в пункті "V. Перебіг даної вагітності."!'
+                )
+            self.InshiPruchynyZnevodnenna = '6. Інші причини зневоднення: ' + self.InshiPruchynyZnevodnenna
+            self.InshiPruchynyZnevodnenna = self.InshiPruchynyZnevodnenna.replace(
+                "'", "''")
+
+            self.GestozIIPolovunuVagitnosti = ''
+            if self.GestozIIPolovunuVagitnostiNoCheckBox.isChecked():
+                self.GestozIIPolovunuVagitnosti = self.GestozIIPolovunuVagitnosti + '7. Гестоз II половини вагітності: ні.'
+            elif self.GestozIIPolovunuVagitnostiProeklampsiaLegkogoStCheckBox.isChecked(
             ):
-                self.ZagrozaPeredchasnuhPologivP4_1 = self.ZagrozaPeredchasnuhPologivP4_1 + " Кровомазання;"
-
-            if self.ZagrozaPereruvannaVagitnostiICNCheckBox.isChecked():
-                self.ZagrozaPeredchasnuhPologivP4_1 = self.ZagrozaPeredchasnuhPologivP4_1 + " ІЦН;"
-        else:
-            self.ZagrozaPeredchasnuhPologivP4_1 = 'Загроза передчасних пологів відсутня'
-        self.ZagrozaPeredchasnuhPologivP4_1 = '4.1. : ' + self.ZagrozaPeredchasnuhPologivP4_1
-
-        self.GestozIPolovunuVagitnosti = ''
-        if self.GestozIPolovunuVagitnostiNoCheckBox.isChecked():
-            self.GestozIPolovunuVagitnosti = self.GestozIPolovunuVagitnosti + '5. Гестоз І половини вагітності: ні.'
-        else:
-            self.GestozIPolovunuVagitnosti = self.GestozIPolovunuVagitnosti + '5. Гестоз І половини вагітності: так.'
-
-        self.InshiPruchynyZnevodnenna = ''
-        if self.InshiPruchynyZnevodnennaNoCheckBox.isChecked():
-            self.InshiPruchynyZnevodnenna = self.InshiPruchynyZnevodnenna + 'ні.'
-        elif self.InshiPruchynyZnevodnennaYesCheckBox.isChecked():
-            self.InshiPruchynyZnevodnenna = self.InshiPruchynyZnevodnenna + 'так.'
-        elif self.InshiPruchynyZnevodnennaVarVCheckBox.isChecked():
-            self.InshiPruchynyZnevodnenna = self.InshiPruchynyZnevodnenna + 'Інше: '
-            self.InshiPruchynyZnevodnennaText = self.InshiPruchynyZnevodnennaVarVLineEdit.text(
-            )
-            self.InshiPruchynyZnevodnennaText = self.InshiPruchynyZnevodnennaText.strip(
-            )
-            if self.InshiPruchynyZnevodnennaText == '':
-                self.ErrorCount = self.ErrorCount + 1
-                self.Error_mesage(
-                    'Необхідно вказати інші причини зневоднення в пункті "V. Перебіг даної вагітності."!'
-                )
+                self.GestozIIPolovunuVagitnosti = self.GestozIIPolovunuVagitnosti + '7. Гестоз II половини вагітності: прееклампсія легкого ступеня.'
+            elif self.GestozIIPolovunuVagitnostiProeklampsiaSerednogoStCheckBox.isChecked(
+            ):
+                self.GestozIIPolovunuVagitnosti = self.GestozIIPolovunuVagitnosti + '7. Гестоз II половини вагітності: прееклампсія середнього ступеня.'
+            elif self.GestozIIPolovunuVagitnostiProeklampsiaVagkogoStCheckBox.isChecked(
+            ):
+                self.GestozIIPolovunuVagitnosti = self.GestozIIPolovunuVagitnosti + '7. Гестоз II половини вагітності: прееклампсія важкого ступеня.'
             else:
-                self.InshiPruchynyZnevodnenna = self.InshiPruchynyZnevodnenna + self.InshiPruchynyZnevodnennaText
-        else:
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage(
-                'Необхідно вибрати підходящий варіант в інших причинах зневоднення в пункті "V. Перебіг даної вагітності."!'
-            )
-        self.InshiPruchynyZnevodnenna = '6. Інші причини зневоднення: ' + self.InshiPruchynyZnevodnenna
-        self.InshiPruchynyZnevodnenna = self.InshiPruchynyZnevodnenna.replace(
-            "'", "''")
-
-        self.GestozIIPolovunuVagitnosti = ''
-        if self.GestozIIPolovunuVagitnostiNoCheckBox.isChecked():
-            self.GestozIIPolovunuVagitnosti = self.GestozIIPolovunuVagitnosti + '7. Гестоз II половини вагітності: ні.'
-        elif self.GestozIIPolovunuVagitnostiProeklampsiaLegkogoStCheckBox.isChecked(
-        ):
-            self.GestozIIPolovunuVagitnosti = self.GestozIIPolovunuVagitnosti + '7. Гестоз II половини вагітності: прееклампсія легкого ступеня.'
-        elif self.GestozIIPolovunuVagitnostiProeklampsiaSerednogoStCheckBox.isChecked(
-        ):
-            self.GestozIIPolovunuVagitnosti = self.GestozIIPolovunuVagitnosti + '7. Гестоз II половини вагітності: прееклампсія середнього ступеня.'
-        elif self.GestozIIPolovunuVagitnostiProeklampsiaVagkogoStCheckBox.isChecked(
-        ):
-            self.GestozIIPolovunuVagitnosti = self.GestozIIPolovunuVagitnosti + '7. Гестоз II половини вагітності: прееклампсія важкого ступеня.'
-        else:
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage(
-                'Необхідно вибрати підходящий варіант гестозу ІІ половини вагітності в пункті "V. Перебіг даної вагітності."!'
-            )
-
-        self.GestozIIPolovunuVagitnostiVTermini = 'гестоз ІІ половини вагітності відсутній.'
-        if self.GestozIIPolovunuVagitnostiProeklampsiaLegkogoStCheckBox.isChecked(
-        ) or self.GestozIIPolovunuVagitnostiProeklampsiaSerednogoStCheckBox.isChecked(
-        ) or self.GestozIIPolovunuVagitnostiProeklampsiaVagkogoStCheckBox.isChecked(
-        ):
-            self.GestozIIPolovunuVagitnostiVTermini = 'гестоз ІІ половини вагітності діагностовано в терміні '
-            self.GestozIIPolovunuDiagnostovanoVTermini = ''
-            self.GestozIIPolovunuDiagnostovanoVTermini = self.GestozIIPolovunuDiagnostovanoVTerminiLineEdit.text(
-            )
-            self.GestozIIPolovunuDiagnostovanoVTermini = self.GestozIIPolovunuDiagnostovanoVTermini.strip(
-            )
-            if self.GestozIIPolovunuDiagnostovanoVTermini == '':
                 self.ErrorCount = self.ErrorCount + 1
                 self.Error_mesage(
-                    'Необхідно вказати термін, в якому діагностовано гестоз ІІ половини вагітності в пункті "V. Перебіг даної вагітності."!'
+                    'Необхідно вибрати підходящий варіант гестозу ІІ половини вагітності в пункті "V. Перебіг даної вагітності."!'
                 )
+
+            self.GestozIIPolovunuVagitnostiVTermini = 'гестоз ІІ половини вагітності відсутній.'
+            if self.GestozIIPolovunuVagitnostiProeklampsiaLegkogoStCheckBox.isChecked(
+            ) or self.GestozIIPolovunuVagitnostiProeklampsiaSerednogoStCheckBox.isChecked(
+            ) or self.GestozIIPolovunuVagitnostiProeklampsiaVagkogoStCheckBox.isChecked(
+            ):
+                self.GestozIIPolovunuVagitnostiVTermini = 'гестоз ІІ половини вагітності діагностовано в терміні '
+                self.GestozIIPolovunuDiagnostovanoVTermini = ''
+                self.GestozIIPolovunuDiagnostovanoVTermini = self.GestozIIPolovunuDiagnostovanoVTerminiLineEdit.text(
+                )
+                self.GestozIIPolovunuDiagnostovanoVTermini = self.GestozIIPolovunuDiagnostovanoVTermini.strip(
+                )
+                if self.GestozIIPolovunuDiagnostovanoVTermini == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно вказати термін, в якому діагностовано гестоз ІІ половини вагітності в пункті "V. Перебіг даної вагітності."!'
+                    )
+                else:
+                    self.GestozIIPolovunuVagitnostiVTermini = self.GestozIIPolovunuVagitnostiVTermini + self.GestozIIPolovunuDiagnostovanoVTermini + " тижнів"
+            self.GestozIIPolovunuVagitnostiVTermini = "8. Гестоз ІІ половини вагітності діагностовано в терміні: " + self.GestozIIPolovunuVagitnostiVTermini
+
+            self.VunuknennaTEY = ''
+            if self.VunuknennaTEYNoCheckBox.isChecked():
+                self.VunuknennaTEY = self.VunuknennaTEY + '9. Винекнення ТЕУ: ні.'
             else:
-                self.GestozIIPolovunuVagitnostiVTermini = self.GestozIIPolovunuVagitnostiVTermini + self.GestozIIPolovunuDiagnostovanoVTermini + " тижнів"
-        self.GestozIIPolovunuVagitnostiVTermini = "8. Гестоз ІІ половини вагітності діагностовано в терміні: " + self.GestozIIPolovunuVagitnostiVTermini
+                self.VunuknennaTEY = self.VunuknennaTEY + '9. Винекнення ТЕУ: так.'
 
-        self.VunuknennaTEY = ''
-        if self.VunuknennaTEYNoCheckBox.isChecked():
-            self.VunuknennaTEY = self.VunuknennaTEY + '9. Винекнення ТЕУ: ні.'
-        else:
-            self.VunuknennaTEY = self.VunuknennaTEY + '9. Винекнення ТЕУ: так.'
+            self.VudTEY = '9.1. Вид ТЕУ: ТЕУ не виникало.'
+            if self.VunuknennaTEYYesCheckBox.isChecked():
+                self.VudTEYText = self.VudTEYLineEdit.text()
+                self.VudTEYText = self.VudTEYText.strip()
+                if self.VudTEYText == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно вказати вид ТЕУ в пункті "V. Перебіг даної вагітності."!'
+                    )
+                else:
+                    self.VudTEY = "9.1. Вид ТЕУ: " + self.VudTEYText
+            self.VudTEY = self.VudTEY.replace("'", "''")
 
-        self.VudTEY = '9.1. Вид ТЕУ: ТЕУ не виникало.'
-        if self.VunuknennaTEYYesCheckBox.isChecked():
-            self.VudTEYText = self.VudTEYLineEdit.text()
-            self.VudTEYText = self.VudTEYText.strip()
-            if self.VudTEYText == '':
-                self.ErrorCount = self.ErrorCount + 1
-                self.Error_mesage(
-                    'Необхідно вказати вид ТЕУ в пункті "V. Перебіг даної вагітності."!'
+            self.TEYTerminVagitnosti = '9.2. термін вагітності: ТЕУ не виникало.'
+            if self.VunuknennaTEYYesCheckBox.isChecked():
+                self.TEYTerminVagitnostiText = self.TEYTerminVagitnostiLineEdit.text(
                 )
+                self.TEYTerminVagitnostiText = self.TEYTerminVagitnostiText.strip()
+                if self.VudTEYText == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно вказати термін вагітності на якому виникло ТЕУ в пункті "V. Перебіг даної вагітності."!'
+                    )
+                else:
+                    self.TEYTerminVagitnosti = "9.2. термін вагітності: " + self.TEYTerminVagitnostiText
+
+            self.Bagatovodda = ''
+            if self.BagatovoddaNoCheckBox.isChecked():
+                self.Bagatovodda = self.Bagatovodda + '10. Багатоводдя: ні.'
+            elif self.BagatovoddaPomirneCheckBox.isChecked():
+                self.Bagatovodda = self.Bagatovodda + '10. Багатоводдя: помірне.'
+            elif self.BagatovoddaVurageneCheckBox.isChecked():
+                self.Bagatovodda = self.Bagatovodda + '10. Багатоводдя: виражене.'
             else:
-                self.VudTEY = "9.1. Вид ТЕУ: " + self.VudTEYText
-        self.VudTEY = self.VudTEY.replace("'", "''")
-
-        self.TEYTerminVagitnosti = '9.2. термін вагітності: ТЕУ не виникало.'
-        if self.VunuknennaTEYYesCheckBox.isChecked():
-            self.TEYTerminVagitnostiText = self.TEYTerminVagitnostiLineEdit.text(
-            )
-            self.TEYTerminVagitnostiText = self.TEYTerminVagitnostiText.strip()
-            if self.VudTEYText == '':
                 self.ErrorCount = self.ErrorCount + 1
                 self.Error_mesage(
-                    'Необхідно вказати термін вагітності на якому виникло ТЕУ в пункті "V. Перебіг даної вагітності."!'
+                    'Необхідно вибрати підходящий варіант багатоводдя в пункті "V. Перебіг даної вагітності."!'
                 )
+
+            self.BagatovoddaDiagnostovanoVTerminVagitnosti = '10.1 Багатоводдя діагностовано з терміну вагітності: багатоводдя не діагностувалося.'
+            if self.BagatovoddaPomirneCheckBox.isChecked(
+            ) or self.BagatovoddaVurageneCheckBox.isChecked():
+                self.BagatovoddaDiagnostovanoVTerminVagitnosti = self.BagatovoddaDiagnostovanoVTerminVagitnostiLineEdit.text(
+                )
+                self.BagatovoddaDiagnostovanoVTerminVagitnosti = self.BagatovoddaDiagnostovanoVTerminVagitnosti.strip(
+                )
+                if self.BagatovoddaDiagnostovanoVTerminVagitnosti == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно термін вагітності на якому було діагностовано багатоводдя в пункті "V. Перебіг даної вагітності."!'
+                    )
+                else:
+                    self.BagatovoddaDiagnostovanoVTerminVagitnosti = "10.1 Багатоводдя діагностовано з терміну вагітності: " + self.BagatovoddaDiagnostovanoVTerminVagitnosti
+
+            self.MaloVodda = ''
+            if self.MaloVoddaNoCheckBox.isChecked():
+                self.MaloVodda = self.MaloVodda + '11. Маловоддя: ні.'
+            elif self.MaloVoddaPomirneCheckBox.isChecked():
+                self.MaloVodda = self.MaloVodda + '11. Маловоддя: помірне.'
+            elif self.MaloVoddaVurageneCheckBox.isChecked():
+                self.MaloVodda = self.MaloVodda + '11. Маловоддя: виражене.'
             else:
-                self.TEYTerminVagitnosti = "9.2. термін вагітності: " + self.TEYTerminVagitnostiText
-
-        self.Bagatovodda = ''
-        if self.BagatovoddaNoCheckBox.isChecked():
-            self.Bagatovodda = self.Bagatovodda + '10. Багатоводдя: ні.'
-        elif self.BagatovoddaPomirneCheckBox.isChecked():
-            self.Bagatovodda = self.Bagatovodda + '10. Багатоводдя: помірне.'
-        elif self.BagatovoddaVurageneCheckBox.isChecked():
-            self.Bagatovodda = self.Bagatovodda + '10. Багатоводдя: виражене.'
-        else:
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage(
-                'Необхідно вибрати підходящий варіант багатоводдя в пункті "V. Перебіг даної вагітності."!'
-            )
-
-        self.BagatovoddaDiagnostovanoVTerminVagitnosti = '10.1 Багатоводдя діагностовано з терміну вагітності: багатоводдя не діагностувалося.'
-        if self.BagatovoddaPomirneCheckBox.isChecked(
-        ) or self.BagatovoddaVurageneCheckBox.isChecked():
-            self.BagatovoddaDiagnostovanoVTerminVagitnosti = self.BagatovoddaDiagnostovanoVTerminVagitnostiLineEdit.text(
-            )
-            self.BagatovoddaDiagnostovanoVTerminVagitnosti = self.BagatovoddaDiagnostovanoVTerminVagitnosti.strip(
-            )
-            if self.BagatovoddaDiagnostovanoVTerminVagitnosti == '':
                 self.ErrorCount = self.ErrorCount + 1
                 self.Error_mesage(
-                    'Необхідно термін вагітності на якому було діагностовано багатоводдя в пункті "V. Перебіг даної вагітності."!'
+                    'Необхідно вибрати підходящий варіант маловоддя в пункті "V. Перебіг даної вагітності."!'
                 )
+
+            self.MaloVoddaDiagnostovanoVTerminVagitnosti = '11.1 Маловоддя діагностовано з терміну вагітності: маловоддя не діагностувалося.'
+            if self.MaloVoddaPomirneCheckBox.isChecked(
+            ) or self.MaloVoddaVurageneCheckBox.isChecked():
+                self.MaloVoddaDiagnostovanoVTerminVagitnosti = self.MaloVoddaDiagnostovanoVTerminVagitnostiLineEdit.text(
+                )
+                self.MaloVoddaDiagnostovanoVTerminVagitnosti = self.MaloVoddaDiagnostovanoVTerminVagitnosti.strip(
+                )
+                if self.MaloVoddaDiagnostovanoVTerminVagitnosti == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно термін вагітності на якому було діагностовано маловоддя в пункті "V. Перебіг даної вагітності."!'
+                    )
+                else:
+                    self.MaloVoddaDiagnostovanoVTerminVagitnosti = "11.1 Маловоддя діагностовано з терміну вагітності: " + self.MaloVoddaDiagnostovanoVTerminVagitnosti
+
+            self.DustressPloda = ''
+            if self.DustressPlodaNoCheckBox.isChecked():
+                self.DustressPloda = self.DustressPloda + '12. Дистрес плода (за доплерометрією): ні.'
+            elif self.DustressPlodaVKompensaciiCheckBox.isChecked():
+                self.DustressPloda = self.DustressPloda + '12. Дистрес плода (за доплерометрією): в стадіі компенсації.'
+            elif self.DustressPlodaVSubKompensaciiCheckBox.isChecked():
+                self.DustressPloda = self.DustressPloda + '12. Дистрес плода (за доплерометрією): в стадіі субкомпенсації.'
+            elif self.DustressPlodaVDekompensaciiCheckBox.isChecked():
+                self.DustressPloda = self.DustressPloda + '12. Дистрес плода (за доплерометрією): в стадіі декомпенсації.'
             else:
-                self.BagatovoddaDiagnostovanoVTerminVagitnosti = "10.1 Багатоводдя діагностовано з терміну вагітності: " + self.BagatovoddaDiagnostovanoVTerminVagitnosti
-
-        self.MaloVodda = ''
-        if self.MaloVoddaNoCheckBox.isChecked():
-            self.MaloVodda = self.MaloVodda + '11. Маловоддя: ні.'
-        elif self.MaloVoddaPomirneCheckBox.isChecked():
-            self.MaloVodda = self.MaloVodda + '11. Маловоддя: помірне.'
-        elif self.MaloVoddaVurageneCheckBox.isChecked():
-            self.MaloVodda = self.MaloVodda + '11. Маловоддя: виражене.'
-        else:
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage(
-                'Необхідно вибрати підходящий варіант маловоддя в пункті "V. Перебіг даної вагітності."!'
-            )
-
-        self.MaloVoddaDiagnostovanoVTerminVagitnosti = '11.1 Маловоддя діагностовано з терміну вагітності: маловоддя не діагностувалося.'
-        if self.MaloVoddaPomirneCheckBox.isChecked(
-        ) or self.MaloVoddaVurageneCheckBox.isChecked():
-            self.MaloVoddaDiagnostovanoVTerminVagitnosti = self.MaloVoddaDiagnostovanoVTerminVagitnostiLineEdit.text(
-            )
-            self.MaloVoddaDiagnostovanoVTerminVagitnosti = self.MaloVoddaDiagnostovanoVTerminVagitnosti.strip(
-            )
-            if self.MaloVoddaDiagnostovanoVTerminVagitnosti == '':
                 self.ErrorCount = self.ErrorCount + 1
                 self.Error_mesage(
-                    'Необхідно термін вагітності на якому було діагностовано маловоддя в пункті "V. Перебіг даної вагітності."!'
+                    'Необхідно вибрати підходящий варіант дистресу плода в пункті "V. Перебіг даної вагітності."!'
                 )
+
+            self.ZatrumkaRozvutkyPloda = ''
+            if self.ZatrumkaRozvutkyPlodaNoCheckBox.isChecked():
+                self.ZatrumkaRozvutkyPloda = self.ZatrumkaRozvutkyPloda + 'ні.'
+            elif self.ZatrumkaRozvutkyPlodaSumetrychnaFormaCheckBox.isChecked():
+                self.ZatrumkaRozvutkyPloda = self.ZatrumkaRozvutkyPloda + 'симетрична форма'
+            elif self.ZatrumkaRozvutkyPlodaAsumetruchnaFormaCheckBox.isChecked():
+                self.ZatrumkaRozvutkyPloda = self.ZatrumkaRozvutkyPloda + 'асиметрична форма'
             else:
-                self.MaloVoddaDiagnostovanoVTerminVagitnosti = "11.1 Маловоддя діагностовано з терміну вагітності: " + self.MaloVoddaDiagnostovanoVTerminVagitnosti
-
-        self.DustressPloda = ''
-        if self.DustressPlodaNoCheckBox.isChecked():
-            self.DustressPloda = self.DustressPloda + '12. Дистрес плода (за доплерометрією): ні.'
-        elif self.DustressPlodaVKompensaciiCheckBox.isChecked():
-            self.DustressPloda = self.DustressPloda + '12. Дистрес плода (за доплерометрією): в стадіі компенсації.'
-        elif self.DustressPlodaVSubKompensaciiCheckBox.isChecked():
-            self.DustressPloda = self.DustressPloda + '12. Дистрес плода (за доплерометрією): в стадіі субкомпенсації.'
-        elif self.DustressPlodaVDekompensaciiCheckBox.isChecked():
-            self.DustressPloda = self.DustressPloda + '12. Дистрес плода (за доплерометрією): в стадіі декомпенсації.'
-        else:
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage(
-                'Необхідно вибрати підходящий варіант дистресу плода в пункті "V. Перебіг даної вагітності."!'
-            )
-
-        self.ZatrumkaRozvutkyPloda = ''
-        if self.ZatrumkaRozvutkyPlodaNoCheckBox.isChecked():
-            self.ZatrumkaRozvutkyPloda = self.ZatrumkaRozvutkyPloda + 'ні.'
-        elif self.ZatrumkaRozvutkyPlodaSumetrychnaFormaCheckBox.isChecked():
-            self.ZatrumkaRozvutkyPloda = self.ZatrumkaRozvutkyPloda + 'симетрична форма'
-        elif self.ZatrumkaRozvutkyPlodaAsumetruchnaFormaCheckBox.isChecked():
-            self.ZatrumkaRozvutkyPloda = self.ZatrumkaRozvutkyPloda + 'асиметрична форма'
-        else:
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage(
-                'Необхідно вибрати підходящий варіант затримки розвитку плода в пункті "V. Перебіг даної вагітності."!'
-            )
-
-        self.ZatrumkaRozvutkyPlodaVTermini = ''
-        if self.ZatrumkaRozvutkyPlodaSumetrychnaFormaCheckBox.isChecked(
-        ) or self.ZatrumkaRozvutkyPlodaAsumetruchnaFormaCheckBox.isChecked():
-            self.ZatrumkaRozvutkyPlodaVTermini = self.ZatrumkaRozvutkyPlodaVTerminiLineEdit.text(
-            )
-            self.ZatrumkaRozvutkyPlodaVTermini = self.ZatrumkaRozvutkyPlodaVTermini.strip(
-            )
-            if self.ZatrumkaRozvutkyPlodaVTermini == '':
                 self.ErrorCount = self.ErrorCount + 1
                 self.Error_mesage(
-                    'Необхідно термін вагітності на якому було діагностовано затримку розвитку плода в пункті "V. Перебіг даної вагітності."!'
+                    'Необхідно вибрати підходящий варіант затримки розвитку плода в пункті "V. Перебіг даної вагітності."!'
                 )
+
+            self.ZatrumkaRozvutkyPlodaVTermini = ''
+            if self.ZatrumkaRozvutkyPlodaSumetrychnaFormaCheckBox.isChecked(
+            ) or self.ZatrumkaRozvutkyPlodaAsumetruchnaFormaCheckBox.isChecked():
+                self.ZatrumkaRozvutkyPlodaVTermini = self.ZatrumkaRozvutkyPlodaVTerminiLineEdit.text(
+                )
+                self.ZatrumkaRozvutkyPlodaVTermini = self.ZatrumkaRozvutkyPlodaVTermini.strip(
+                )
+                if self.ZatrumkaRozvutkyPlodaVTermini == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно термін вагітності на якому було діагностовано затримку розвитку плода в пункті "V. Перебіг даної вагітності."!'
+                    )
+                else:
+                    self.ZatrumkaRozvutkyPlodaVTermini = '; в терміні ' + self.ZatrumkaRozvutkyPlodaVTermini + ' тижнів.'
+            self.ZatrumkaRozvutkyPloda = self.ZatrumkaRozvutkyPloda + self.ZatrumkaRozvutkyPlodaVTermini
+            self.ZatrumkaRozvutkyPloda = self.ZatrumkaRozvutkyPloda.strip()
+            self.ZatrumkaRozvutkyPloda = "13. Затримка росту плода: " + self.ZatrumkaRozvutkyPloda
+
+            self.NajavnistSustemnoiInfekcii = ''
+            if self.NajavnistSustemnoiInfekciiNoCheckBox.isChecked():
+                self.NajavnistSustemnoiInfekcii = '14. Наявність системної інфекції: ні.'
             else:
-                self.ZatrumkaRozvutkyPlodaVTermini = '; в терміні ' + self.ZatrumkaRozvutkyPlodaVTermini + ' тижнів.'
-        self.ZatrumkaRozvutkyPloda = self.ZatrumkaRozvutkyPloda + self.ZatrumkaRozvutkyPlodaVTermini
-        self.ZatrumkaRozvutkyPloda = self.ZatrumkaRozvutkyPloda.strip()
-        self.ZatrumkaRozvutkyPloda = "13. Затримка росту плода: " + self.ZatrumkaRozvutkyPloda
+                self.NajavnistSustemnoiInfekcii = '14. Наявність системної інфекції: так.'
 
-        self.NajavnistSustemnoiInfekcii = ''
-        if self.NajavnistSustemnoiInfekciiNoCheckBox.isChecked():
-            self.NajavnistSustemnoiInfekcii = '14. Наявність системної інфекції: ні.'
-        else:
-            self.NajavnistSustemnoiInfekcii = '14. Наявність системної інфекції: так.'
-
-        self.PatologiaPlacentu = ''
-        if self.PatologiaPlacentuNoCheckBox.isChecked():
-            self.PatologiaPlacentu = '15. Патологія плаценти: ні.'
-        elif self.PatologiaPlacentuGipoplaziaCheckBox.isChecked():
-            self.PatologiaPlacentu = '15. Патологія плаценти: гіпоплазія.'
-        elif self.PatologiaPlacentuGiperplaziaCheckBox.isChecked():
-            self.PatologiaPlacentu = '15. Патологія плаценти: гіперплазія.'
-        else:
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage(
-                'Необхідно вибрати підходящий варіант патології плаценти в пункті "V. Перебіг даної вагітності."!'
-            )
-
-        self.PatologiaLocalizaciiPlacentu = ''
-        if self.PatologiaLocalizaciiPlacentuNoCheckBox.isChecked():
-            self.PatologiaLocalizaciiPlacentu = '15.1. Паталогія  локалізації плаценти: ні.'
-        elif self.PatologiaLocalizaciiPlacentuNuzkaPlacentaciaCheckBox.isChecked(
-        ):
-            self.PatologiaLocalizaciiPlacentu = '15.1. Паталогія  локалізації плаценти: низька плацентація.'
-        elif self.PatologiaLocalizaciiPlacentuKrajovePeredlegannaCheckBox.isChecked(
-        ):
-            self.PatologiaLocalizaciiPlacentu = '15.1. Паталогія  локалізації плаценти: крайове передлежання.'
-        elif self.PatologiaLocalizaciiPlacentuPovnePeredlegannaCheckBox.isChecked(
-        ):
-            self.PatologiaLocalizaciiPlacentu = '15.1. Паталогія  локалізації плаценти: повне передлежання.'
-        else:
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage(
-                'Необхідно вибрати підходящий варіант патології локалізації плаценти в пункті "V. Перебіг даної вагітності."!'
-            )
-
-        self.PeredchasneVadsharyvannaPlacentu = ''
-        if self.PeredchasneVadsharyvannaPlacentuNoCheckBox.isChecked():
-            self.PeredchasneVadsharyvannaPlacentu = '16. Передчасне відшарування плаценти: ні.'
-        else:
-            self.PeredchasneVadsharyvannaPlacentu = '16. Передчасне відшарування плаценти: так.'
-
-        self.HiryrgichniVtyrchannaPidChasVagitnosti = ''
-        if self.HiryrgichniVtyrchannaPidChasVagitnostiNoCheckBox.isChecked():
-            self.HiryrgichniVtyrchannaPidChasVagitnosti = '17. Хірургічні втручання під час вагітності: ні.'
-        else:
-            self.HiryrgichniVtyrchannaPidChasVagitnosti = '17. Хірургічні втручання під час вагітності: так.'
-
-        self.TruvalaImmobilizacia = ''
-        if self.TruvalaImmobilizaciaNoCheckBox.isChecked():
-            self.TruvalaImmobilizacia = '18. Тривала іммобілізація: ні.'
-        else:
-            self.TruvalaImmobilizacia = '18. Тривала іммобілізація: так.'
-
-        self.ZavershennaDannoiVagitnosti = ''
-        if self.ZavershennaDannoiVagitnostiPologuVTerminiCheckBox.isChecked():
-            self.ZavershennaDannoiVagitnosti = self.ZavershennaDannoiVagitnosti + 'Пологи в терміні: '
-            self.ZavershennaDannoiVagitnostiPologuVTermini = self.ZavershennaDannoiVagitnostiPologuVTerminiLineEdit.text(
-            )
-            self.ZavershennaDannoiVagitnostiPologuVTermini = self.ZavershennaDannoiVagitnostiPologuVTermini.strip(
-            )
-            if self.ZavershennaDannoiVagitnostiPologuVTermini == '':
-                self.ErrorCount = self.ErrorCount + 1
-                self.Error_mesage(
-                    'Необхідно вказати термін на якому відбулися пологи в пункті "V. Перебіг даної вагітності."!'
-                )
-            self.ZavershennaDannoiVagitnosti = self.ZavershennaDannoiVagitnosti + self.ZavershennaDannoiVagitnostiPologuVTermini + ' тижнів'
-
-        elif self.ZavershennaDannoiVagitnostiPereryvannaZaMedPokCheckBox.isChecked(
-        ):
-            self.ZavershennaDannoiVagitnosti = self.ZavershennaDannoiVagitnosti + 'Переривання за медичними показаннями в терміні '
-            self.ZavershennaDannoiVagitnostiPereryvannaZaMedPok = self.ZavershennaDannoiVagitnostiPereryvannaZaMedPokLineEdit.text(
-            )
-            self.ZavershennaDannoiVagitnostiPereryvannaZaMedPok = self.ZavershennaDannoiVagitnostiPereryvannaZaMedPok.strip(
-            )
-            if self.ZavershennaDannoiVagitnostiPereryvannaZaMedPok == '':
-                self.ErrorCount = self.ErrorCount + 1
-                self.Error_mesage(
-                    'Необхідно вказати термін на якому відбулося переривання вагітності за медичними показаннями в пункті "V. Перебіг даної вагітності."!'
-                )
-            self.ZavershennaDannoiVagitnosti = self.ZavershennaDannoiVagitnosti + self.ZavershennaDannoiVagitnostiPereryvannaZaMedPok + ' тижнів'
-
-        elif self.ZavershennaDannoiVagitnostiSamovilnuiVukudenCheckBox.isChecked(
-        ):
-            self.ZavershennaDannoiVagitnosti = self.ZavershennaDannoiVagitnosti + 'Самовільний викидень в терміні '
-            self.ZavershennaDannoiVagitnostiSamovilnuiVukuden = self.ZavershennaDannoiVagitnostiSamovilnuiVukudenLineEdit.text(
-            )
-            self.ZavershennaDannoiVagitnostiSamovilnuiVukuden = self.ZavershennaDannoiVagitnostiSamovilnuiVukuden.strip(
-            )
-            if self.ZavershennaDannoiVagitnostiSamovilnuiVukuden == '':
-                self.ErrorCount = self.ErrorCount + 1
-                self.Error_mesage(
-                    'Необхідно вказати термін на якому самовільний викидень в пункті "V. Перебіг даної вагітності."!'
-                )
-            self.ZavershennaDannoiVagitnosti = self.ZavershennaDannoiVagitnosti + self.ZavershennaDannoiVagitnostiSamovilnuiVukuden + ' тижнів'
-
-        else:
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage(
-                'Необхідно вибрати підходящий варіант завершення даної вагітності плаценти в пункті "V. Перебіг даної вагітності."!'
-            )
-        self.ZavershennaDannoiVagitnosti = "19. Завершення даної вагітності: " + self.ZavershennaDannoiVagitnosti
-        self.ZavershennaDannoiVagitnosti = self.ZavershennaDannoiVagitnosti.replace(
-            "'", "''")
-
-        self.ProvedennaProfilaktukuTerapiiTEYPidChasVagitnosti = ''
-        if self.ProvedennaProfilaktukuTerapiiTEYPidChasVagitnostiNoCheckBox.isChecked(
-        ):
-            self.ProvedennaProfilaktukuTerapiiTEYPidChasVagitnosti = '\nVІ. Проведення профілактики/терапії ТЕУ під час вагітності: ні.'
-        else:
-            self.ProvedennaProfilaktukuTerapiiTEYPidChasVagitnosti = '\nVІ. Проведення профілактики/терапії ТЕУ під час вагітності: так.'
-
-        self.PokazuDlaProvedennaProfilaktuky = 'Покази до проведення профілактики: проведення профілактики/терапії ТЕУ під час вагітності не проводилося'
-        if self.ProvedennaProfilaktukuTerapiiTEYPidChasVagitnostiYesCheckBox.isChecked(
-        ):
-            self.PokazuDlaProvedennaProfilaktukyText = self.PokazuDlaProvedennaProfilaktukyLineEdit.text(
-            )
-            self.PokazuDlaProvedennaProfilaktukyText = self.PokazuDlaProvedennaProfilaktukyText.strip(
-            )
-            if self.PokazuDlaProvedennaProfilaktukyText == '':
-                self.ErrorCount = self.ErrorCount + 1
-                self.Error_mesage(
-                    'Необхідно заповнити покази для проведення профілактики в пункті "VІ Проведення профілактики/терапії ТЕУ під час вагітності"!'
-                )
+            self.PatologiaPlacentu = ''
+            if self.PatologiaPlacentuNoCheckBox.isChecked():
+                self.PatologiaPlacentu = '15. Патологія плаценти: ні.'
+            elif self.PatologiaPlacentuGipoplaziaCheckBox.isChecked():
+                self.PatologiaPlacentu = '15. Патологія плаценти: гіпоплазія.'
+            elif self.PatologiaPlacentuGiperplaziaCheckBox.isChecked():
+                self.PatologiaPlacentu = '15. Патологія плаценти: гіперплазія.'
             else:
-                self.PokazuDlaProvedennaProfilaktuky = 'Покази до проведення профілактики: ' + self.PokazuDlaProvedennaProfilaktukyText
-        self.PokazuDlaProvedennaProfilaktuky = self.PokazuDlaProvedennaProfilaktuky.replace(
-            "'", "''")
-
-        self.ElastychnaKompresiaPynktVI = ''
-        if self.ElastychnaKompresiaPynktVINoCheckBox.isChecked():
-            self.ElastychnaKompresiaPynktVI = '1. Еластична компресія: ні.'
-        else:
-            self.ElastychnaKompresiaPynktVI = '1. Еластична компресія: так; клас: '
-            self.ElastychnaKompresiaPynktVILevel = self.ElastychnaKompresiaPynktVILevelLineEdit.text(
-            )
-            self.ElastychnaKompresiaPynktVILevel = self.ElastychnaKompresiaPynktVILevel.strip(
-            )
-            if self.ElastychnaKompresiaPynktVILevel == '':
                 self.ErrorCount = self.ErrorCount + 1
                 self.Error_mesage(
-                    'Необхідно заповнити клас еластичної компрессії в пункті "VІ Проведення профілактики/терапії ТЕУ під час вагітності"!'
+                    'Необхідно вибрати підходящий варіант патології плаценти в пункті "V. Перебіг даної вагітності."!'
                 )
-            self.ElastychnaKompresiaPynktVI = self.ElastychnaKompresiaPynktVI + self.ElastychnaKompresiaPynktVILevel
-        self.ElastychnaKompresiaPynktVI = self.ElastychnaKompresiaPynktVI.replace(
-            "'", "''")
 
-        self.MedukamentoznaProfilaktukaPynktVI = ''
-        if self.MedukamentoznaProfilaktukaPynktVINoCheckBox.isChecked():
-            self.MedukamentoznaProfilaktukaPynktVI = self.MedukamentoznaProfilaktukaPynktVI + '2. Медикаментозна профілактика: ні.'
-        else:
-            self.MedukamentoznaProfilaktukaPynktVI = self.MedukamentoznaProfilaktukaPynktVI + '2. Медикаментозна профілактика: так.'
-
-        self.MedukamentoznaProfilaktukaPynktVINazvaPreperaty = '2.1 Назва препарату: медикаментозна профілактика не проводилась.'
-        if self.MedukamentoznaProfilaktukaPynktVIYesCheckBox.isChecked():
-            self.MedukamentoznaProfilaktukaPynktVINazvaPreperatyText = self.MedukamentoznaProfilaktukaPynktVINazvaPreperatyLineEdit.text(
-            )
-            self.MedukamentoznaProfilaktukaPynktVINazvaPreperatyText = self.MedukamentoznaProfilaktukaPynktVINazvaPreperatyText.strip(
-            )
-            if self.MedukamentoznaProfilaktukaPynktVINazvaPreperatyText == '':
-                self.ErrorCount = self.ErrorCount + 1
-                self.Error_mesage(
-                    'Необхідно заповнити назву препарату для медикаментозної профілактики в пункті "VІ Проведення профілактики/терапії ТЕУ під час вагітності"!'
-                )
+            self.PatologiaLocalizaciiPlacentu = ''
+            if self.PatologiaLocalizaciiPlacentuNoCheckBox.isChecked():
+                self.PatologiaLocalizaciiPlacentu = '15.1. Паталогія  локалізації плаценти: ні.'
+            elif self.PatologiaLocalizaciiPlacentuNuzkaPlacentaciaCheckBox.isChecked(
+            ):
+                self.PatologiaLocalizaciiPlacentu = '15.1. Паталогія  локалізації плаценти: низька плацентація.'
+            elif self.PatologiaLocalizaciiPlacentuKrajovePeredlegannaCheckBox.isChecked(
+            ):
+                self.PatologiaLocalizaciiPlacentu = '15.1. Паталогія  локалізації плаценти: крайове передлежання.'
+            elif self.PatologiaLocalizaciiPlacentuPovnePeredlegannaCheckBox.isChecked(
+            ):
+                self.PatologiaLocalizaciiPlacentu = '15.1. Паталогія  локалізації плаценти: повне передлежання.'
             else:
-                self.MedukamentoznaProfilaktukaPynktVINazvaPreperaty = '2.1 Назва препарату: ' + self.MedukamentoznaProfilaktukaPynktVINazvaPreperatyText
-        self.MedukamentoznaProfilaktukaPynktVINazvaPreperaty = self.MedukamentoznaProfilaktukaPynktVINazvaPreperaty.replace(
-            "'", "''")
-
-        self.MedukamentoznaProfilaktukaPynktVIRegymPrujomy = '2.2 Режим прийому: медикаментозна профілактика не проводилась.'
-        if self.MedukamentoznaProfilaktukaPynktVIYesCheckBox.isChecked():
-            self.MedukamentoznaProfilaktukaPynktVIRegymPrujomyText = self.MedukamentoznaProfilaktukaPynktVIRegymPrujomyLineEdit.text(
-            )
-            self.MedukamentoznaProfilaktukaPynktVIRegymPrujomyText = self.MedukamentoznaProfilaktukaPynktVIRegymPrujomyText.strip(
-            )
-            if self.MedukamentoznaProfilaktukaPynktVIRegymPrujomyText == '':
                 self.ErrorCount = self.ErrorCount + 1
                 self.Error_mesage(
-                    'Необхідно заповнити режим прийому препарату для медикаментозної профілактики в пункті "VІ Проведення профілактики/терапії ТЕУ під час вагітності"!'
+                    'Необхідно вибрати підходящий варіант патології локалізації плаценти в пункті "V. Перебіг даної вагітності."!'
                 )
+
+            self.PeredchasneVadsharyvannaPlacentu = ''
+            if self.PeredchasneVadsharyvannaPlacentuNoCheckBox.isChecked():
+                self.PeredchasneVadsharyvannaPlacentu = '16. Передчасне відшарування плаценти: ні.'
             else:
-                self.MedukamentoznaProfilaktukaPynktVIRegymPrujomy = '2.2 Режим прийому: ' + self.MedukamentoznaProfilaktukaPynktVIRegymPrujomyText
-        self.MedukamentoznaProfilaktukaPynktVIRegymPrujomy = self.MedukamentoznaProfilaktukaPynktVIRegymPrujomy.replace(
-            "'", "''")
+                self.PeredchasneVadsharyvannaPlacentu = '16. Передчасне відшарування плаценти: так.'
 
-        self.MedukamentoznaProfilaktukaPynktVITerminKoluPruznacheno = '2.3 Термін коли призначено: медикаментозна профілактика не проводилась.'
-        if self.MedukamentoznaProfilaktukaPynktVIYesCheckBox.isChecked():
-            self.MedukamentoznaProfilaktukaPynktVITerminKoluPruznachenoText = self.MedukamentoznaProfilaktukaPynktVITerminKoluPruznachenoLineEdit.text(
-            )
-            self.MedukamentoznaProfilaktukaPynktVITerminKoluPruznachenoText = self.MedukamentoznaProfilaktukaPynktVITerminKoluPruznachenoText.strip(
-            )
-            if self.MedukamentoznaProfilaktukaPynktVITerminKoluPruznachenoText == '':
-                self.ErrorCount = self.ErrorCount + 1
-                self.Error_mesage(
-                    'Необхідно заповнити режим прийому препарату для медикаментозної профілактики в пункті "VІ Проведення профілактики/терапії ТЕУ під час вагітності"!'
-                )
+            self.HiryrgichniVtyrchannaPidChasVagitnosti = ''
+            if self.HiryrgichniVtyrchannaPidChasVagitnostiNoCheckBox.isChecked():
+                self.HiryrgichniVtyrchannaPidChasVagitnosti = '17. Хірургічні втручання під час вагітності: ні.'
             else:
-                self.MedukamentoznaProfilaktukaPynktVITerminKoluPruznacheno = '2.3 Термін коли призначено: ' + self.MedukamentoznaProfilaktukaPynktVITerminKoluPruznachenoText
-        self.MedukamentoznaProfilaktukaPynktVITerminKoluPruznacheno = self.MedukamentoznaProfilaktukaPynktVITerminKoluPruznacheno.replace(
-            "'", "''")
+                self.HiryrgichniVtyrchannaPidChasVagitnosti = '17. Хірургічні втручання під час вагітності: так.'
 
-        self.HiryrgichneLikyvannaPynktVI = ''
-        if self.HiryrgichneLikyvannaPynktVINoCheckBox.isChecked():
-            self.HiryrgichneLikyvannaPynktVI = '3. Хірургічне лікування: ні.'
-        else:
-            self.HiryrgichneLikyvannaPynktVI = 'так; назва операції та дата: '
-            self.HiryrgichneLikyvannaNazvaOpericiiPynktVI = self.HiryrgichneLikyvannaNazvaOpericiiPynktVILineEdit.text(
-            )
-            self.HiryrgichneLikyvannaNazvaOpericiiPynktVI = self.HiryrgichneLikyvannaNazvaOpericiiPynktVI.strip(
-            )
-            if self.HiryrgichneLikyvannaNazvaOpericiiPynktVI == '':
-                self.ErrorCount = self.ErrorCount + 1
-                self.Error_mesage(
-                    'Необхідно заповнити назву операції та дату в пункті "VІ Проведення профілактики/терапії ТЕУ під час вагітності"!'
-                )
-            self.HiryrgichneLikyvannaPynktVI = self.HiryrgichneLikyvannaPynktVI + self.HiryrgichneLikyvannaNazvaOpericiiPynktVI
-        self.HiryrgichneLikyvannaPynktVI = self.HiryrgichneLikyvannaPynktVI.replace(
-            "'", "''")
-
-        self.TryvalistProvedennoiProfilaktykyPynktVI = '4. Тривалість проведеної профілактики: проведення профілактики/терапії ТЕУ під час вагітності не проводилося.'
-        if self.ProvedennaProfilaktukuTerapiiTEYPidChasVagitnostiYesCheckBox.isChecked(
-        ):
-            self.TryvalistProvedennoiProfilaktykyPynktVI = ''
-            self.TryvalistProvedennoiProfilaktykyPynktVIText = self.TryvalistProvedennoiProfilaktykyPynktVILineEdit.text(
-            )
-            self.TryvalistProvedennoiProfilaktykyPynktVIText = self.TryvalistProvedennoiProfilaktykyPynktVIText.strip(
-            )
-            if self.TryvalistProvedennoiProfilaktykyPynktVIText == '':
-                self.ErrorCount = self.ErrorCount + 1
-                self.Error_mesage(
-                    'Необхідно заповнити тривалість проведеної профілактики в пункті "VІ Проведення профілактики/терапії ТЕУ під час вагітності"!'
-                )
+            self.TruvalaImmobilizacia = ''
+            if self.TruvalaImmobilizaciaNoCheckBox.isChecked():
+                self.TruvalaImmobilizacia = '18. Тривала іммобілізація: ні.'
             else:
-                self.TryvalistProvedennoiProfilaktykyPynktVI = "4. Тривалість проведеної профілактики: " + self.TryvalistProvedennoiProfilaktykyPynktVIText
-        self.TryvalistProvedennoiProfilaktykyPynktVI = self.TryvalistProvedennoiProfilaktykyPynktVI.replace(
-            "'", "''")
+                self.TruvalaImmobilizacia = '18. Тривала іммобілізація: так.'
 
-        self.YskladneenaVidProfilaktykuPynktVI = ''
-        if self.YskladneenaVidProfilaktykuPynktVINoCheckBox.isChecked():
-            self.YskladneenaVidProfilaktykuPynktVI = '5. Наявність ускладнень від проведеної профілактики: ні.'
-        else:
-            self.YskladneenaVidProfilaktykuPynktVI = '5. Наявність ускладнень від проведеної профілактики: так; Ускладнення: '
-            self.YskladneenaVidProfilaktykuPynktVIText = self.YskladneenaVidProfilaktykuNajavnistPynktVILineEdit.text(
-            )
-            self.YskladneenaVidProfilaktykuPynktVIText = self.YskladneenaVidProfilaktykuPynktVIText.strip(
-            )
-            if self.YskladneenaVidProfilaktykuPynktVIText == '':
+            self.ZavershennaDannoiVagitnosti = ''
+            if self.ZavershennaDannoiVagitnostiPologuVTerminiCheckBox.isChecked():
+                self.ZavershennaDannoiVagitnosti = self.ZavershennaDannoiVagitnosti + 'Пологи в терміні: '
+                self.ZavershennaDannoiVagitnostiPologuVTermini = self.ZavershennaDannoiVagitnostiPologuVTerminiLineEdit.text(
+                )
+                self.ZavershennaDannoiVagitnostiPologuVTermini = self.ZavershennaDannoiVagitnostiPologuVTermini.strip(
+                )
+                if self.ZavershennaDannoiVagitnostiPologuVTermini == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно вказати термін на якому відбулися пологи в пункті "V. Перебіг даної вагітності."!'
+                    )
+                self.ZavershennaDannoiVagitnosti = self.ZavershennaDannoiVagitnosti + self.ZavershennaDannoiVagitnostiPologuVTermini + ' тижнів'
+
+            elif self.ZavershennaDannoiVagitnostiPereryvannaZaMedPokCheckBox.isChecked(
+            ):
+                self.ZavershennaDannoiVagitnosti = self.ZavershennaDannoiVagitnosti + 'Переривання за медичними показаннями в терміні '
+                self.ZavershennaDannoiVagitnostiPereryvannaZaMedPok = self.ZavershennaDannoiVagitnostiPereryvannaZaMedPokLineEdit.text(
+                )
+                self.ZavershennaDannoiVagitnostiPereryvannaZaMedPok = self.ZavershennaDannoiVagitnostiPereryvannaZaMedPok.strip(
+                )
+                if self.ZavershennaDannoiVagitnostiPereryvannaZaMedPok == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно вказати термін на якому відбулося переривання вагітності за медичними показаннями в пункті "V. Перебіг даної вагітності."!'
+                    )
+                self.ZavershennaDannoiVagitnosti = self.ZavershennaDannoiVagitnosti + self.ZavershennaDannoiVagitnostiPereryvannaZaMedPok + ' тижнів'
+
+            elif self.ZavershennaDannoiVagitnostiSamovilnuiVukudenCheckBox.isChecked(
+            ):
+                self.ZavershennaDannoiVagitnosti = self.ZavershennaDannoiVagitnosti + 'Самовільний викидень в терміні '
+                self.ZavershennaDannoiVagitnostiSamovilnuiVukuden = self.ZavershennaDannoiVagitnostiSamovilnuiVukudenLineEdit.text(
+                )
+                self.ZavershennaDannoiVagitnostiSamovilnuiVukuden = self.ZavershennaDannoiVagitnostiSamovilnuiVukuden.strip(
+                )
+                if self.ZavershennaDannoiVagitnostiSamovilnuiVukuden == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно вказати термін на якому самовільний викидень в пункті "V. Перебіг даної вагітності."!'
+                    )
+                self.ZavershennaDannoiVagitnosti = self.ZavershennaDannoiVagitnosti + self.ZavershennaDannoiVagitnostiSamovilnuiVukuden + ' тижнів'
+
+            else:
                 self.ErrorCount = self.ErrorCount + 1
                 self.Error_mesage(
-                    'Необхідно заповнити наявність ускладнень від проведеної профілактики в пункті "VІ Проведення профілактики/терапії ТЕУ під час вагітності"!'
+                    'Необхідно вибрати підходящий варіант завершення даної вагітності плаценти в пункті "V. Перебіг даної вагітності."!'
                 )
-            self.YskladneenaVidProfilaktykuPynktVI = self.YskladneenaVidProfilaktykuPynktVI + self.YskladneenaVidProfilaktykuPynktVIText
-        self.YskladneenaVidProfilaktykuPynktVI = self.YskladneenaVidProfilaktykuPynktVI.replace(
-            "'", "''")
+            self.ZavershennaDannoiVagitnosti = "19. Завершення даної вагітності: " + self.ZavershennaDannoiVagitnosti
+            self.ZavershennaDannoiVagitnosti = self.ZavershennaDannoiVagitnosti.replace(
+                "'", "''")
 
-        self.TerapiyVidminenoZaGodDoPologivPynktVI = '6. Терапію відмінено за: проведення профілактики/терапії ТЕУ під час вагітності не проводилося.'
-        if self.ProvedennaProfilaktukuTerapiiTEYPidChasVagitnostiYesCheckBox.isChecked(
-        ):
-            self.TerapiyVidminenoZaGodDoPologivPynktVIText = self.TerapiyVidminenoZaGodDoPologivPynktVILineEdit.text(
-            )
-            self.TerapiyVidminenoZaGodDoPologivPynktVIText = self.TerapiyVidminenoZaGodDoPologivPynktVIText.strip(
-            )
-            if self.TerapiyVidminenoZaGodDoPologivPynktVIText == '':
+            self.ProvedennaProfilaktukuTerapiiTEYPidChasVagitnosti = ''
+            if self.ProvedennaProfilaktukuTerapiiTEYPidChasVagitnostiNoCheckBox.isChecked(
+            ):
+                self.ProvedennaProfilaktukuTerapiiTEYPidChasVagitnosti = '\nVІ. Проведення профілактики/терапії ТЕУ під час вагітності: ні.'
+            else:
+                self.ProvedennaProfilaktukuTerapiiTEYPidChasVagitnosti = '\nVІ. Проведення профілактики/терапії ТЕУ під час вагітності: так.'
+
+            self.PokazuDlaProvedennaProfilaktuky = 'Покази до проведення профілактики: проведення профілактики/терапії ТЕУ під час вагітності не проводилося'
+            if self.ProvedennaProfilaktukuTerapiiTEYPidChasVagitnostiYesCheckBox.isChecked(
+            ):
+                self.PokazuDlaProvedennaProfilaktukyText = self.PokazuDlaProvedennaProfilaktukyLineEdit.text(
+                )
+                self.PokazuDlaProvedennaProfilaktukyText = self.PokazuDlaProvedennaProfilaktukyText.strip(
+                )
+                if self.PokazuDlaProvedennaProfilaktukyText == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно заповнити покази для проведення профілактики в пункті "VІ Проведення профілактики/терапії ТЕУ під час вагітності"!'
+                    )
+                else:
+                    self.PokazuDlaProvedennaProfilaktuky = 'Покази до проведення профілактики: ' + self.PokazuDlaProvedennaProfilaktukyText
+            self.PokazuDlaProvedennaProfilaktuky = self.PokazuDlaProvedennaProfilaktuky.replace(
+                "'", "''")
+
+            self.ElastychnaKompresiaPynktVI = ''
+            if self.ElastychnaKompresiaPynktVINoCheckBox.isChecked():
+                self.ElastychnaKompresiaPynktVI = '1. Еластична компресія: ні.'
+            else:
+                self.ElastychnaKompresiaPynktVI = '1. Еластична компресія: так; клас: '
+                self.ElastychnaKompresiaPynktVILevel = self.ElastychnaKompresiaPynktVILevelLineEdit.text(
+                )
+                self.ElastychnaKompresiaPynktVILevel = self.ElastychnaKompresiaPynktVILevel.strip(
+                )
+                if self.ElastychnaKompresiaPynktVILevel == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно заповнити клас еластичної компрессії в пункті "VІ Проведення профілактики/терапії ТЕУ під час вагітності"!'
+                    )
+                self.ElastychnaKompresiaPynktVI = self.ElastychnaKompresiaPynktVI + self.ElastychnaKompresiaPynktVILevel
+            self.ElastychnaKompresiaPynktVI = self.ElastychnaKompresiaPynktVI.replace(
+                "'", "''")
+
+            self.MedukamentoznaProfilaktukaPynktVI = ''
+            if self.MedukamentoznaProfilaktukaPynktVINoCheckBox.isChecked():
+                self.MedukamentoznaProfilaktukaPynktVI = self.MedukamentoznaProfilaktukaPynktVI + '2. Медикаментозна профілактика: ні.'
+            else:
+                self.MedukamentoznaProfilaktukaPynktVI = self.MedukamentoznaProfilaktukaPynktVI + '2. Медикаментозна профілактика: так.'
+
+            self.MedukamentoznaProfilaktukaPynktVINazvaPreperaty = '2.1 Назва препарату: медикаментозна профілактика не проводилась.'
+            if self.MedukamentoznaProfilaktukaPynktVIYesCheckBox.isChecked():
+                self.MedukamentoznaProfilaktukaPynktVINazvaPreperatyText = self.MedukamentoznaProfilaktukaPynktVINazvaPreperatyLineEdit.text(
+                )
+                self.MedukamentoznaProfilaktukaPynktVINazvaPreperatyText = self.MedukamentoznaProfilaktukaPynktVINazvaPreperatyText.strip(
+                )
+                if self.MedukamentoznaProfilaktukaPynktVINazvaPreperatyText == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно заповнити назву препарату для медикаментозної профілактики в пункті "VІ Проведення профілактики/терапії ТЕУ під час вагітності"!'
+                    )
+                else:
+                    self.MedukamentoznaProfilaktukaPynktVINazvaPreperaty = '2.1 Назва препарату: ' + self.MedukamentoznaProfilaktukaPynktVINazvaPreperatyText
+            self.MedukamentoznaProfilaktukaPynktVINazvaPreperaty = self.MedukamentoznaProfilaktukaPynktVINazvaPreperaty.replace(
+                "'", "''")
+
+            self.MedukamentoznaProfilaktukaPynktVIRegymPrujomy = '2.2 Режим прийому: медикаментозна профілактика не проводилась.'
+            if self.MedukamentoznaProfilaktukaPynktVIYesCheckBox.isChecked():
+                self.MedukamentoznaProfilaktukaPynktVIRegymPrujomyText = self.MedukamentoznaProfilaktukaPynktVIRegymPrujomyLineEdit.text(
+                )
+                self.MedukamentoznaProfilaktukaPynktVIRegymPrujomyText = self.MedukamentoznaProfilaktukaPynktVIRegymPrujomyText.strip(
+                )
+                if self.MedukamentoznaProfilaktukaPynktVIRegymPrujomyText == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно заповнити режим прийому препарату для медикаментозної профілактики в пункті "VІ Проведення профілактики/терапії ТЕУ під час вагітності"!'
+                    )
+                else:
+                    self.MedukamentoznaProfilaktukaPynktVIRegymPrujomy = '2.2 Режим прийому: ' + self.MedukamentoznaProfilaktukaPynktVIRegymPrujomyText
+            self.MedukamentoznaProfilaktukaPynktVIRegymPrujomy = self.MedukamentoznaProfilaktukaPynktVIRegymPrujomy.replace(
+                "'", "''")
+
+            self.MedukamentoznaProfilaktukaPynktVITerminKoluPruznacheno = '2.3 Термін коли призначено: медикаментозна профілактика не проводилась.'
+            if self.MedukamentoznaProfilaktukaPynktVIYesCheckBox.isChecked():
+                self.MedukamentoznaProfilaktukaPynktVITerminKoluPruznachenoText = self.MedukamentoznaProfilaktukaPynktVITerminKoluPruznachenoLineEdit.text(
+                )
+                self.MedukamentoznaProfilaktukaPynktVITerminKoluPruznachenoText = self.MedukamentoznaProfilaktukaPynktVITerminKoluPruznachenoText.strip(
+                )
+                if self.MedukamentoznaProfilaktukaPynktVITerminKoluPruznachenoText == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно заповнити режим прийому препарату для медикаментозної профілактики в пункті "VІ Проведення профілактики/терапії ТЕУ під час вагітності"!'
+                    )
+                else:
+                    self.MedukamentoznaProfilaktukaPynktVITerminKoluPruznacheno = '2.3 Термін коли призначено: ' + self.MedukamentoznaProfilaktukaPynktVITerminKoluPruznachenoText
+            self.MedukamentoznaProfilaktukaPynktVITerminKoluPruznacheno = self.MedukamentoznaProfilaktukaPynktVITerminKoluPruznacheno.replace(
+                "'", "''")
+
+            self.HiryrgichneLikyvannaPynktVI = ''
+            if self.HiryrgichneLikyvannaPynktVINoCheckBox.isChecked():
+                self.HiryrgichneLikyvannaPynktVI = '3. Хірургічне лікування: ні.'
+            else:
+                self.HiryrgichneLikyvannaPynktVI = 'так; назва операції та дата: '
+                self.HiryrgichneLikyvannaNazvaOpericiiPynktVI = self.HiryrgichneLikyvannaNazvaOpericiiPynktVILineEdit.text(
+                )
+                self.HiryrgichneLikyvannaNazvaOpericiiPynktVI = self.HiryrgichneLikyvannaNazvaOpericiiPynktVI.strip(
+                )
+                if self.HiryrgichneLikyvannaNazvaOpericiiPynktVI == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно заповнити назву операції та дату в пункті "VІ Проведення профілактики/терапії ТЕУ під час вагітності"!'
+                    )
+                self.HiryrgichneLikyvannaPynktVI = self.HiryrgichneLikyvannaPynktVI + self.HiryrgichneLikyvannaNazvaOpericiiPynktVI
+            self.HiryrgichneLikyvannaPynktVI = self.HiryrgichneLikyvannaPynktVI.replace(
+                "'", "''")
+
+            self.TryvalistProvedennoiProfilaktykyPynktVI = '4. Тривалість проведеної профілактики: проведення профілактики/терапії ТЕУ під час вагітності не проводилося.'
+            if self.ProvedennaProfilaktukuTerapiiTEYPidChasVagitnostiYesCheckBox.isChecked(
+            ):
+                self.TryvalistProvedennoiProfilaktykyPynktVI = ''
+                self.TryvalistProvedennoiProfilaktykyPynktVIText = self.TryvalistProvedennoiProfilaktykyPynktVILineEdit.text(
+                )
+                self.TryvalistProvedennoiProfilaktykyPynktVIText = self.TryvalistProvedennoiProfilaktykyPynktVIText.strip(
+                )
+                if self.TryvalistProvedennoiProfilaktykyPynktVIText == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно заповнити тривалість проведеної профілактики в пункті "VІ Проведення профілактики/терапії ТЕУ під час вагітності"!'
+                    )
+                else:
+                    self.TryvalistProvedennoiProfilaktykyPynktVI = "4. Тривалість проведеної профілактики: " + self.TryvalistProvedennoiProfilaktykyPynktVIText
+            self.TryvalistProvedennoiProfilaktykyPynktVI = self.TryvalistProvedennoiProfilaktykyPynktVI.replace(
+                "'", "''")
+
+            self.YskladneenaVidProfilaktykuPynktVI = ''
+            if self.YskladneenaVidProfilaktykuPynktVINoCheckBox.isChecked():
+                self.YskladneenaVidProfilaktykuPynktVI = '5. Наявність ускладнень від проведеної профілактики: ні.'
+            else:
+                self.YskladneenaVidProfilaktykuPynktVI = '5. Наявність ускладнень від проведеної профілактики: так; Ускладнення: '
+                self.YskladneenaVidProfilaktykuPynktVIText = self.YskladneenaVidProfilaktykuNajavnistPynktVILineEdit.text(
+                )
+                self.YskladneenaVidProfilaktykuPynktVIText = self.YskladneenaVidProfilaktykuPynktVIText.strip(
+                )
+                if self.YskladneenaVidProfilaktykuPynktVIText == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно заповнити наявність ускладнень від проведеної профілактики в пункті "VІ Проведення профілактики/терапії ТЕУ під час вагітності"!'
+                    )
+                self.YskladneenaVidProfilaktykuPynktVI = self.YskladneenaVidProfilaktykuPynktVI + self.YskladneenaVidProfilaktykuPynktVIText
+            self.YskladneenaVidProfilaktykuPynktVI = self.YskladneenaVidProfilaktykuPynktVI.replace(
+                "'", "''")
+
+            self.TerapiyVidminenoZaGodDoPologivPynktVI = '6. Терапію відмінено за: проведення профілактики/терапії ТЕУ під час вагітності не проводилося.'
+            if self.ProvedennaProfilaktukuTerapiiTEYPidChasVagitnostiYesCheckBox.isChecked(
+            ):
+                self.TerapiyVidminenoZaGodDoPologivPynktVIText = self.TerapiyVidminenoZaGodDoPologivPynktVILineEdit.text(
+                )
+                self.TerapiyVidminenoZaGodDoPologivPynktVIText = self.TerapiyVidminenoZaGodDoPologivPynktVIText.strip(
+                )
+                if self.TerapiyVidminenoZaGodDoPologivPynktVIText == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно за скільки годин до пологів було відмінено терапію в пункті "VІ Проведення профілактики/терапії ТЕУ під час вагітності"!'
+                    )
+                else:
+                    self.TerapiyVidminenoZaGodDoPologivPynktVI = '6. Терапію відмінено за: ' + self.TerapiyVidminenoZaGodDoPologivPynktVIText
+
+            self.PerebigDanuhPologiv = "\nVII. Перебіг даних пологів."
+
+            self.PologuVaginalni = ''
+            if self.PologuVaginalniNoCheckBox.isChecked():
+                self.PologuVaginalni = '1. Пологи вагінальні: ні.'
+            elif self.PologuVaginalniSpomtanniCheckBox.isChecked():
+                self.PologuVaginalni = '1. Пологи вагінальні: спонтанні.'
+            elif self.PologuVaginalniIndykovaniCheckBox.isChecked():
+                self.PologuVaginalni = '1. Пологи вагінальні: індуковані.'
+            else:
                 self.ErrorCount = self.ErrorCount + 1
                 self.Error_mesage(
-                    'Необхідно за скільки годин до пологів було відмінено терапію в пункті "VІ Проведення профілактики/терапії ТЕУ під час вагітності"!'
+                    'Необхідно вибрати потрібний варіант вагінальних пологів в пункті "VII. Перебіг даних пологів"!'
                 )
+
+            self.PologuAbdominalni = ''
+            if self.PologuAbdominalniNoCheckBox.isChecked():
+                self.PologuAbdominalni = self.PologuAbdominalni + '2. Пологи абдомінальні: ні.'
+            elif self.PologuAbdominalniPlanovuiKRCheckBox.isChecked():
+                self.PologuAbdominalni = self.PologuAbdominalni + '2. Пологи абдомінальні: плановий КР.'
+            elif self.PologuAbdominalniYrgentbuiKRCheckBox.isChecked():
+                self.PologuAbdominalni = self.PologuAbdominalni + '2. Пологи абдомінальні: кргентний КР.'
             else:
-                self.TerapiyVidminenoZaGodDoPologivPynktVI = '6. Терапію відмінено за: ' + self.TerapiyVidminenoZaGodDoPologivPynktVIText
-
-        self.PerebigDanuhPologiv = "\nVII. Перебіг даних пологів."
-
-        self.PologuVaginalni = ''
-        if self.PologuVaginalniNoCheckBox.isChecked():
-            self.PologuVaginalni = '1. Пологи вагінальні: ні.'
-        elif self.PologuVaginalniSpomtanniCheckBox.isChecked():
-            self.PologuVaginalni = '1. Пологи вагінальні: спонтанні.'
-        elif self.PologuVaginalniIndykovaniCheckBox.isChecked():
-            self.PologuVaginalni = '1. Пологи вагінальні: індуковані.'
-        else:
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage(
-                'Необхідно вибрати потрібний варіант вагінальних пологів в пункті "VII. Перебіг даних пологів"!'
-            )
-
-        self.PologuAbdominalni = ''
-        if self.PologuAbdominalniNoCheckBox.isChecked():
-            self.PologuAbdominalni = self.PologuAbdominalni + '2. Пологи абдомінальні: ні.'
-        elif self.PologuAbdominalniPlanovuiKRCheckBox.isChecked():
-            self.PologuAbdominalni = self.PologuAbdominalni + '2. Пологи абдомінальні: плановий КР.'
-        elif self.PologuAbdominalniYrgentbuiKRCheckBox.isChecked():
-            self.PologuAbdominalni = self.PologuAbdominalni + '2. Пологи абдомінальні: кргентний КР.'
-        else:
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage(
-                'Необхідно вибрати потрібний варіант абдомінальних пологів в пункті "VII. Перебіг даних пологів"!'
-            )
-
-        self.PokazannaDlaAbdominalnogoRozrodjenna = ''
-        self.PokazannaDlaAbdominalnogoRozrodjennaText = self.PokazannaDlaAbdominalnogoRozrodjennaLineEdit.text(
-        )
-        self.PokazannaDlaAbdominalnogoRozrodjennaText = self.PokazannaDlaAbdominalnogoRozrodjennaText.strip(
-        )
-        if self.PokazannaDlaAbdominalnogoRozrodjennaText == '':
-            self.PokazannaDlaAbdominalnogoRozrodjenna = '3. Показання до абдомінального розродження: відсутні.'
-        else:
-            self.PokazannaDlaAbdominalnogoRozrodjenna = "3. Показання до абдомінального розродження: " + self.PokazannaDlaAbdominalnogoRozrodjennaText
-        self.PokazannaDlaAbdominalnogoRozrodjenna = self.PokazannaDlaAbdominalnogoRozrodjenna.replace(
-            "'", "''")
-
-        self.PoryshennaPologovoiDialnosti = ''
-        if self.PoryshennaPologovoiDialnostiNoCheckBox.isChecked():
-            self.PoryshennaPologovoiDialnosti = '4. Порушення пологової діяльності: ні.'
-        elif self.PoryshennaPologovoiDialnostiStrimkiPologuCheckBox.isChecked(
-        ):
-            self.PoryshennaPologovoiDialnosti = '4. Порушення пологової діяльності: стрімкі пологи.'
-        elif self.PoryshennaPologovoiDialnostiDuskoordunaciaCheckBox.isChecked(
-        ):
-            self.PoryshennaPologovoiDialnosti = '4. Порушення пологової діяльності: дискоординація.'
-        elif self.PoryshennaPologovoiDialnostiSlabkistCheckBox.isChecked():
-            self.PoryshennaPologovoiDialnosti = '4. Порушення пологової діяльності: слабкість.'
-        else:
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage(
-                'Необхідно вибрати потрібний варіант порушення пологової діяльності в пункті "VII. Перебіг даних пологів"!'
-            )
-
-        self.KorekciaAnomaliiPologovoiDialnosti = ''
-        if self.KorekciaAnomaliiPologovoiDialnostiNoCheckBox.isChecked():
-            self.KorekciaAnomaliiPologovoiDialnosti = '5. Корекція аномалій пологової діяльності: ні.'
-        elif self.KorekciaAnomaliiPologovoiDialnostiBetaMimetukuCheckBox.isChecked(
-        ):
-            self.KorekciaAnomaliiPologovoiDialnosti = '5. Корекція аномалій пологової діяльності: бета-міметики.'
-        elif self.KorekciaAnomaliiPologovoiDialnostiOksutocunCheckBox.isChecked(
-        ):
-            self.KorekciaAnomaliiPologovoiDialnosti = '5. Корекція аномалій пологової діяльності: окситоцин.'
-        elif self.KorekciaAnomaliiPologovoiDialnostiEnzaprostCheckBox.isChecked(
-        ):
-            self.KorekciaAnomaliiPologovoiDialnosti = '5. Корекція аномалій пологової діяльності: ензапрост.'
-        elif self.KorekciaAnomaliiPologovoiDialnostiOksutocunZEnzaprostomCheckBox.isChecked(
-        ):
-            self.KorekciaAnomaliiPologovoiDialnosti = '5. Корекція аномалій пологової діяльності: окситоцин з ензапростом.'
-        else:
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage(
-                'Необхідно вибрати потрібний варіант  корекції аномалій пологової діяльності в пункті "VII. Перебіг даних пологів"!'
-            )
-
-        self.VuluvNavkoloplodovuhVod = ''
-        if self.VuluvNavkoloplodovuhVodSvoechasnuiCheckBox.isChecked():
-            self.VuluvNavkoloplodovuhVod = '6. Вилив навколоплодових вод: своєчасний.'
-        elif self.VuluvNavkoloplodovuhVodRaniiCheckBox.isChecked():
-            self.VuluvNavkoloplodovuhVod = '6. Вилив навколоплодових вод: ранній.'
-        elif self.VuluvNavkoloplodovuhVodPeredchasnuiCheckBox.isChecked():
-            self.VuluvNavkoloplodovuhVod = '6. Вилив навколоплодових вод: передчасний.'
-        else:
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage(
-                'Необхідно вибрати потрібний варіант виливу навколоплодових вод в пункті "VII. Перебіг даних пологів"!'
-            )
-
-        self.DustressPlodaVPologah = ''
-        if self.DustressPlodaVPologahNoCheckBox.isChecked():
-            self.DustressPlodaVPologah = '7. Дистрес плода в пологах: ні.'
-        elif self.DustressPlodaVPologahVIPeriodiCheckBox.isChecked():
-            self.DustressPlodaVPologah = '7. Дистрес плода в пологах: в І періоді.'
-        elif self.DustressPlodaVPologahVIIPeriodiCheckBox.isChecked():
-            self.DustressPlodaVPologah = '7. Дистрес плода в пологах: в ІІ періоді.'
-        else:
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage(
-                'Необхідно вибрати потрібний варіант дистресу плода під час пологів в пункті "VII. Перебіг даних пологів"!'
-            )
-
-        self.GipotonichnaKrovotecha = ''
-        if self.GipotonichnaKrovotechaNoCheckBox.isChecked():
-            self.GipotonichnaKrovotecha = '8. Гіпотонічна кровотеча: ні.'
-        elif self.GipotonichnaKrovotechaVIIIPeriodiCheckBox.isChecked():
-            self.GipotonichnaKrovotecha = '8. Гіпотонічна кровотеча: в ІII періоді'
-        elif self.GipotonichnaKrovotechaVRannomyPislapologovomyPeriodiCheckBox.isChecked(
-        ):
-            self.GipotonichnaKrovotecha = '8. Гіпотонічна кровотеча: в ранньому післяпологовому періоді.'
-        elif self.GipotonichnaKrovotechaVPiznomyPislapologovomyPeriodiCheckBox.isChecked(
-        ):
-            self.GipotonichnaKrovotecha = '8. Гіпотонічна кровотеча: в пізньому післяпологовому періоді.'
-        else:
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage(
-                'Необхідно вибрати потрібний варіант гіпотонічної в пункті "VII. Перебіг даних пологів"!'
-            )
-
-        self.AnomaliiPrukriplennaPlacentu = ''
-        if self.AnomaliiPrukriplennaPlacentuNoCheckBox.isChecked():
-            self.AnomaliiPrukriplennaPlacentu = '9. Аномалії прикріплення плаценти: ні.'
-        elif self.AnomaliiPrukriplennaPlacentuAdherensCheckBox.isChecked():
-            self.AnomaliiPrukriplennaPlacentu = '9. Аномалії прикріплення плаценти: adherens.'
-        elif self.AnomaliiPrukriplennaPlacentuAcretaCheckBox.isChecked():
-            self.AnomaliiPrukriplennaPlacentu = '9. Аномалії прикріплення плаценти: acreta.'
-        elif self.AnomaliiPrukriplennaPlacentuPercretaCheckBox.isChecked():
-            self.AnomaliiPrukriplennaPlacentu = '9. Аномалії прикріплення плаценти: percreta.'
-        else:
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage(
-                'Необхідно вибрати потрібний варіант аномалії прикріплення плаценти в пункті "VII. Перебіг даних пологів"!'
-            )
-
-        self.DefektPoslidy = ''
-        if self.DefektPoslidyNoCheckBox.isChecked():
-            self.DefektPoslidy = '10. Дефект посліду: ні.'
-        else:
-            self.DefektPoslidy = '10. Дефект посліду: так.'
-
-        self.DefektObolonok = ''
-        if self.DefektObolonokNoCheckBox.isChecked():
-            self.DefektObolonok = '11. Дефект оболонок: ні.'
-        else:
-            self.DefektObolonok = '11. Дефект оболонок: так.'
-
-        self.AnomaliiPrukriplennaPypovunu = ''
-        if self.AnomaliiPrukriplennaPypovunuNoCheckBox.isChecked():
-            self.AnomaliiPrukriplennaPypovunu = self.AnomaliiPrukriplennaPypovunu + '12. Аномалії прикріплення пуповини: ні.'
-        else:
-            self.AnomaliiPrukriplennaPypovunu = self.AnomaliiPrukriplennaPypovunu + '12. Аномалії прикріплення пуповини: так.'
-
-        self.OperatuvnaDopomoga = ''
-        if self.OperatuvnaDopomogaNoCheckBox.isChecked():
-            self.OperatuvnaDopomoga = self.OperatuvnaDopomoga + 'ні.'
-        elif self.OperatuvnaDopomogaRychnaReviziaCheckBox.isChecked():
-            self.OperatuvnaDopomoga = self.OperatuvnaDopomoga + 'Ручна ревізія стінок порожнини матки; '
-        elif self.OperatuvnaDopomogaInstrymentalnaReviziaCheckBox.isChecked():
-            self.OperatuvnaDopomoga = self.OperatuvnaDopomoga + 'Інструментальна ревізія стінок порожнини матки; '
-        elif self.OperatuvnaDopomogaRychneVidokremlennaCheckBox.isChecked():
-            self.OperatuvnaDopomoga = self.OperatuvnaDopomoga + 'Ручне відокремлення плаценти та видалення посліду;'
-        else:
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage(
-                'Необхідно вибрати потрібний варіант оперативної допомоги в пункті "VII. Перебіг даних пологів"!'
-            )
-        self.OperatuvnaDopomoga = self.OperatuvnaDopomoga.strip()
-        self.OperatuvnaDopomoga = '13. Оперативна допомога: ' + self.OperatuvnaDopomoga
-
-        self.RozruvuPologovuhShlahiv = ''
-        if self.RozruvuPologovuhShlahivNoCheckBox.isChecked():
-            self.RozruvuPologovuhShlahiv = self.RozruvuPologovuhShlahiv + 'ні.'
-        elif self.RozruvuPologovuhShlahivPromejunuCheckBox.isChecked():
-            self.RozruvuPologovuhShlahiv = self.RozruvuPologovuhShlahiv + 'промежини; '
-        elif self.RozruvuPologovuhShlahivPihvuCheckBox.isChecked():
-            self.RozruvuPologovuhShlahiv = self.RozruvuPologovuhShlahiv + 'піхви; '
-        elif self.RozruvuPologovuhShlahivShuikiMatkuCheckBox.isChecked():
-            self.RozruvuPologovuhShlahiv = self.RozruvuPologovuhShlahiv + 'шийки матки;'
-        else:
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage(
-                'Необхідно вибрати потрібний варіант розриву пологових шляхів в пункті "VII. Перебіг даних пологів"!'
-            )
-        self.StypinRozruvu = ''
-        if self.RozruvuPologovuhShlahivPromejunuCheckBox.isChecked(
-        ) or self.RozruvuPologovuhShlahivPihvuCheckBox.isChecked(
-        ) or self.RozruvuPologovuhShlahivShuikiMatkuCheckBox.isChecked():
-            self.StypinRozruvu = self.StypinRozruvyPologovuhShlahivLineEdit.text(
-            )
-            self.StypinRozruvu = self.StypinRozruvu.strip()
-            self.StypinRozruvu = ' ступінь: ' + self.StypinRozruvu
-
-        self.RozruvuPologovuhShlahiv = self.RozruvuPologovuhShlahiv.strip()
-        self.RozruvuPologovuhShlahiv = '14. Розриви пологових шляхів: ' + self.RozruvuPologovuhShlahiv + self.StypinRozruvu
-
-        self.EpizoAboPerineotomia = ''
-        if self.EpizoAboPerineotomiaNoCheckBox.isChecked():
-            self.EpizoAboPerineotomia = '15. Епізіо- або перінеотомія: ні.'
-        else:
-            self.EpizoAboPerineotomia = '15. Епізіо- або перінеотомія: так.'
-
-        self.KrovovtrataVPologah = ''
-        self.KrovovtrataVPologahText = self.KrovovtrataVPologahLineEdit.text()
-        self.KrovovtrataVPologahText = self.KrovovtrataVPologahText.strip()
-        if self.KrovovtrataVPologahText != '':
-            self.KrovovtrataVPologah = '16. Крововтрата в пологах: ' + self.KrovovtrataVPologahText
-            self.KrovovtrataVPologah = self.KrovovtrataVPologah.strip()
-        else:
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage(
-                'Необхідно заповнити крововтрату в полгах в пункті "VII. Перебіг даних пологів"!'
-            )
-        self.KrovovtrataVPologah = self.KrovovtrataVPologah.replace("'", "''")
-
-        self.TruvalistPologiv = '17. Тривалість пологів загальна: '
-        self.TruvalistPologivZagalnaGodun = self.TruvalistPologivZagalnaGodunLineEdit.text(
-        )
-        self.TruvalistPologivZagalnaGodun = self.TruvalistPologivZagalnaGodun.strip(
-        )
-        if self.TruvalistPologivZagalnaGodun != '':
-            self.TruvalistPologiv = self.TruvalistPologiv + self.TruvalistPologivZagalnaGodun + ' годин '
-
-        self.TruvalistPologivZagalnaHvulun = self.TruvalistPologivZagalnaHvulunLineEdit.text(
-        )
-        self.TruvalistPologivZagalnaHvulun = self.TruvalistPologivZagalnaHvulun.strip(
-        )
-        if self.TruvalistPologivZagalnaHvulun != '':
-            self.TruvalistPologiv = self.TruvalistPologiv + self.TruvalistPologivZagalnaHvulun + ' хвилин '
-        self.TruvalistPologiv = self.TruvalistPologiv.strip()
-        if self.TruvalistPologivZagalnaGodun == '' and self.TruvalistPologivZagalnaHvulun == '':
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage(
-                'Необхідно вказати загальну тривалість пологів в пункті "VII. Перебіг даних пологів"!'
-            )
-
-        self.TruvalistPologiv = self.TruvalistPologiv + '; - Ι період: '
-        self.TruvalistPologivIPeriodGodun = self.TruvalistPologivIPeriodLineEdit.text(
-        )
-        self.TruvalistPologivIPeriodGodun = self.TruvalistPologivIPeriodGodun.strip(
-        )
-        if self.TruvalistPologivIPeriodGodun != '':
-            self.TruvalistPologiv = self.TruvalistPologiv + self.TruvalistPologivIPeriodGodun + ' годин, '
-
-        self.TruvalistPologivIPeriodHvulun = self.TruvalistPologivIPeriodHvulunLineEdit.text(
-        )
-        self.TruvalistPologivIPeriodHvulun = self.TruvalistPologivIPeriodHvulun.strip(
-        )
-        if self.TruvalistPologivIPeriodHvulun != '':
-            self.TruvalistPologiv = self.TruvalistPologiv + self.TruvalistPologivIPeriodHvulun + ' хвилин '
-        self.TruvalistPologiv = self.TruvalistPologiv.strip()
-        if self.TruvalistPologivIPeriodGodun == '' and self.TruvalistPologivIPeriodHvulun == '':
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage(
-                'Необхідно вказати тривалість І періоду пологів в пункті "VII. Перебіг даних пологів"!'
-            )
-
-        self.TruvalistPologiv = self.TruvalistPologiv + '; - ΙI період: '
-        self.TruvalistPologivIIPeriodGodun = self.TruvalistPologivIIPeriodLineEdit.text(
-        )
-        self.TruvalistPologivIIPeriodGodun = self.TruvalistPologivIIPeriodGodun.strip(
-        )
-        if self.TruvalistPologivIIPeriodGodun != '':
-            self.TruvalistPologiv = self.TruvalistPologiv + self.TruvalistPologivIIPeriodGodun + ' годин, '
-
-        self.TruvalistPologivIIPeriodHvulun = self.TruvalistPologivIIPeriodHvulunLineEdit.text(
-        )
-        self.TruvalistPologivIIPeriodHvulun = self.TruvalistPologivIIPeriodHvulun.strip(
-        )
-        if self.TruvalistPologivIIPeriodHvulun != '':
-            self.TruvalistPologiv = self.TruvalistPologiv + self.TruvalistPologivIIPeriodHvulun + ' хвилин '
-        self.TruvalistPologiv = self.TruvalistPologiv.strip()
-        if self.TruvalistPologivIIPeriodGodun == '' and self.TruvalistPologivIIPeriodHvulun == '':
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage(
-                'Необхідно вказати тривалість ІI періоду пологів в пункті "VII. Перебіг даних пологів"!'
-            )
-
-        self.TruvalistPologiv = self.TruvalistPologiv + '; - ΙII період: '
-        self.TruvalistPologivIIIPeriodGodun = self.TruvalistPologivIIIPeriodLineEdit.text(
-        )
-        self.TruvalistPologivIIIPeriodGodun = self.TruvalistPologivIIIPeriodGodun.strip(
-        )
-        if self.TruvalistPologivIIIPeriodGodun != '':
-            self.TruvalistPologiv = self.TruvalistPologiv + self.TruvalistPologivIIIPeriodGodun + ' годин, '
-
-        self.TruvalistPologivIIIPeriodHvulun = self.TruvalistPologivIIIPeriodHvulunLineEdit.text(
-        )
-        self.TruvalistPologivIIIPeriodHvulun = self.TruvalistPologivIIIPeriodHvulun.strip(
-        )
-        if self.TruvalistPologivIIIPeriodHvulun != '':
-            self.TruvalistPologiv = self.TruvalistPologiv + self.TruvalistPologivIIIPeriodHvulun + ' хвилин '
-        self.TruvalistPologiv = self.TruvalistPologiv.strip()
-        if self.TruvalistPologivIIIPeriodGodun == '' and self.TruvalistPologivIIIPeriodHvulun == '':
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage(
-                'Необхідно вказати тривалість ІII періоду пологів в пункті "VII. Перебіг даних пологів"!'
-            )
-
-        self.StanNovonarodgennogoTaNeoPeriodTitleLable = '\nVIII. Стан новонародженого та перебіг раннього неонатального періоду.'
-
-        self.Naroduvsa = '1. Народився: '
-        if self.NaroduvsaGuvuiCheckBox.isChecked():
-            self.Naroduvsa = self.Naroduvsa + 'живий.'
-        else:
-            self.Naroduvsa = self.Naroduvsa + 'мертвий.'
-
-        self.PruchunaMertvonarodgenna = '2. Причина мертвонародження: народився живий.'
-        if self.NaroduvsaMertvuiCheckBox.isChecked():
-            if self.PruchunaMertvonarodgennaAntenatalnaCheckBox.isChecked():
-                self.PruchunaMertvonarodgenna = '2. Причина мертвонародження антенатальна.'
-            else:
-                self.PruchunaMertvonarodgenna = '2. Причина мертвонародження інтранатальна.'
-
-        self.ZrilistNovonarodgennogo = '3. Зрілість новонародженого: '
-        if self.ZrilistNovonarodgennogoDonoshenuiCheckBox.isChecked():
-            self.ZrilistNovonarodgennogo = self.ZrilistNovonarodgennogo + 'доношений.'
-        elif self.ZrilistNovonarodgennogoNedonoshenuiCheckBox.isChecked():
-            self.ZrilistNovonarodgennogo = self.ZrilistNovonarodgennogo + 'недоношений.'
-        elif self.ZrilistNovonarodgennogoPerenoshenuiCheckBox.isChecked():
-            self.ZrilistNovonarodgennogo = self.ZrilistNovonarodgennogo + 'переношений.'
-        else:
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage(
-                'Необхідно вказати зрілість новонародженого в пункті "VIII. Стан новонародженого та перебіг раннього неонатального періоду"!'
-            )
-
-        self.ParametruNovonarodgennogo = ''
-
-        self.MasaNovonarodgenogo = self.MasaNovonarodgenogoLineEdit.text()
-        self.MasaNovonarodgenogo = self.MasaNovonarodgenogo.strip()
-        if self.MasaNovonarodgenogo == '':
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage(
-                'Необхідно вказати масу новонародженого в пункті "VIII. Стан новонародженого та перебіг раннього неонатального періоду"!'
-            )
-
-        self.ZristNovonarodgenogo = self.ZristNovonarodgenogoLineEdit.text()
-        self.ZristNovonarodgenogo = self.ZristNovonarodgenogo.strip()
-        if self.ZristNovonarodgenogo == '':
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage(
-                'Необхідно вказати зріст новонародженого в пункті "VIII. Стан новонародженого та перебіг раннього неонатального періоду"!'
-            )
-
-        self.KoeficientNovonarodgenogo = self.KoeficientNovonarodgenogoLineEdit.text(
-        )
-        self.KoeficientNovonarodgenogo = self.KoeficientNovonarodgenogo.strip()
-        if self.KoeficientNovonarodgenogo == '':
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage(
-                'Необхідно вказати коефіцієнт новонародженого в пункті "VIII. Стан новонародженого та перебіг раннього неонатального періоду"!'
-            )
-        self.ParametruNovonarodgennogo = '4. Маса: ' + self.MasaNovonarodgenogo + '; зріст: ' + self.ZristNovonarodgenogo + '; коефіцієнт: ' + self.KoeficientNovonarodgenogo + '.'
-        self.ParametruNovonarodgennogo = self.ParametruNovonarodgennogo.replace(
-            "'", "''")
-
-        self.GipotrofiaPloda = ''
-        if self.GipotrofiaPlodaNoCheckBox.isChecked():
-            self.GipotrofiaPloda = '4.1. Гіпотрофія плода: ні.'
-        else:
-            self.GipotrofiaPloda = '4.1. Гіпотрофія плода: так.'
-
-        self.OcinkaZaShkaloyApgar = ''
-        self.OcinkaZaShkaloyApgarNaPerHv = self.OcinkaZaShkaloyApgarNaPerHvLineEdit.text(
-        )
-        self.OcinkaZaShkaloyApgarNaPerHv = self.OcinkaZaShkaloyApgarNaPerHv.strip(
-        )
-        if self.OcinkaZaShkaloyApgarNaPerHv == '':
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage(
-                'Необхідно вказати оцінку новонародженого за шкалою апгар на 1 хвилині в пункті "VIII. Стан новонародженого та перебіг раннього неонатального періоду"!'
-            )
-
-        self.OcinkaZaShkaloyApgarNa5Hv = self.OcinkaZaShkaloyApgarNa5HvLineEdit.text(
-        )
-        self.OcinkaZaShkaloyApgarNa5Hv = self.OcinkaZaShkaloyApgarNa5Hv.strip()
-        if self.OcinkaZaShkaloyApgarNa5Hv == '':
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage(
-                'Необхідно вказати оцінку новонародженого за шкалою апгар на 5 хвилині в пункті "VIII. Стан новонародженого та перебіг раннього неонатального періоду"!'
-            )
-
-        self.OcinkaZaShkaloyApgar = '5. Оцінка за шкалою Апгар: на першій хвилині ' + self.OcinkaZaShkaloyApgarNaPerHv + '; на 5 хвилині: ' + self.OcinkaZaShkaloyApgarNa5Hv + '.'
-
-        self.NovonarodjenuiZVadamuRozvutky = ''
-        if self.NovonarodjenuiZVadamuRozvutkyNoCheckBox.isChecked():
-            self.NovonarodjenuiZVadamuRozvutky = '6. Новонароджений з вадами розвиту:  ні.'
-        else:
-            self.NovonarodjenuiZVadamuRozvutkyJakiSame = self.NovonarodjenuiZVadamuRozvutkyJakiSameLineEdit.text(
-            )
-            self.NovonarodjenuiZVadamuRozvutkyJakiSame = self.NovonarodjenuiZVadamuRozvutkyJakiSame.strip(
-            )
-            if self.NovonarodjenuiZVadamuRozvutkyJakiSame == '':
                 self.ErrorCount = self.ErrorCount + 1
                 self.Error_mesage(
-                    'Необхідно вказати з якими саме вадами народився новонароджений в пункті "VIII. Стан новонародженого та перебіг раннього неонатального періоду"!'
+                    'Необхідно вибрати потрібний варіант абдомінальних пологів в пункті "VII. Перебіг даних пологів"!'
                 )
-            else:
-                self.NovonarodjenuiZVadamuRozvutky = '6. Новонароджений з вадами розвиту:  так; які саме: ' + self.NovonarodjenuiZVadamuRozvutkyJakiSame
-        self.NovonarodjenuiZVadamuRozvutky = self.NovonarodjenuiZVadamuRozvutky.replace(
-            "'", "''")
 
-        self.PologovaTravma = ''
-        if self.PologovaTravmaNoCheckBox.isChecked():
-            self.PologovaTravma = '7. Пологова травма:  ні.'
-        else:
-            self.PologovaTravmaJakaSame = self.PologovaTravmaJakaSameLineEdit.text(
+            self.PokazannaDlaAbdominalnogoRozrodjenna = ''
+            self.PokazannaDlaAbdominalnogoRozrodjennaText = self.PokazannaDlaAbdominalnogoRozrodjennaLineEdit.text(
             )
-            self.PologovaTravmaJakaSame = self.PologovaTravmaJakaSame.strip()
-            if self.PologovaTravmaJakaSame == '':
+            self.PokazannaDlaAbdominalnogoRozrodjennaText = self.PokazannaDlaAbdominalnogoRozrodjennaText.strip(
+            )
+            if self.PokazannaDlaAbdominalnogoRozrodjennaText == '':
+                self.PokazannaDlaAbdominalnogoRozrodjenna = '3. Показання до абдомінального розродження: відсутні.'
+            else:
+                self.PokazannaDlaAbdominalnogoRozrodjenna = "3. Показання до абдомінального розродження: " + self.PokazannaDlaAbdominalnogoRozrodjennaText
+            self.PokazannaDlaAbdominalnogoRozrodjenna = self.PokazannaDlaAbdominalnogoRozrodjenna.replace(
+                "'", "''")
+
+            self.PoryshennaPologovoiDialnosti = ''
+            if self.PoryshennaPologovoiDialnostiNoCheckBox.isChecked():
+                self.PoryshennaPologovoiDialnosti = '4. Порушення пологової діяльності: ні.'
+            elif self.PoryshennaPologovoiDialnostiStrimkiPologuCheckBox.isChecked(
+            ):
+                self.PoryshennaPologovoiDialnosti = '4. Порушення пологової діяльності: стрімкі пологи.'
+            elif self.PoryshennaPologovoiDialnostiDuskoordunaciaCheckBox.isChecked(
+            ):
+                self.PoryshennaPologovoiDialnosti = '4. Порушення пологової діяльності: дискоординація.'
+            elif self.PoryshennaPologovoiDialnostiSlabkistCheckBox.isChecked():
+                self.PoryshennaPologovoiDialnosti = '4. Порушення пологової діяльності: слабкість.'
+            else:
                 self.ErrorCount = self.ErrorCount + 1
                 self.Error_mesage(
-                    'Необхідно вказати з якими саме вадами народився новонароджений в пункті "VIII. Стан новонародженого та перебіг раннього неонатального періоду"!'
+                    'Необхідно вибрати потрібний варіант порушення пологової діяльності в пункті "VII. Перебіг даних пологів"!'
                 )
+
+            self.KorekciaAnomaliiPologovoiDialnosti = ''
+            if self.KorekciaAnomaliiPologovoiDialnostiNoCheckBox.isChecked():
+                self.KorekciaAnomaliiPologovoiDialnosti = '5. Корекція аномалій пологової діяльності: ні.'
+            elif self.KorekciaAnomaliiPologovoiDialnostiBetaMimetukuCheckBox.isChecked(
+            ):
+                self.KorekciaAnomaliiPologovoiDialnosti = '5. Корекція аномалій пологової діяльності: бета-міметики.'
+            elif self.KorekciaAnomaliiPologovoiDialnostiOksutocunCheckBox.isChecked(
+            ):
+                self.KorekciaAnomaliiPologovoiDialnosti = '5. Корекція аномалій пологової діяльності: окситоцин.'
+            elif self.KorekciaAnomaliiPologovoiDialnostiEnzaprostCheckBox.isChecked(
+            ):
+                self.KorekciaAnomaliiPologovoiDialnosti = '5. Корекція аномалій пологової діяльності: ензапрост.'
+            elif self.KorekciaAnomaliiPologovoiDialnostiOksutocunZEnzaprostomCheckBox.isChecked(
+            ):
+                self.KorekciaAnomaliiPologovoiDialnosti = '5. Корекція аномалій пологової діяльності: окситоцин з ензапростом.'
             else:
-                self.PologovaTravma = '7. Пологова травма:  так; якa саме: ' + self.PologovaTravmaJakaSame
-        self.PologovaTravma = self.PologovaTravma.replace("'", "''")
-
-        self.SDR = ''
-        if self.SDRNoCheckBox.isChecked():
-            self.SDR = '8. СДР: ні.'
-        else:
-            self.SDR = '8. СДР: так.'
-
-        self.VnytrishnoytrobneInfikyvanna = ''
-        if self.VnytrishnoytrobneInfikyvannaNoCheckBox.isChecked():
-            self.VnytrishnoytrobneInfikyvanna = '9. Внутрішньоутробне інфікування: ні.'
-        else:
-            self.VnytrishnoytrobneInfikyvanna = '9. Внутрішньоутробне інфікування: так.'
-
-        self.GemoragichniYskladnenna = ''
-        if self.GemoragichniYskladnennaNoCheckBox.isChecked():
-            self.GemoragichniYskladnenna = '10. Геморагічні ускладнення: ні.'
-        else:
-            self.GemoragichniYskladnenna = '10. Геморагічні ускладнення: так.'
-
-        self.Anemia = ''
-        if self.AnemiaNoCheckBox.isChecked():
-            self.Anemia = '11. Aнемія: ні.'
-        elif self.AnemiaIStypenaCheckBox.isChecked():
-            self.Anemia = '11. Aнемія: І ступеня.'
-        elif self.AnemiaIIStypenaCheckBox.isChecked():
-            self.Anemia = '11. Aнемія: ІІ ступеня.'
-        elif self.AnemiaIIIStypenaCheckBox.isChecked():
-            self.Anemia = '11. Aнемія: ІІІ ступеня.'
-        else:
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage(
-                'Необхідно вказати підходящий варіант анемії в пункті "VIII. Стан новонародженого та перебіг раннього неонатального періоду"!'
-            )
-
-        self.GiperBilirybinemia = ''
-        if self.GiperBilirybinemiaNoCheckBox.isChecked():
-            self.GiperBilirybinemia = '12. Гіпербілірубінемія: ні;'
-        else:
-            self.GiperBilirybinemiaRivenBilirybiny = self.GiperBilirybinemiaRivenBilirybinyLineEdit.text(
-            )
-            self.GiperBilirybinemiaRivenBilirybiny = self.GiperBilirybinemiaRivenBilirybiny.strip(
-            )
-            if self.GiperBilirybinemiaRivenBilirybiny == '':
                 self.ErrorCount = self.ErrorCount + 1
                 self.Error_mesage(
-                    'Необхідно вказати рівень білірубіну в пункті "VIII. Стан новонародженого та перебіг раннього неонатального періоду"!'
+                    'Необхідно вибрати потрібний варіант  корекції аномалій пологової діяльності в пункті "VII. Перебіг даних пологів"!'
                 )
+
+            self.VuluvNavkoloplodovuhVod = ''
+            if self.VuluvNavkoloplodovuhVodSvoechasnuiCheckBox.isChecked():
+                self.VuluvNavkoloplodovuhVod = '6. Вилив навколоплодових вод: своєчасний.'
+            elif self.VuluvNavkoloplodovuhVodRaniiCheckBox.isChecked():
+                self.VuluvNavkoloplodovuhVod = '6. Вилив навколоплодових вод: ранній.'
+            elif self.VuluvNavkoloplodovuhVodPeredchasnuiCheckBox.isChecked():
+                self.VuluvNavkoloplodovuhVod = '6. Вилив навколоплодових вод: передчасний.'
             else:
-                self.GiperBilirybinemia = '12. Гіпербілірубінемія: так; рівень білірубіну: ' + self.GiperBilirybinemiaRivenBilirybiny + '.'
-        self.GiperBilirybinemia = self.GiperBilirybinemia.replace("'", "''")
-
-        self.Asfiksia = ''
-        if self.AsfiksiaNoCheckBox.isChecked():
-            self.Asfiksia = '13. Aсфіксія: ні.'
-        elif self.AsfiksiaLegkaCheckBox.isChecked():
-            self.Asfiksia = '13. Aсфіксія: легка.'
-        elif self.AsfiksiaSerednaCheckBox.isChecked():
-            self.Asfiksia = '13. Aсфіксія: середня.'
-        elif self.AsfiksiaVajkaCheckBox.isChecked():
-            self.Asfiksia = '13. Aсфіксія: важка.'
-        else:
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage(
-                'Необхідно вказати підходящий варіант асфіксії в пункті "VIII. Стан новонародженого та перебіг раннього неонатального періоду"!'
-            )
-
-        self.PoryshennaKardioRespiratornoiAdaptacii = ''
-        if self.PoryshennaKardioRespiratornoiAdaptaciiNoCheckBox.isChecked():
-            self.PoryshennaKardioRespiratornoiAdaptacii = '14. Порушення кардіо-респіраторної адаптації: ні.'
-        else:
-            self.PoryshennaKardioRespiratornoiAdaptacii = '14. Порушення кардіо-респіраторної адаптації: так.'
-
-        self.VtrataMasuTila = '15. Втрата маси тіла: ні.'
-        self.VtrataMasuTilaText = self.VtrataMasuTilaLineEdit.text()
-        self.VtrataMasuTilaText = self.VtrataMasuTilaText.strip()
-        if self.VtrataMasuTilaText != '':
-            self.VtrataMasuTila = '15. Втрата маси тіла: ' + self.VtrataMasuTilaText
-        self.VtrataMasuTila = self.VtrataMasuTila.replace("'", "''")
-
-        self.VitaminKVvedeno = ''
-        if self.VitaminKVvedenoNoCheckBox.isChecked():
-            self.VitaminKVvedeno = '16. Вітамін К введено: ні.'
-        else:
-            self.VitaminKVvedenoText = self.VitaminKVvedenoTerminLineEdit.text(
-            )
-            self.VitaminKVvedenoText = self.VitaminKVvedenoText.strip()
-            if self.VitaminKVvedenoText == '':
                 self.ErrorCount = self.ErrorCount + 1
                 self.Error_mesage(
-                    'Необхідно вказати термін на якому було введено вітамін К в пункті "VIII. Стан новонародженого та перебіг раннього неонатального періоду"!'
+                    'Необхідно вибрати потрібний варіант виливу навколоплодових вод в пункті "VII. Перебіг даних пологів"!'
                 )
+
+            self.DustressPlodaVPologah = ''
+            if self.DustressPlodaVPologahNoCheckBox.isChecked():
+                self.DustressPlodaVPologah = '7. Дистрес плода в пологах: ні.'
+            elif self.DustressPlodaVPologahVIPeriodiCheckBox.isChecked():
+                self.DustressPlodaVPologah = '7. Дистрес плода в пологах: в І періоді.'
+            elif self.DustressPlodaVPologahVIIPeriodiCheckBox.isChecked():
+                self.DustressPlodaVPologah = '7. Дистрес плода в пологах: в ІІ періоді.'
             else:
-                self.VitaminKVvedeno = "16. Вітамін К введено: так; в терміні: " + self.VitaminKVvedenoText + '.'
-        self.VitaminKVvedeno = self.VitaminKVvedeno.replace("'", "''")
-
-        self.VupusanuiNa = ''
-        self.VupusanuiNaText = self.VupusanuiNaLineEdit.text()
-        self.VupusanuiNaText = self.VupusanuiNaText.strip()
-        if self.VupusanuiNaText != '':
-            self.VupusanuiNa = '17. Виписаний на: ' + self.VupusanuiNaText + ' добу.'
-        else:
-            self.ErrorCount = self.ErrorCount + 1
-            self.Error_mesage(
-                'Необхідно вказати добу на яку було виписано в пункті "VIII. Стан новонародженого та перебіг раннього неонатального періоду"!'
-            )
-        self.VupusanuiNa = self.VupusanuiNa.replace("'", "''")
-
-        self.NeonatalnaSmert = ''
-        if self.NeonatalnaSmertNoCheckBox.isChecked():
-            self.NeonatalnaSmert = '18. Неонатальна смерть: ні.'
-        else:
-            self.NeonatalnaSmertText = self.NeonatalnaSmertTerminLineEdit.text(
-            )
-            self.NeonatalnaSmertText = self.NeonatalnaSmertText.strip()
-            if self.NeonatalnaSmertText == '':
                 self.ErrorCount = self.ErrorCount + 1
                 self.Error_mesage(
-                    'Необхідно вказати добу на яку відбулася неонатальна смерть в пункті "VIII. Стан новонародженого та перебіг раннього неонатального періоду"!'
+                    'Необхідно вибрати потрібний варіант дистресу плода під час пологів в пункті "VII. Перебіг даних пологів"!'
                 )
-            else:
-                self.NeonatalnaSmert = '18. Неонатальна смерть: так; на добу: ' + self.NeonatalnaSmertText
-        self.NeonatalnaSmert = self.NeonatalnaSmert.replace("'", "''")
 
-        self.PruchunaSmertiZaRezyltatomAytopsii = '19. Причина смерті за результатами аутопсії: неонатальної смерті не було.'
-        if self.NeonatalnaSmertYesCheckBox.isChecked():
-            self.PruchunaSmertiZaRezyltatomAytopsiiText = self.PruchunaSmertiZaRezyltatomAytopsiiLineEdit.text(
-            )
-            self.PruchunaSmertiZaRezyltatomAytopsiiText = self.PruchunaSmertiZaRezyltatomAytopsiiText.strip(
-            )
-            if self.PruchunaSmertiZaRezyltatomAytopsiiText == '':
+            self.GipotonichnaKrovotecha = ''
+            if self.GipotonichnaKrovotechaNoCheckBox.isChecked():
+                self.GipotonichnaKrovotecha = '8. Гіпотонічна кровотеча: ні.'
+            elif self.GipotonichnaKrovotechaVIIIPeriodiCheckBox.isChecked():
+                self.GipotonichnaKrovotecha = '8. Гіпотонічна кровотеча: в ІII періоді'
+            elif self.GipotonichnaKrovotechaVRannomyPislapologovomyPeriodiCheckBox.isChecked(
+            ):
+                self.GipotonichnaKrovotecha = '8. Гіпотонічна кровотеча: в ранньому післяпологовому періоді.'
+            elif self.GipotonichnaKrovotechaVPiznomyPislapologovomyPeriodiCheckBox.isChecked(
+            ):
+                self.GipotonichnaKrovotecha = '8. Гіпотонічна кровотеча: в пізньому післяпологовому періоді.'
+            else:
                 self.ErrorCount = self.ErrorCount + 1
                 self.Error_mesage(
-                    'Необхідно вказати причину смерті за результатами аутопсії в пункті "VIII. Стан новонародженого та перебіг раннього неонатального періоду"!'
+                    'Необхідно вибрати потрібний варіант гіпотонічної в пункті "VII. Перебіг даних пологів"!'
                 )
+
+            self.AnomaliiPrukriplennaPlacentu = ''
+            if self.AnomaliiPrukriplennaPlacentuNoCheckBox.isChecked():
+                self.AnomaliiPrukriplennaPlacentu = '9. Аномалії прикріплення плаценти: ні.'
+            elif self.AnomaliiPrukriplennaPlacentuAdherensCheckBox.isChecked():
+                self.AnomaliiPrukriplennaPlacentu = '9. Аномалії прикріплення плаценти: adherens.'
+            elif self.AnomaliiPrukriplennaPlacentuAcretaCheckBox.isChecked():
+                self.AnomaliiPrukriplennaPlacentu = '9. Аномалії прикріплення плаценти: acreta.'
+            elif self.AnomaliiPrukriplennaPlacentuPercretaCheckBox.isChecked():
+                self.AnomaliiPrukriplennaPlacentu = '9. Аномалії прикріплення плаценти: percreta.'
             else:
-                self.PruchunaSmertiZaRezyltatomAytopsii = '19. Причина смерті за результатами аутопсії: ' + self.PruchunaSmertiZaRezyltatomAytopsiiText
-        self.PruchunaSmertiZaRezyltatomAytopsii = self.PruchunaSmertiZaRezyltatomAytopsii.replace(
-            "'", "''")
-
-        self.PislapologovuiPeriod = '\nІX.Післяпологовий період.'
-
-        self.PislapologovuiPerebig = ''
-        if self.PislapologovuiPerebigNoCheckBox.isChecked():
-            self.PislapologovuiPerebig = '1. Перебіг: нормальний.'
-        else:
-            self.PislapologovuiPerebig = '1. Перебіг: ускладнений.'
-
-        self.ProfilaktukaTerapiaTEYPynktI = ''
-        if self.ProfilaktukaTerapiaTEYPynktIXNoCheckBox.isChecked():
-            self.ProfilaktukaTerapiaTEYPynktI = '2. Чи проводилась профілактика/терапія ТЕУ: ні.'
-        else:
-            self.ProfilaktukaTerapiaTEYPynktI = '2. Чи проводилась профілактика/терапія ТЕУ: так.'
-
-        self.ElastuchnaKompressiaPynktIX = ''
-        if self.ElastuchnaKompressiaPynktIXNoCheckBox.isChecked():
-            self.ElastuchnaKompressiaPynktIX = '2.1. Еластична компресія: ні.'
-        else:
-            self.ElastuchnaKompressiaPynktIXText = self.ElastuchnaKompressiaPynktIXKlasLineEdit.text(
-            )
-            self.ElastuchnaKompressiaPynktIXText = self.ElastuchnaKompressiaPynktIXText.strip(
-            )
-            if self.ElastuchnaKompressiaPynktIXText == '':
                 self.ErrorCount = self.ErrorCount + 1
                 self.Error_mesage(
-                    'Необхідно вказати клас еластичної компресії в пункті "ІХ.Післяпологовий період"!'
+                    'Необхідно вибрати потрібний варіант аномалії прикріплення плаценти в пункті "VII. Перебіг даних пологів"!'
                 )
+
+            self.DefektPoslidy = ''
+            if self.DefektPoslidyNoCheckBox.isChecked():
+                self.DefektPoslidy = '10. Дефект посліду: ні.'
             else:
-                self.ElastuchnaKompressiaPynktIX = '2.1. Еластична компресія: так; клас ' + self.ElastuchnaKompressiaPynktIXText
-        self.ElastuchnaKompressiaPynktIX = self.ElastuchnaKompressiaPynktIX.replace(
-            "'", "''")
+                self.DefektPoslidy = '10. Дефект посліду: так.'
 
-        self.MedukamentoznaProfilaktukaPynktIX = ''
-        if self.MedukamentoznaProfilaktukaPynktIXNoCheckBox.isChecked():
-            self.MedukamentoznaProfilaktukaPynktIX = '2.2. Медикаментозна профілактика/терапія: ні.'
-        else:
-            self.MedukamentoznaProfilaktukaPynktIX = '2.2. Медикаментозна профілактика/терапія: так.'
+            self.DefektObolonok = ''
+            if self.DefektObolonokNoCheckBox.isChecked():
+                self.DefektObolonok = '11. Дефект оболонок: ні.'
+            else:
+                self.DefektObolonok = '11. Дефект оболонок: так.'
 
-        self.MedukamentoznaProfilaktukaPynktIXNazvaPreparaty = '2.2.1. Назва препарата: медикаментозна профілактика/терапія не проводилася.'
-        if self.MedukamentoznaProfilaktukaPynktIXYesCheckBox.isChecked():
-            self.MedukamentoznaProfilaktukaPynktIXNazvaPreparatyText = self.MedukamentoznaProfilaktukaPynktIXNazvaPreparatyLineEdit.text(
-            )
-            self.MedukamentoznaProfilaktukaPynktIXNazvaPreparatyText = self.MedukamentoznaProfilaktukaPynktIXNazvaPreparatyText.strip(
-            )
-            if self.MedukamentoznaProfilaktukaPynktIXNazvaPreparatyText == '':
+            self.AnomaliiPrukriplennaPypovunu = ''
+            if self.AnomaliiPrukriplennaPypovunuNoCheckBox.isChecked():
+                self.AnomaliiPrukriplennaPypovunu = self.AnomaliiPrukriplennaPypovunu + '12. Аномалії прикріплення пуповини: ні.'
+            else:
+                self.AnomaliiPrukriplennaPypovunu = self.AnomaliiPrukriplennaPypovunu + '12. Аномалії прикріплення пуповини: так.'
+
+            self.OperatuvnaDopomoga = ''
+            if self.OperatuvnaDopomogaNoCheckBox.isChecked():
+                self.OperatuvnaDopomoga = self.OperatuvnaDopomoga + 'ні.'
+            elif self.OperatuvnaDopomogaRychnaReviziaCheckBox.isChecked():
+                self.OperatuvnaDopomoga = self.OperatuvnaDopomoga + 'Ручна ревізія стінок порожнини матки; '
+            elif self.OperatuvnaDopomogaInstrymentalnaReviziaCheckBox.isChecked():
+                self.OperatuvnaDopomoga = self.OperatuvnaDopomoga + 'Інструментальна ревізія стінок порожнини матки; '
+            elif self.OperatuvnaDopomogaRychneVidokremlennaCheckBox.isChecked():
+                self.OperatuvnaDopomoga = self.OperatuvnaDopomoga + 'Ручне відокремлення плаценти та видалення посліду;'
+            else:
                 self.ErrorCount = self.ErrorCount + 1
                 self.Error_mesage(
-                    'Необхідно вказати назву препарату в пункті "ІХ.Післяпологовий період"!'
+                    'Необхідно вибрати потрібний варіант оперативної допомоги в пункті "VII. Перебіг даних пологів"!'
                 )
-            else:
-                self.MedukamentoznaProfilaktukaPynktIXNazvaPreparaty = '2.2.1. Назва препарата: ' + self.MedukamentoznaProfilaktukaPynktIXNazvaPreparatyText
-        self.MedukamentoznaProfilaktukaPynktIXNazvaPreparaty = self.MedukamentoznaProfilaktukaPynktIXNazvaPreparaty.replace(
-            "'", "''")
+            self.OperatuvnaDopomoga = self.OperatuvnaDopomoga.strip()
+            self.OperatuvnaDopomoga = '13. Оперативна допомога: ' + self.OperatuvnaDopomoga
 
-        self.MedukamentoznaProfilaktukaPynktIXRegumPrujomy = '2.2.2. Режим прийому: медикаментозна профілактика/терапія не проводилася.'
-        if self.MedukamentoznaProfilaktukaPynktIXYesCheckBox.isChecked():
-            self.MedukamentoznaProfilaktukaPynktIXRegumPrujomyText = self.MedukamentoznaProfilaktukaPynktIXRegumPrujomyLineEdit.text(
-            )
-            self.MedukamentoznaProfilaktukaPynktIXRegumPrujomyText = self.MedukamentoznaProfilaktukaPynktIXRegumPrujomyText.strip(
-            )
-            if self.MedukamentoznaProfilaktukaPynktIXRegumPrujomyText == '':
+            self.RozruvuPologovuhShlahiv = ''
+            if self.RozruvuPologovuhShlahivNoCheckBox.isChecked():
+                self.RozruvuPologovuhShlahiv = self.RozruvuPologovuhShlahiv + 'ні.'
+            elif self.RozruvuPologovuhShlahivPromejunuCheckBox.isChecked():
+                self.RozruvuPologovuhShlahiv = self.RozruvuPologovuhShlahiv + 'промежини; '
+            elif self.RozruvuPologovuhShlahivPihvuCheckBox.isChecked():
+                self.RozruvuPologovuhShlahiv = self.RozruvuPologovuhShlahiv + 'піхви; '
+            elif self.RozruvuPologovuhShlahivShuikiMatkuCheckBox.isChecked():
+                self.RozruvuPologovuhShlahiv = self.RozruvuPologovuhShlahiv + 'шийки матки;'
+            else:
                 self.ErrorCount = self.ErrorCount + 1
                 self.Error_mesage(
-                    'Необхідно вказати режим прийому препарату в пункті "ІХ.Післяпологовий період"!'
+                    'Необхідно вибрати потрібний варіант розриву пологових шляхів в пункті "VII. Перебіг даних пологів"!'
                 )
-            else:
-                self.MedukamentoznaProfilaktukaPynktIXRegumPrujomy = '2.2.2. Режим прийому: ' + self.MedukamentoznaProfilaktukaPynktIXRegumPrujomyText
-        self.MedukamentoznaProfilaktukaPynktIXRegumPrujomy = self.MedukamentoznaProfilaktukaPynktIXRegumPrujomy.replace(
-            "'", "''")
+            self.StypinRozruvu = ''
+            if self.RozruvuPologovuhShlahivPromejunuCheckBox.isChecked(
+            ) or self.RozruvuPologovuhShlahivPihvuCheckBox.isChecked(
+            ) or self.RozruvuPologovuhShlahivShuikiMatkuCheckBox.isChecked():
+                self.StypinRozruvu = self.StypinRozruvyPologovuhShlahivLineEdit.text(
+                )
+                self.StypinRozruvu = self.StypinRozruvu.strip()
+                self.StypinRozruvu = ' ступінь: ' + self.StypinRozruvu
 
-        self.MedukamentoznaProfilaktukaPynktIXTerminKoluPruznacheno = '2.2.3. Термін коли призначено: медикаментозна профілактика/терапія не проводилася.'
-        if self.MedukamentoznaProfilaktukaPynktIXYesCheckBox.isChecked():
-            self.MedukamentoznaProfilaktukaPynktITerminKoluPruznachenoText = self.MedukamentoznaProfilaktukaPynktIXTerminKoluPruznachenoLineEdit.text(
-            )
-            self.MedukamentoznaProfilaktukaPynktITerminKoluPruznachenoText = self.MedukamentoznaProfilaktukaPynktITerminKoluPruznachenoText.strip(
-            )
-            if self.MedukamentoznaProfilaktukaPynktITerminKoluPruznachenoText == '':
+            self.RozruvuPologovuhShlahiv = self.RozruvuPologovuhShlahiv.strip()
+            self.RozruvuPologovuhShlahiv = '14. Розриви пологових шляхів: ' + self.RozruvuPologovuhShlahiv + self.StypinRozruvu
+
+            self.EpizoAboPerineotomia = ''
+            if self.EpizoAboPerineotomiaNoCheckBox.isChecked():
+                self.EpizoAboPerineotomia = '15. Епізіо- або перінеотомія: ні.'
+            else:
+                self.EpizoAboPerineotomia = '15. Епізіо- або перінеотомія: так.'
+
+            self.KrovovtrataVPologah = ''
+            self.KrovovtrataVPologahText = self.KrovovtrataVPologahLineEdit.text()
+            self.KrovovtrataVPologahText = self.KrovovtrataVPologahText.strip()
+            if self.KrovovtrataVPologahText != '':
+                self.KrovovtrataVPologah = '16. Крововтрата в пологах: ' + self.KrovovtrataVPologahText
+                self.KrovovtrataVPologah = self.KrovovtrataVPologah.strip()
+            else:
                 self.ErrorCount = self.ErrorCount + 1
                 self.Error_mesage(
-                    'Необхідно вказати термін коли призначено препарат в пункті "ІХ.Післяпологовий період"!'
+                    'Необхідно заповнити крововтрату в полгах в пункті "VII. Перебіг даних пологів"!'
                 )
-            else:
-                self.MedukamentoznaProfilaktukaPynktIXTerminKoluPruznacheno = '2.2.3. Термін коли призначено: ' + self.MedukamentoznaProfilaktukaPynktITerminKoluPruznachenoText
-        self.MedukamentoznaProfilaktukaPynktIXTerminKoluPruznacheno = self.MedukamentoznaProfilaktukaPynktIXTerminKoluPruznacheno.replace(
-            "'", "''")
+            self.KrovovtrataVPologah = self.KrovovtrataVPologah.replace("'", "''")
 
-        self.HiryrgichneLikyvannaPynktIX = ''
-        if self.HiryrgichneLikyvannaPynktIXNoCheckBox.isChecked():
-            self.HiryrgichneLikyvannaPynktIX = '2.3. Хірургічне лікування: ні.'
-        else:
-            self.HiryrgichneLikyvannaPynktIX = '2.3. Хірургічне лікування: так.'
+            self.TruvalistPologiv = '17. Тривалість пологів загальна: '
+            self.TruvalistPologivZagalnaGodun = self.TruvalistPologivZagalnaGodunLineEdit.text(
+            )
+            self.TruvalistPologivZagalnaGodun = self.TruvalistPologivZagalnaGodun.strip(
+            )
+            if self.TruvalistPologivZagalnaGodun != '':
+                self.TruvalistPologiv = self.TruvalistPologiv + self.TruvalistPologivZagalnaGodun + ' годин '
 
-        self.HiryrgichneLikyvannaPynktIXTerminNazvaOperacii = '2.3.1. Назва операції та дата: хірургічне лікування не проводилося.'
-        if self.HiryrgichneLikyvannaPynktIXYesCheckBox.isChecked():
-            self.HiryrgichneLikyvannaPynktIXTerminNazvaOperaciiText = self.HiryrgichneLikyvannaPynktIXTerminNazvaOperaciiLineEdit.text(
+            self.TruvalistPologivZagalnaHvulun = self.TruvalistPologivZagalnaHvulunLineEdit.text(
             )
-            self.HiryrgichneLikyvannaPynktIXTerminNazvaOperaciiText = self.HiryrgichneLikyvannaPynktIXTerminNazvaOperaciiText.strip(
+            self.TruvalistPologivZagalnaHvulun = self.TruvalistPologivZagalnaHvulun.strip(
             )
-            if self.HiryrgichneLikyvannaPynktIXTerminNazvaOperaciiText == '':
+            if self.TruvalistPologivZagalnaHvulun != '':
+                self.TruvalistPologiv = self.TruvalistPologiv + self.TruvalistPologivZagalnaHvulun + ' хвилин '
+            self.TruvalistPologiv = self.TruvalistPologiv.strip()
+            if self.TruvalistPologivZagalnaGodun == '' and self.TruvalistPologivZagalnaHvulun == '':
                 self.ErrorCount = self.ErrorCount + 1
                 self.Error_mesage(
-                    'Необхідно вказати назву та дату операції в пункті "ІХ.Післяпологовий період"!'
+                    'Необхідно вказати загальну тривалість пологів в пункті "VII. Перебіг даних пологів"!'
                 )
-            else:
-                self.HiryrgichneLikyvannaPynktIXTerminNazvaOperacii = '2.3.1.Назва операції та дата: ' + self.HiryrgichneLikyvannaPynktIXTerminNazvaOperaciiText
-        self.HiryrgichneLikyvannaPynktIXTerminNazvaOperacii = self.HiryrgichneLikyvannaPynktIXTerminNazvaOperacii.replace(
-            "'", "''")
 
-        self.TruvalistProvedenoiProfilaktuktPynktIX = '3. Тривалість проведеної профілактики: профілактика не проводилась.'
-        self.TruvalistProvedenoiProfilaktuktPynktIXText = self.TruvalistProvedenoiProfilaktuktPynktIXLineEdit.text(
-        )
-        self.TruvalistProvedenoiProfilaktuktPynktIXText = self.TruvalistProvedenoiProfilaktuktPynktIXText.strip(
-        )
-        if self.TruvalistProvedenoiProfilaktuktPynktIXText != '':
-            self.TruvalistProvedenoiProfilaktuktPynktIX = '3. Тривалість проведеної профілактики: ' + self.TruvalistProvedenoiProfilaktuktPynktIXText
-        self.TruvalistProvedenoiProfilaktuktPynktIX = self.TruvalistProvedenoiProfilaktuktPynktIX.replace(
-            "'", "''")
+            self.TruvalistPologiv = self.TruvalistPologiv + '; - Ι період: '
+            self.TruvalistPologivIPeriodGodun = self.TruvalistPologivIPeriodLineEdit.text(
+            )
+            self.TruvalistPologivIPeriodGodun = self.TruvalistPologivIPeriodGodun.strip(
+            )
+            if self.TruvalistPologivIPeriodGodun != '':
+                self.TruvalistPologiv = self.TruvalistPologiv + self.TruvalistPologivIPeriodGodun + ' годин, '
 
-        self.YskladnennaVidProfilaktukyPynktIX = ''
-        if self.YskladnennaVidProfilaktukyPynktIXNoCheckBox.isChecked():
-            self.YskladnennaVidProfilaktukyPynktIX = '4. Наявність ускладнень від проведеної профілактики: ні.'
-        else:
-            self.YskladnennaVidProfilaktukyPynktIXText = self.YskladnennaVidProfilaktukyPynktIXYskladnennaLineEdit.text(
+            self.TruvalistPologivIPeriodHvulun = self.TruvalistPologivIPeriodHvulunLineEdit.text(
             )
-            self.YskladnennaVidProfilaktukyPynktIXText = self.YskladnennaVidProfilaktukyPynktIXText.strip(
+            self.TruvalistPologivIPeriodHvulun = self.TruvalistPologivIPeriodHvulun.strip(
             )
-            if self.YskladnennaVidProfilaktukyPynktIXText == '':
+            if self.TruvalistPologivIPeriodHvulun != '':
+                self.TruvalistPologiv = self.TruvalistPologiv + self.TruvalistPologivIPeriodHvulun + ' хвилин '
+            self.TruvalistPologiv = self.TruvalistPologiv.strip()
+            if self.TruvalistPologivIPeriodGodun == '' and self.TruvalistPologivIPeriodHvulun == '':
                 self.ErrorCount = self.ErrorCount + 1
                 self.Error_mesage(
-                    'Необхідно ускладнення від проведеної профілактики в пункті "ІХ.Післяпологовий період"!'
+                    'Необхідно вказати тривалість І періоду пологів в пункті "VII. Перебіг даних пологів"!'
                 )
-            else:
-                self.YskladnennaVidProfilaktukyPynktIX = '4. Наявність ускладнень від проведеної профілактики: так; ускладнення: ' + self.YskladnennaVidProfilaktukyPynktIXText
-        self.YskladnennaVidProfilaktukyPynktIX = self.YskladnennaVidProfilaktukyPynktIX.replace(
-            "'", "''")
 
-        self.TromboembolichniYskladnennaPynktIX = ''
-        if self.TromboembolichniYskladnennaPynktIXNoCheckBox.isChecked():
-            self.TromboembolichniYskladnennaPynktIX = '5. Тромбоемболічні ускладнення: ні.'
-        else:
-            self.TromboembolichniYskladnennaPynktIX = '5. Тромбоемболічні ускладнення: так.'
+            self.TruvalistPologiv = self.TruvalistPologiv + '; - ΙI період: '
+            self.TruvalistPologivIIPeriodGodun = self.TruvalistPologivIIPeriodLineEdit.text(
+            )
+            self.TruvalistPologivIIPeriodGodun = self.TruvalistPologivIIPeriodGodun.strip(
+            )
+            if self.TruvalistPologivIIPeriodGodun != '':
+                self.TruvalistPologiv = self.TruvalistPologiv + self.TruvalistPologivIIPeriodGodun + ' годин, '
 
-        self.TromboembolichniYskladnennaPynktIXVudTey = '5.1. Вид ТЕУ: тромбоемболічні ускладнення відсутні.'
-        if self.TromboembolichniYskladnennaPynktIXYesCheckBox.isChecked():
-            self.TromboembolichniYskladnennaPynktIXVudTeyText = self.TromboembolichniYskladnennaPynktIXVudTeyLineEdit.text(
+            self.TruvalistPologivIIPeriodHvulun = self.TruvalistPologivIIPeriodHvulunLineEdit.text(
             )
-            self.TromboembolichniYskladnennaPynktIXVudTeyText = self.TromboembolichniYskladnennaPynktIXVudTeyText.strip(
+            self.TruvalistPologivIIPeriodHvulun = self.TruvalistPologivIIPeriodHvulun.strip(
             )
-            if self.TromboembolichniYskladnennaPynktIXVudTeyText == '':
+            if self.TruvalistPologivIIPeriodHvulun != '':
+                self.TruvalistPologiv = self.TruvalistPologiv + self.TruvalistPologivIIPeriodHvulun + ' хвилин '
+            self.TruvalistPologiv = self.TruvalistPologiv.strip()
+            if self.TruvalistPologivIIPeriodGodun == '' and self.TruvalistPologivIIPeriodHvulun == '':
                 self.ErrorCount = self.ErrorCount + 1
                 self.Error_mesage(
-                    'Необхідно вказати вид ТЕУ в пункті "ІХ.Післяпологовий період"!'
+                    'Необхідно вказати тривалість ІI періоду пологів в пункті "VII. Перебіг даних пологів"!'
                 )
-            else:
-                self.TromboembolichniYskladnennaPynktIXVudTey = '5.1. Вид ТЕУ: ' + self.TromboembolichniYskladnennaPynktIXVudTeyText
-        self.TromboembolichniYskladnennaPynktIXVudTey = self.TromboembolichniYskladnennaPynktIXVudTey.replace(
-            "'", "''")
 
-        self.TromboembolichniYskladnennaPynktIXTerminVunuknenna = '5.2. Термін винекнення: тромбоемболічні ускладнення відсутні.'
-        if self.TromboembolichniYskladnennaPynktIXYesCheckBox.isChecked():
-            self.TromboembolichniYskladnennaPynktIXTerminVunuknennaText = self.TromboembolichniYskladnennaPynktIXTerminVunuknennaLineEdit.text(
+            self.TruvalistPologiv = self.TruvalistPologiv + '; - ΙII період: '
+            self.TruvalistPologivIIIPeriodGodun = self.TruvalistPologivIIIPeriodLineEdit.text(
             )
-            self.TromboembolichniYskladnennaPynktIXTerminVunuknennaText = self.TromboembolichniYskladnennaPynktIXTerminVunuknennaText.strip(
+            self.TruvalistPologivIIIPeriodGodun = self.TruvalistPologivIIIPeriodGodun.strip(
             )
-            if self.TromboembolichniYskladnennaPynktIXTerminVunuknennaText == '':
+            if self.TruvalistPologivIIIPeriodGodun != '':
+                self.TruvalistPologiv = self.TruvalistPologiv + self.TruvalistPologivIIIPeriodGodun + ' годин, '
+
+            self.TruvalistPologivIIIPeriodHvulun = self.TruvalistPologivIIIPeriodHvulunLineEdit.text(
+            )
+            self.TruvalistPologivIIIPeriodHvulun = self.TruvalistPologivIIIPeriodHvulun.strip(
+            )
+            if self.TruvalistPologivIIIPeriodHvulun != '':
+                self.TruvalistPologiv = self.TruvalistPologiv + self.TruvalistPologivIIIPeriodHvulun + ' хвилин '
+            self.TruvalistPologiv = self.TruvalistPologiv.strip()
+            if self.TruvalistPologivIIIPeriodGodun == '' and self.TruvalistPologivIIIPeriodHvulun == '':
                 self.ErrorCount = self.ErrorCount + 1
                 self.Error_mesage(
-                    'Необхідно вказати термін виникнення ТЕУ в пункті "ІХ.Післяпологовий період"!'
+                    'Необхідно вказати тривалість ІII періоду пологів в пункті "VII. Перебіг даних пологів"!'
                 )
-            else:
-                self.TromboembolichniYskladnennaPynktIXTerminVunuknenna = '5.2. Термін винекнення: ' + self.TromboembolichniYskladnennaPynktIXTerminVunuknennaText
-        self.TromboembolichniYskladnennaPynktIXTerminVunuknenna = self.TromboembolichniYskladnennaPynktIXTerminVunuknenna.replace(
-            "'", "''")
 
-        self.TromboembolichniYskladnennaPynktIXTerapiaTEY = '5.3. Терапія ТЕУ: тромбоемболічні ускладнення відсутні.'
-        if self.TromboembolichniYskladnennaPynktIXYesCheckBox.isChecked():
-            self.TromboembolichniYskladnennaPynktIXTerapiaTEYText = self.TromboembolichniYskladnennaPynktIXTerapiaTEYLineEdit.text(
-            )
-            self.TromboembolichniYskladnennaPynktIXTerapiaTEYText = self.TromboembolichniYskladnennaPynktIXTerapiaTEYText.strip(
-            )
-            if self.TromboembolichniYskladnennaPynktIXTerapiaTEYText == '':
+            self.StanNovonarodgennogoTaNeoPeriodTitleLable = '\nVIII. Стан новонародженого та перебіг раннього неонатального періоду.'
+
+            self.Naroduvsa = '1. Народився: '
+            if self.NaroduvsaGuvuiCheckBox.isChecked():
+                self.Naroduvsa = self.Naroduvsa + 'живий.'
+            else:
+                self.Naroduvsa = self.Naroduvsa + 'мертвий.'
+
+            self.PruchunaMertvonarodgenna = '2. Причина мертвонародження: народився живий.'
+            if self.NaroduvsaMertvuiCheckBox.isChecked():
+                if self.PruchunaMertvonarodgennaAntenatalnaCheckBox.isChecked():
+                    self.PruchunaMertvonarodgenna = '2. Причина мертвонародження антенатальна.'
+                else:
+                    self.PruchunaMertvonarodgenna = '2. Причина мертвонародження інтранатальна.'
+
+            self.ZrilistNovonarodgennogo = '3. Зрілість новонародженого: '
+            if self.ZrilistNovonarodgennogoDonoshenuiCheckBox.isChecked():
+                self.ZrilistNovonarodgennogo = self.ZrilistNovonarodgennogo + 'доношений.'
+            elif self.ZrilistNovonarodgennogoNedonoshenuiCheckBox.isChecked():
+                self.ZrilistNovonarodgennogo = self.ZrilistNovonarodgennogo + 'недоношений.'
+            elif self.ZrilistNovonarodgennogoPerenoshenuiCheckBox.isChecked():
+                self.ZrilistNovonarodgennogo = self.ZrilistNovonarodgennogo + 'переношений.'
+            else:
                 self.ErrorCount = self.ErrorCount + 1
                 self.Error_mesage(
-                    'Необхідно вказати терапію ТЕУ в пункті "ІХ.Післяпологовий період"!'
+                    'Необхідно вказати зрілість новонародженого в пункті "VIII. Стан новонародженого та перебіг раннього неонатального періоду"!'
                 )
-            else:
-                self.TromboembolichniYskladnennaPynktIXTerapiaTEY = '5.3. Терапія ТЕУ: ' + self.TromboembolichniYskladnennaPynktIXTerapiaTEYText
-        self.TromboembolichniYskladnennaPynktIXTerapiaTEY = self.TromboembolichniYskladnennaPynktIXTerapiaTEY.replace(
-            "'", "''")
 
-        self.MastutPynktIX = ''
-        if self.MastutPynktIXNoCheckBox.isChecked():
-            self.MastutPynktIX = '6. Мастит: ні.'
-        else:
-            self.MastutPynktIX = '6. Мастит: так.'
+            self.ParametruNovonarodgennogo = ''
 
-        self.SubinvolyciaMatkuPynktIX = ''
-        if self.SubinvolyciaMatkuPynktIXNoCheckBox.isChecked():
-            self.SubinvolyciaMatkuPynktIX = '7. Субінволюція матки: ні.'
-        else:
-            self.SubinvolyciaMatkuPynktIX = '7. Субінволюція матки: так.'
-
-        self.EndometrutPynktIX = ''
-        if self.EndometrutPynktIXNoCheckBox.isChecked():
-            self.EndometrutPynktIX = '8. Ендометрит: ні.'
-        else:
-            self.EndometrutPynktIX = '8. Ендометрит: так.'
-
-        self.PiznaPologovaKrovotechaPynktIX = ''
-        if self.PiznaPologovaKrovotechaPynktIXNoCheckBox.isChecked():
-            self.PiznaPologovaKrovotechaPynktIX = '9. Пізня післяпологова кровотеча: ні.'
-        else:
-            self.PiznaPologovaKrovotechaPynktIX = '9. Пізня післяпологова кровотеча: так.'
-
-        self.SepsusPynktIX = ''
-        if self.SepsusPynktIXNoCheckBox.isChecked():
-            self.SepsusPynktIX = '10. Сепсис: ні.'
-        else:
-            self.SepsusPynktIX = '10. Сепсис: так.'
-
-        self.RoshodgennaShvivPynktIX = ''
-        if self.RoshodgennaShvivPynktIXNoCheckBox.isChecked():
-            self.RoshodgennaShvivPynktIX = '11. Розходження швів: ні.'
-        else:
-            self.RoshodgennaShvivPynktIX = '11. Розходження швів: так.'
-
-        self.InshiPynktIX = '12. Інші: відсутні.'
-        self.InshiPynktIXText = self.InshiPynktIXLineEdit.text()
-        self.InshiPynktIXText = self.InshiPynktIXText.strip()
-        if self.InshiPynktIXText != '':
-            self.InshiPynktIX = '12. Інші: ' + self.InshiPynktIXText
-        self.InshiPynktIX = self.InshiPynktIX.replace("'", "''")
-
-        self.HirVtyrchannaVPershi6TugnivPynktIX = ''
-        if self.HirVtyrchannaVPershi6TugnivPynktIXNoCheckBox.isChecked():
-            self.HirVtyrchannaVPershi6TugnivPynktIX = '13. Хірургічні втручання в перші 6 тиж після пологів: ні.'
-        else:
-            self.HirVtyrchannaVPershi6TugnivPynktIX = '13. Хірургічні втручання в перші 6 тиж після пологів: так.'
-
-        self.VupuskaDodomyPynktIX = ''
-        if self.VupuskaDodomyPynktIXNoCheckBox.isChecked():
-            self.VupuskaDodomyPynktIX = '14. Виписка додому: ні.'
-        else:
-            self.VupuskaDodomyPynktIXText = self.VupuskaDodomyPynktIXDobyLineEdit.text(
-            )
-            self.VupuskaDodomyPynktIXText = self.VupuskaDodomyPynktIXText.strip(
-            )
-            if self.VupuskaDodomyPynktIXText == '':
+            self.MasaNovonarodgenogo = self.MasaNovonarodgenogoLineEdit.text()
+            self.MasaNovonarodgenogo = self.MasaNovonarodgenogo.strip()
+            if self.MasaNovonarodgenogo == '':
                 self.ErrorCount = self.ErrorCount + 1
                 self.Error_mesage(
-                    'Необхідно вказати термін виписки додому в пункті "ІХ.Післяпологовий період"!'
+                    'Необхідно вказати масу новонародженого в пункті "VIII. Стан новонародженого та перебіг раннього неонатального періоду"!'
                 )
-            else:
-                self.VupuskaDodomyPynktIX = '14. Виписка додому: так; на ' + self.VupuskaDodomyPynktIXText + " добу."
 
-        self.PerevedennaVInshuiStacionarPynktIX = ''
-        if self.PerevedennaVInshuiStacionarPynktIXNoCheckBox.isChecked():
-            self.PerevedennaVInshuiStacionarPynktIX = '15. Переведена в інший стаціонар: ні.'
-        else:
-            self.PerevedennaVInshuiStacionarPynktIXText = self.PerevedennaVInshuiStacionarPynktIXDobyLineEdit.text(
-            )
-            self.PerevedennaVInshuiStacionarPynktIXText = self.PerevedennaVInshuiStacionarPynktIXText.strip(
-            )
-            if self.PerevedennaVInshuiStacionarPynktIXText == '':
+            self.ZristNovonarodgenogo = self.ZristNovonarodgenogoLineEdit.text()
+            self.ZristNovonarodgenogo = self.ZristNovonarodgenogo.strip()
+            if self.ZristNovonarodgenogo == '':
                 self.ErrorCount = self.ErrorCount + 1
                 self.Error_mesage(
-                    'Необхідно вказати термін переведення в інший стаціонар в пункті "ІХ.Післяпологовий період"!'
+                    'Необхідно вказати зріст новонародженого в пункті "VIII. Стан новонародженого та перебіг раннього неонатального періоду"!'
                 )
+
+            self.KoeficientNovonarodgenogo = self.KoeficientNovonarodgenogoLineEdit.text(
+            )
+            self.KoeficientNovonarodgenogo = self.KoeficientNovonarodgenogo.strip()
+            if self.KoeficientNovonarodgenogo == '':
+                self.ErrorCount = self.ErrorCount + 1
+                self.Error_mesage(
+                    'Необхідно вказати коефіцієнт новонародженого в пункті "VIII. Стан новонародженого та перебіг раннього неонатального періоду"!'
+                )
+            self.ParametruNovonarodgennogo = '4. Маса: ' + self.MasaNovonarodgenogo + '; зріст: ' + self.ZristNovonarodgenogo + '; коефіцієнт: ' + self.KoeficientNovonarodgenogo + '.'
+            self.ParametruNovonarodgennogo = self.ParametruNovonarodgennogo.replace(
+                "'", "''")
+
+            self.GipotrofiaPloda = ''
+            if self.GipotrofiaPlodaNoCheckBox.isChecked():
+                self.GipotrofiaPloda = '4.1. Гіпотрофія плода: ні.'
             else:
-                self.PerevedennaVInshuiStacionarPynktIX = '15. Переведена в інший стаціонар: так; на ' + self.PerevedennaVInshuiStacionarPynktIXText + " добу."
+                self.GipotrofiaPloda = '4.1. Гіпотрофія плода: так.'
 
-        self.ChangeDateRow = 'Дата та час заповнення реєстраційної карти: ' + self.ChangeDate.text(
-        )
+            self.OcinkaZaShkaloyApgar = ''
+            self.OcinkaZaShkaloyApgarNaPerHv = self.OcinkaZaShkaloyApgarNaPerHvLineEdit.text(
+            )
+            self.OcinkaZaShkaloyApgarNaPerHv = self.OcinkaZaShkaloyApgarNaPerHv.strip(
+            )
+            if self.OcinkaZaShkaloyApgarNaPerHv == '':
+                self.ErrorCount = self.ErrorCount + 1
+                self.Error_mesage(
+                    'Необхідно вказати оцінку новонародженого за шкалою апгар на 1 хвилині в пункті "VIII. Стан новонародженого та перебіг раннього неонатального періоду"!'
+                )
 
-        self.WhoChangeRow = 'Заповняв: ' + self.WhoChange.text()
-        self.WhoChangeRow = self.WhoChangeRow.replace("'", "''")
+            self.OcinkaZaShkaloyApgarNa5Hv = self.OcinkaZaShkaloyApgarNa5HvLineEdit.text(
+            )
+            self.OcinkaZaShkaloyApgarNa5Hv = self.OcinkaZaShkaloyApgarNa5Hv.strip()
+            if self.OcinkaZaShkaloyApgarNa5Hv == '':
+                self.ErrorCount = self.ErrorCount + 1
+                self.Error_mesage(
+                    'Необхідно вказати оцінку новонародженого за шкалою апгар на 5 хвилині в пункті "VIII. Стан новонародженого та перебіг раннього неонатального періоду"!'
+                )
 
-        if self.ErrorCount == 0:
-            try:
-                cnx = self.ConnectToPregnantBD()
-            except mysql.connector.DatabaseError as e:
-                self.Info_mesage(str(e))
+            self.OcinkaZaShkaloyApgar = '5. Оцінка за шкалою Апгар: на першій хвилині ' + self.OcinkaZaShkaloyApgarNaPerHv + '; на 5 хвилині: ' + self.OcinkaZaShkaloyApgarNa5Hv + '.'
 
-            try:
-                cursor = cnx.cursor()
-            except mysql.connector.DatabaseError as e:
-                self.Info_mesage(str(e))
-                cnx.close()
+            self.NovonarodjenuiZVadamuRozvutky = ''
+            if self.NovonarodjenuiZVadamuRozvutkyNoCheckBox.isChecked():
+                self.NovonarodjenuiZVadamuRozvutky = '6. Новонароджений з вадами розвиту:  ні.'
+            else:
+                self.NovonarodjenuiZVadamuRozvutkyJakiSame = self.NovonarodjenuiZVadamuRozvutkyJakiSameLineEdit.text(
+                )
+                self.NovonarodjenuiZVadamuRozvutkyJakiSame = self.NovonarodjenuiZVadamuRozvutkyJakiSame.strip(
+                )
+                if self.NovonarodjenuiZVadamuRozvutkyJakiSame == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно вказати з якими саме вадами народився новонароджений в пункті "VIII. Стан новонародженого та перебіг раннього неонатального періоду"!'
+                    )
+                else:
+                    self.NovonarodjenuiZVadamuRozvutky = '6. Новонароджений з вадами розвиту:  так; які саме: ' + self.NovonarodjenuiZVadamuRozvutkyJakiSame
+            self.NovonarodjenuiZVadamuRozvutky = self.NovonarodjenuiZVadamuRozvutky.replace(
+                "'", "''")
 
-            query_to_insert = ("""
-                    INSERT INTO Registry
-                        (
+            self.PologovaTravma = ''
+            if self.PologovaTravmaNoCheckBox.isChecked():
+                self.PologovaTravma = '7. Пологова травма:  ні.'
+            else:
+                self.PologovaTravmaJakaSame = self.PologovaTravmaJakaSameLineEdit.text(
+                )
+                self.PologovaTravmaJakaSame = self.PologovaTravmaJakaSame.strip()
+                if self.PologovaTravmaJakaSame == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно вказати з якими саме вадами народився новонароджений в пункті "VIII. Стан новонародженого та перебіг раннього неонатального періоду"!'
+                    )
+                else:
+                    self.PologovaTravma = '7. Пологова травма:  так; якa саме: ' + self.PologovaTravmaJakaSame
+            self.PologovaTravma = self.PologovaTravma.replace("'", "''")
 
-                        PasportniDaniTitle,
-                        PasportniDani,
-                        HistoryNumber,
-                        Age,
-                        Address,
-                        Proffesional,
-                        Disability,
-                        ReceduvyTromboemboliiTitle,
-                        ReceduvyTromboembolii,
-                        TromboemboliiAndEstrogens,
-                        TromboemboliaSprovokovana,
-                        SimeinuiAnamnezTromboembolii,
-                        VstanovlennaTrombofilia,
-                        SypytniZahvoryvanna,
-                        OldMore35,
-                        Ogirinna,
-                        VagitnistMore3,
-                        Kyrinna,
-                        VelykiVarikozniVenu,
-                        ProvedennaProfTEYdpVagitnosti,
-                        ElastychnaKompresia,
-                        MedukamentoznaProfilaktuka,
-                        MedukamentoznaProfilaktukaNazvaPreperaty,
-                        MedukamentoznaProfilaktukaRegymPrujomy,
-                        HiryrgichneLikyvanna,
-                        TryvalistProvedennoiProfilaktyky,
-                        YskladneenaVidProfilaktyku,
-                        AkysherskiiAnamnez,
-                        DanaVagitnist,
-                        DanaVagitnistZaRahynkom,
-                        DaniPologuZaRahynkom,
-                        PoperedniPologuZavershulus,
-                        PoperedniPologu,
-                        NayavnistGuvyhDitey,
-                        VPerebigDannoiVagitnosti,
-                        Vagitnist,
-                        NaOblikyVGinochiiKonsyltacii,
-                        ZagrozaPereruvannaVagitnosti,
-                        ZagrozaPeredchasnuhPologiv,
-                        ZagrozaPeredchasnuhPologivP4_1,
-                        GestozIPolovunuVagitnosti,
-                        InshiPruchynyZnevodnenna,
-                        GestozIIPolovunuVagitnosti,
-                        GestozIIPolovunuVagitnostiVTermini,
-                        VunuknennaTEY,
-                        VudTEY,
-                        TEYTerminVagitnosti,
-                        Bagatovodda,
-                        BagatovoddaDiagnostovanoVTerminVagitnosti,
-                        MaloVodda,
-                        MaloVoddaDiagnostovanoVTerminVagitnosti,
-                        DustressPloda,
-                        ZatrumkaRozvutkyPloda,
-                        NajavnistSustemnoiInfekcii,
-                        PatologiaPlacentu,
-                        PatologiaLocalizaciiPlacentu,
-                        PeredchasneVadsharyvannaPlacentu,
-                        HiryrgichniVtyrchannaPidChasVagitnosti,
-                        TruvalaImmobilizacia,
-                        ZavershennaDannoiVagitnosti,
-                        ProvedennaProfilaktukuTerapiiTEYPidChasVagitnosti,
-                        PokazuDlaProvedennaProfilaktuky,
-                        ElastychnaKompresiaPynktVI,
-                        MedukamentoznaProfilaktukaPynktVI,
-                        MedukamentoznaProfilaktukaPynktVINazvaPreperaty,
-                        MedukamentoznaProfilaktukaPynktVIRegymPrujomy,
-                        MedukamentoznaProfilaktukaPynktVITerminKoluPruznacheno,
-                        HiryrgichneLikyvannaPynktVI,
-                        TryvalistProvedennoiProfilaktykyPynktVI,
-                        YskladneenaVidProfilaktykuPynktVI,
-                        TerapiyVidminenoZaGodDoPologivPynktVI,
-                        PerebigDanuhPologiv,
-                        PologuVaginalni,
-                        PologuAbdominalni,
-                        PokazannaDlaAbdominalnogoRozrodjenna,
-                        PoryshennaPologovoiDialnosti,
-                        KorekciaAnomaliiPologovoiDialnosti,
-                        VuluvNavkoloplodovuhVod,
-                        DustressPlodaVPologah,
-                        GipotonichnaKrovotecha,
-                        AnomaliiPrukriplennaPlacentu,
-                        DefektPoslidy,
-                        DefektObolonok,
-                        AnomaliiPrukriplennaPypovunu,
-                        OperatuvnaDopomoga,
-                        RozruvuPologovuhShlahiv,
-                        EpizoAboPerineotomia,
-                        KrovovtrataVPologah,
-                        TruvalistPologiv,
-                        StanNovonarodgennogoTaNeoPeriodTitleLable,
-                        Naroduvsa,
-                        PruchunaMertvonarodgenna,
-                        ZrilistNovonarodgennogo,
-                        ParametruNovonarodgennogo,
-                        GipotrofiaPloda,
-                        OcinkaZaShkaloyApgar,
-                        NovonarodjenuiZVadamuRozvutky,
-                        PologovaTravma,
-                        SDR,
-                        VnytrishnoytrobneInfikyvanna,
-                        GemoragichniYskladnenna,
-                        Anemia,
-                        GiperBilirybinemia,
-                        Asfiksia,
-                        PoryshennaKardioRespiratornoiAdaptacii,
-                        VtrataMasuTila,
-                        VitaminKVvedeno,
-                        VupusanuiNa,
-                        NeonatalnaSmert,
-                        PruchunaSmertiZaRezyltatomAytopsii,
-                        PislapologovuiPeriod,
-                        PislapologovuiPerebig,
-                        ProfilaktukaTerapiaTEYPynktI,
-                        ElastuchnaKompressiaPynktIX,
-                        MedukamentoznaProfilaktukaPynktIX,
-                        MedukamentoznaProfilaktukaPynktIXNazvaPreparaty,
-                        MedukamentoznaProfilaktukaPynktIXRegumPrujomy,
-                        MedukamentoznaProfilaktukaPynktIXTerminKoluPruznacheno,
-                        HiryrgichneLikyvannaPynktIX,
-                        HiryrgichneLikyvannaPynktIXTerminNazvaOperacii,
-                        TruvalistProvedenoiProfilaktuktPynktIX,
-                        YskladnennaVidProfilaktukyPynktIX,
-                        TromboembolichniYskladnennaPynktIX,
-                        TromboembolichniYskladnennaPynktIXVudTey,
-                        TromboembolichniYskladnennaPynktIXTerminVunuknenna,
-                        TromboembolichniYskladnennaPynktIXTerapiaTEY,
-                        MastutPynktIX,
-                        SubinvolyciaMatkuPynktIX,
-                        EndometrutPynktIX,
-                        PiznaPologovaKrovotechaPynktIX,
-                        SepsusPynktIX,
-                        RoshodgennaShvivPynktIX,
-                        InshiPynktIX,
-                        HirVtyrchannaVPershi6TugnivPynktIX,
-                        VupuskaDodomyPynktIX,
-                        PerevedennaVInshuiStacionarPynktIX,
-                        ChangeDateRow,
-                        WhoChangeRow)
-                        VALUES
-                        (
-                        '""" + self.PasportniDaniTitle + """',
-                        '""" + self.PasportniDani + """',
-                        '""" + self.HistoryNumber + """',
-                        '""" + self.Age + """',
-                        '""" + self.Address + """',
-                        '""" + self.Proffesional + """',
-                        '""" + self.Disability + """',
-                        '""" + self.ReceduvyTromboemboliiTitle + """',
-                        '""" + self.ReceduvyTromboembolii + """',
-                        '""" + self.TromboemboliiAndEstrogens + """',
-                        '""" + self.TromboemboliaSprovokovana + """',
-                        '""" + self.SimeinuiAnamnezTromboembolii + """',
-                        '""" + self.VstanovlennaTrombofilia + """',
-                        '""" + self.SypytniZahvoryvanna + """',
-                        '""" + self.OldMore35 + """',
-                        '""" + self.Ogirinna + """',
-                        '""" + self.VagitnistMore3 + """',
-                        '""" + self.Kyrinna + """',
-                        '""" + self.VelykiVarikozniVenu + """',
-                        '""" + self.ProvedennaProfTEYdpVagitnosti + """',
-                        '""" + self.ElastychnaKompresia + """',
-                        '""" + self.MedukamentoznaProfilaktuka + """',
-                        '""" + self.MedukamentoznaProfilaktukaNazvaPreperaty +
-                               """',
-                        '""" + self.MedukamentoznaProfilaktukaRegymPrujomy +
-                               """',
-                        '""" + self.HiryrgichneLikyvanna + """',
-                        '""" + self.TryvalistProvedennoiProfilaktyky + """',
-                        '""" + self.YskladneenaVidProfilaktyku + """',
-                        '""" + self.AkysherskiiAnamnez + """',
-                        '""" + self.DanaVagitnist + """',
-                        '""" + self.DanaVagitnistZaRahynkom + """',
-                        '""" + self.DaniPologuZaRahynkom + """',
-                        '""" + self.PoperedniPologuZavershulus + """',
-                        '""" + self.PoperedniPologu + """',
-                        '""" + self.NayavnistGuvyhDitey + """',
-                        '""" + self.VPerebigDannoiVagitnosti + """',
-                        '""" + self.Vagitnist + """',
-                        '""" + self.NaOblikyVGinochiiKonsyltacii + """',
-                        '""" + self.ZagrozaPereruvannaVagitnosti + """',
-                        '""" + self.ZagrozaPeredchasnuhPologiv + """',
-                        '""" + self.ZagrozaPeredchasnuhPologivP4_1 + """',
-                        '""" + self.GestozIPolovunuVagitnosti + """',
-                        '""" + self.InshiPruchynyZnevodnenna + """',
-                        '""" + self.GestozIIPolovunuVagitnosti + """',
-                        '""" + self.GestozIIPolovunuVagitnostiVTermini + """',
-                        '""" + self.VunuknennaTEY + """',
-                        '""" + self.VudTEY + """',
-                        '""" + self.TEYTerminVagitnosti + """',
-                        '""" + self.Bagatovodda + """',
-                        '""" + self.BagatovoddaDiagnostovanoVTerminVagitnosti +
-                               """',
-                        '""" + self.MaloVodda + """',
-                        '""" + self.MaloVoddaDiagnostovanoVTerminVagitnosti +
-                               """',
-                        '""" + self.DustressPloda + """',
-                        '""" + self.ZatrumkaRozvutkyPloda + """',
-                        '""" + self.NajavnistSustemnoiInfekcii + """',
-                        '""" + self.PatologiaPlacentu + """',
-                        '""" + self.PatologiaLocalizaciiPlacentu + """',
-                        '""" + self.PeredchasneVadsharyvannaPlacentu + """',
-                        '""" + self.HiryrgichniVtyrchannaPidChasVagitnosti +
-                               """',
-                        '""" + self.TruvalaImmobilizacia + """',
-                        '""" + self.ZavershennaDannoiVagitnosti + """',
-                        '""" + self.
-                               ProvedennaProfilaktukuTerapiiTEYPidChasVagitnosti
-                               + """',
-                        '""" + self.PokazuDlaProvedennaProfilaktuky + """',
-                        '""" + self.ElastychnaKompresiaPynktVI + """',
-                        '""" + self.MedukamentoznaProfilaktukaPynktVI + """',
-                        '""" + self.
-                               MedukamentoznaProfilaktukaPynktVINazvaPreperaty
-                               + """',
-                        '""" + self.
-                               MedukamentoznaProfilaktukaPynktVIRegymPrujomy +
-                               """',
-                        '""" + self.
-                               MedukamentoznaProfilaktukaPynktVITerminKoluPruznacheno
-                               + """',
-                        '""" + self.HiryrgichneLikyvannaPynktVI + """',
-                        '""" + self.TryvalistProvedennoiProfilaktykyPynktVI +
-                               """',
-                        '""" + self.YskladneenaVidProfilaktykuPynktVI + """',
-                        '""" + self.TerapiyVidminenoZaGodDoPologivPynktVI +
-                               """',
-                        '""" + self.PerebigDanuhPologiv + """',
-                        '""" + self.PologuVaginalni + """',
-                        '""" + self.PologuAbdominalni + """',
-                        '""" + self.PokazannaDlaAbdominalnogoRozrodjenna +
-                               """',
-                        '""" + self.PoryshennaPologovoiDialnosti + """',
-                        '""" + self.KorekciaAnomaliiPologovoiDialnosti + """',
-                        '""" + self.VuluvNavkoloplodovuhVod + """',
-                        '""" + self.DustressPlodaVPologah + """',
-                        '""" + self.GipotonichnaKrovotecha + """',
-                        '""" + self.AnomaliiPrukriplennaPlacentu + """',
-                        '""" + self.DefektPoslidy + """',
-                        '""" + self.DefektObolonok + """',
-                        '""" + self.AnomaliiPrukriplennaPypovunu + """',
-                        '""" + self.OperatuvnaDopomoga + """',
-                        '""" + self.RozruvuPologovuhShlahiv + """',
-                        '""" + self.EpizoAboPerineotomia + """',
-                        '""" + self.KrovovtrataVPologah + """',
-                        '""" + self.TruvalistPologiv + """',
-                        '""" + self.StanNovonarodgennogoTaNeoPeriodTitleLable +
-                               """',
-                        '""" + self.Naroduvsa + """',
-                        '""" + self.PruchunaMertvonarodgenna + """',
-                        '""" + self.ZrilistNovonarodgennogo + """',
-                        '""" + self.ParametruNovonarodgennogo + """',
-                        '""" + self.GipotrofiaPloda + """',
-                        '""" + self.OcinkaZaShkaloyApgar + """',
-                        '""" + self.NovonarodjenuiZVadamuRozvutky + """',
-                        '""" + self.PologovaTravma + """',
-                        '""" + self.SDR + """',
-                        '""" + self.VnytrishnoytrobneInfikyvanna + """',
-                        '""" + self.GemoragichniYskladnenna + """',
-                        '""" + self.Anemia + """',
-                        '""" + self.GiperBilirybinemia + """',
-                        '""" + self.Asfiksia + """',
-                        '""" + self.PoryshennaKardioRespiratornoiAdaptacii +
-                               """',
-                        '""" + self.VtrataMasuTila + """',
-                        '""" + self.VitaminKVvedeno + """',
-                        '""" + self.VupusanuiNa + """',
-                        '""" + self.NeonatalnaSmert + """',
-                        '""" + self.PruchunaSmertiZaRezyltatomAytopsii + """',
-                        '""" + self.PislapologovuiPeriod + """',
-                        '""" + self.PislapologovuiPerebig + """',
-                        '""" + self.ProfilaktukaTerapiaTEYPynktI + """',
-                        '""" + self.ElastuchnaKompressiaPynktIX + """',
-                        '""" + self.MedukamentoznaProfilaktukaPynktIX + """',
-                        '""" + self.
-                               MedukamentoznaProfilaktukaPynktIXNazvaPreparaty
-                               + """',
-                        '""" + self.
-                               MedukamentoznaProfilaktukaPynktIXRegumPrujomy +
-                               """',
-                        '""" + self.
-                               MedukamentoznaProfilaktukaPynktIXTerminKoluPruznacheno
-                               + """',
-                        '""" + self.HiryrgichneLikyvannaPynktIX + """',
-                        '""" + self.
-                               HiryrgichneLikyvannaPynktIXTerminNazvaOperacii +
-                               """',
-                        '""" + self.TruvalistProvedenoiProfilaktuktPynktIX +
-                               """',
-                        '""" + self.YskladnennaVidProfilaktukyPynktIX + """',
-                        '""" + self.TromboembolichniYskladnennaPynktIX + """',
-                        '""" + self.TromboembolichniYskladnennaPynktIXVudTey +
-                               """',
-                        '""" + self.
-                               TromboembolichniYskladnennaPynktIXTerminVunuknenna
-                               + """',
-                        '""" + self.TromboembolichniYskladnennaPynktIXTerapiaTEY
-                               + """',
-                        '""" + self.MastutPynktIX + """',
-                        '""" + self.SubinvolyciaMatkuPynktIX + """',
-                        '""" + self.EndometrutPynktIX + """',
-                        '""" + self.PiznaPologovaKrovotechaPynktIX + """',
-                        '""" + self.SepsusPynktIX + """',
-                        '""" + self.RoshodgennaShvivPynktIX + """',
-                        '""" + self.InshiPynktIX + """',
-                        '""" + self.HirVtyrchannaVPershi6TugnivPynktIX + """',
-                        '""" + self.VupuskaDodomyPynktIX + """',
-                        '""" + self.PerevedennaVInshuiStacionarPynktIX + """',
-                        '""" + self.ChangeDateRow + """',
-                        '""" + self.WhoChangeRow + """'
-                        )
-            """)
-            try:
-                cursor.execute(query_to_insert)
-            except mysql.connector.DatabaseError as e:
-                self.Info_mesage(str(e))
+            self.SDR = ''
+            if self.SDRNoCheckBox.isChecked():
+                self.SDR = '8. СДР: ні.'
+            else:
+                self.SDR = '8. СДР: так.'
+
+            self.VnytrishnoytrobneInfikyvanna = ''
+            if self.VnytrishnoytrobneInfikyvannaNoCheckBox.isChecked():
+                self.VnytrishnoytrobneInfikyvanna = '9. Внутрішньоутробне інфікування: ні.'
+            else:
+                self.VnytrishnoytrobneInfikyvanna = '9. Внутрішньоутробне інфікування: так.'
+
+            self.GemoragichniYskladnenna = ''
+            if self.GemoragichniYskladnennaNoCheckBox.isChecked():
+                self.GemoragichniYskladnenna = '10. Геморагічні ускладнення: ні.'
+            else:
+                self.GemoragichniYskladnenna = '10. Геморагічні ускладнення: так.'
+
+            self.Anemia = ''
+            if self.AnemiaNoCheckBox.isChecked():
+                self.Anemia = '11. Aнемія: ні.'
+            elif self.AnemiaIStypenaCheckBox.isChecked():
+                self.Anemia = '11. Aнемія: І ступеня.'
+            elif self.AnemiaIIStypenaCheckBox.isChecked():
+                self.Anemia = '11. Aнемія: ІІ ступеня.'
+            elif self.AnemiaIIIStypenaCheckBox.isChecked():
+                self.Anemia = '11. Aнемія: ІІІ ступеня.'
+            else:
+                self.ErrorCount = self.ErrorCount + 1
+                self.Error_mesage(
+                    'Необхідно вказати підходящий варіант анемії в пункті "VIII. Стан новонародженого та перебіг раннього неонатального періоду"!'
+                )
+
+            self.GiperBilirybinemia = ''
+            if self.GiperBilirybinemiaNoCheckBox.isChecked():
+                self.GiperBilirybinemia = '12. Гіпербілірубінемія: ні;'
+            else:
+                self.GiperBilirybinemiaRivenBilirybiny = self.GiperBilirybinemiaRivenBilirybinyLineEdit.text(
+                )
+                self.GiperBilirybinemiaRivenBilirybiny = self.GiperBilirybinemiaRivenBilirybiny.strip(
+                )
+                if self.GiperBilirybinemiaRivenBilirybiny == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно вказати рівень білірубіну в пункті "VIII. Стан новонародженого та перебіг раннього неонатального періоду"!'
+                    )
+                else:
+                    self.GiperBilirybinemia = '12. Гіпербілірубінемія: так; рівень білірубіну: ' + self.GiperBilirybinemiaRivenBilirybiny + '.'
+            self.GiperBilirybinemia = self.GiperBilirybinemia.replace("'", "''")
+
+            self.Asfiksia = ''
+            if self.AsfiksiaNoCheckBox.isChecked():
+                self.Asfiksia = '13. Aсфіксія: ні.'
+            elif self.AsfiksiaLegkaCheckBox.isChecked():
+                self.Asfiksia = '13. Aсфіксія: легка.'
+            elif self.AsfiksiaSerednaCheckBox.isChecked():
+                self.Asfiksia = '13. Aсфіксія: середня.'
+            elif self.AsfiksiaVajkaCheckBox.isChecked():
+                self.Asfiksia = '13. Aсфіксія: важка.'
+            else:
+                self.ErrorCount = self.ErrorCount + 1
+                self.Error_mesage(
+                    'Необхідно вказати підходящий варіант асфіксії в пункті "VIII. Стан новонародженого та перебіг раннього неонатального періоду"!'
+                )
+
+            self.PoryshennaKardioRespiratornoiAdaptacii = ''
+            if self.PoryshennaKardioRespiratornoiAdaptaciiNoCheckBox.isChecked():
+                self.PoryshennaKardioRespiratornoiAdaptacii = '14. Порушення кардіо-респіраторної адаптації: ні.'
+            else:
+                self.PoryshennaKardioRespiratornoiAdaptacii = '14. Порушення кардіо-респіраторної адаптації: так.'
+
+            self.VtrataMasuTila = '15. Втрата маси тіла: ні.'
+            self.VtrataMasuTilaText = self.VtrataMasuTilaLineEdit.text()
+            self.VtrataMasuTilaText = self.VtrataMasuTilaText.strip()
+            if self.VtrataMasuTilaText != '':
+                self.VtrataMasuTila = '15. Втрата маси тіла: ' + self.VtrataMasuTilaText
+            self.VtrataMasuTila = self.VtrataMasuTila.replace("'", "''")
+
+            self.VitaminKVvedeno = ''
+            if self.VitaminKVvedenoNoCheckBox.isChecked():
+                self.VitaminKVvedeno = '16. Вітамін К введено: ні.'
+            else:
+                self.VitaminKVvedenoText = self.VitaminKVvedenoTerminLineEdit.text(
+                )
+                self.VitaminKVvedenoText = self.VitaminKVvedenoText.strip()
+                if self.VitaminKVvedenoText == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно вказати термін на якому було введено вітамін К в пункті "VIII. Стан новонародженого та перебіг раннього неонатального періоду"!'
+                    )
+                else:
+                    self.VitaminKVvedeno = "16. Вітамін К введено: так; в терміні: " + self.VitaminKVvedenoText + '.'
+            self.VitaminKVvedeno = self.VitaminKVvedeno.replace("'", "''")
+
+            self.VupusanuiNa = ''
+            self.VupusanuiNaText = self.VupusanuiNaLineEdit.text()
+            self.VupusanuiNaText = self.VupusanuiNaText.strip()
+            if self.VupusanuiNaText != '':
+                self.VupusanuiNa = '17. Виписаний на: ' + self.VupusanuiNaText + ' добу.'
+            else:
+                self.ErrorCount = self.ErrorCount + 1
+                self.Error_mesage(
+                    'Необхідно вказати добу на яку було виписано в пункті "VIII. Стан новонародженого та перебіг раннього неонатального періоду"!'
+                )
+            self.VupusanuiNa = self.VupusanuiNa.replace("'", "''")
+
+            self.NeonatalnaSmert = ''
+            if self.NeonatalnaSmertNoCheckBox.isChecked():
+                self.NeonatalnaSmert = '18. Неонатальна смерть: ні.'
+            else:
+                self.NeonatalnaSmertText = self.NeonatalnaSmertTerminLineEdit.text(
+                )
+                self.NeonatalnaSmertText = self.NeonatalnaSmertText.strip()
+                if self.NeonatalnaSmertText == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно вказати добу на яку відбулася неонатальна смерть в пункті "VIII. Стан новонародженого та перебіг раннього неонатального періоду"!'
+                    )
+                else:
+                    self.NeonatalnaSmert = '18. Неонатальна смерть: так; на добу: ' + self.NeonatalnaSmertText
+            self.NeonatalnaSmert = self.NeonatalnaSmert.replace("'", "''")
+
+            self.PruchunaSmertiZaRezyltatomAytopsii = '19. Причина смерті за результатами аутопсії: неонатальної смерті не було.'
+            if self.NeonatalnaSmertYesCheckBox.isChecked():
+                self.PruchunaSmertiZaRezyltatomAytopsiiText = self.PruchunaSmertiZaRezyltatomAytopsiiLineEdit.text(
+                )
+                self.PruchunaSmertiZaRezyltatomAytopsiiText = self.PruchunaSmertiZaRezyltatomAytopsiiText.strip(
+                )
+                if self.PruchunaSmertiZaRezyltatomAytopsiiText == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно вказати причину смерті за результатами аутопсії в пункті "VIII. Стан новонародженого та перебіг раннього неонатального періоду"!'
+                    )
+                else:
+                    self.PruchunaSmertiZaRezyltatomAytopsii = '19. Причина смерті за результатами аутопсії: ' + self.PruchunaSmertiZaRezyltatomAytopsiiText
+            self.PruchunaSmertiZaRezyltatomAytopsii = self.PruchunaSmertiZaRezyltatomAytopsii.replace(
+                "'", "''")
+
+            self.PislapologovuiPeriod = '\nІX.Післяпологовий період.'
+
+            self.PislapologovuiPerebig = ''
+            if self.PislapologovuiPerebigNoCheckBox.isChecked():
+                self.PislapologovuiPerebig = '1. Перебіг: нормальний.'
+            else:
+                self.PislapologovuiPerebig = '1. Перебіг: ускладнений.'
+
+            self.ProfilaktukaTerapiaTEYPynktI = ''
+            if self.ProfilaktukaTerapiaTEYPynktIXNoCheckBox.isChecked():
+                self.ProfilaktukaTerapiaTEYPynktI = '2. Чи проводилась профілактика/терапія ТЕУ: ні.'
+            else:
+                self.ProfilaktukaTerapiaTEYPynktI = '2. Чи проводилась профілактика/терапія ТЕУ: так.'
+
+            self.ElastuchnaKompressiaPynktIX = ''
+            if self.ElastuchnaKompressiaPynktIXNoCheckBox.isChecked():
+                self.ElastuchnaKompressiaPynktIX = '2.1. Еластична компресія: ні.'
+            else:
+                self.ElastuchnaKompressiaPynktIXText = self.ElastuchnaKompressiaPynktIXKlasLineEdit.text(
+                )
+                self.ElastuchnaKompressiaPynktIXText = self.ElastuchnaKompressiaPynktIXText.strip(
+                )
+                if self.ElastuchnaKompressiaPynktIXText == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно вказати клас еластичної компресії в пункті "ІХ.Післяпологовий період"!'
+                    )
+                else:
+                    self.ElastuchnaKompressiaPynktIX = '2.1. Еластична компресія: так; клас ' + self.ElastuchnaKompressiaPynktIXText
+            self.ElastuchnaKompressiaPynktIX = self.ElastuchnaKompressiaPynktIX.replace(
+                "'", "''")
+
+            self.MedukamentoznaProfilaktukaPynktIX = ''
+            if self.MedukamentoznaProfilaktukaPynktIXNoCheckBox.isChecked():
+                self.MedukamentoznaProfilaktukaPynktIX = '2.2. Медикаментозна профілактика/терапія: ні.'
+            else:
+                self.MedukamentoznaProfilaktukaPynktIX = '2.2. Медикаментозна профілактика/терапія: так.'
+
+            self.MedukamentoznaProfilaktukaPynktIXNazvaPreparaty = '2.2.1. Назва препарата: медикаментозна профілактика/терапія не проводилася.'
+            if self.MedukamentoznaProfilaktukaPynktIXYesCheckBox.isChecked():
+                self.MedukamentoznaProfilaktukaPynktIXNazvaPreparatyText = self.MedukamentoznaProfilaktukaPynktIXNazvaPreparatyLineEdit.text(
+                )
+                self.MedukamentoznaProfilaktukaPynktIXNazvaPreparatyText = self.MedukamentoznaProfilaktukaPynktIXNazvaPreparatyText.strip(
+                )
+                if self.MedukamentoznaProfilaktukaPynktIXNazvaPreparatyText == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно вказати назву препарату в пункті "ІХ.Післяпологовий період"!'
+                    )
+                else:
+                    self.MedukamentoznaProfilaktukaPynktIXNazvaPreparaty = '2.2.1. Назва препарата: ' + self.MedukamentoznaProfilaktukaPynktIXNazvaPreparatyText
+            self.MedukamentoznaProfilaktukaPynktIXNazvaPreparaty = self.MedukamentoznaProfilaktukaPynktIXNazvaPreparaty.replace(
+                "'", "''")
+
+            self.MedukamentoznaProfilaktukaPynktIXRegumPrujomy = '2.2.2. Режим прийому: медикаментозна профілактика/терапія не проводилася.'
+            if self.MedukamentoznaProfilaktukaPynktIXYesCheckBox.isChecked():
+                self.MedukamentoznaProfilaktukaPynktIXRegumPrujomyText = self.MedukamentoznaProfilaktukaPynktIXRegumPrujomyLineEdit.text(
+                )
+                self.MedukamentoznaProfilaktukaPynktIXRegumPrujomyText = self.MedukamentoznaProfilaktukaPynktIXRegumPrujomyText.strip(
+                )
+                if self.MedukamentoznaProfilaktukaPynktIXRegumPrujomyText == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно вказати режим прийому препарату в пункті "ІХ.Післяпологовий період"!'
+                    )
+                else:
+                    self.MedukamentoznaProfilaktukaPynktIXRegumPrujomy = '2.2.2. Режим прийому: ' + self.MedukamentoznaProfilaktukaPynktIXRegumPrujomyText
+            self.MedukamentoznaProfilaktukaPynktIXRegumPrujomy = self.MedukamentoznaProfilaktukaPynktIXRegumPrujomy.replace(
+                "'", "''")
+
+            self.MedukamentoznaProfilaktukaPynktIXTerminKoluPruznacheno = '2.2.3. Термін коли призначено: медикаментозна профілактика/терапія не проводилася.'
+            if self.MedukamentoznaProfilaktukaPynktIXYesCheckBox.isChecked():
+                self.MedukamentoznaProfilaktukaPynktITerminKoluPruznachenoText = self.MedukamentoznaProfilaktukaPynktIXTerminKoluPruznachenoLineEdit.text(
+                )
+                self.MedukamentoznaProfilaktukaPynktITerminKoluPruznachenoText = self.MedukamentoznaProfilaktukaPynktITerminKoluPruznachenoText.strip(
+                )
+                if self.MedukamentoznaProfilaktukaPynktITerminKoluPruznachenoText == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно вказати термін коли призначено препарат в пункті "ІХ.Післяпологовий період"!'
+                    )
+                else:
+                    self.MedukamentoznaProfilaktukaPynktIXTerminKoluPruznacheno = '2.2.3. Термін коли призначено: ' + self.MedukamentoznaProfilaktukaPynktITerminKoluPruznachenoText
+            self.MedukamentoznaProfilaktukaPynktIXTerminKoluPruznacheno = self.MedukamentoznaProfilaktukaPynktIXTerminKoluPruznacheno.replace(
+                "'", "''")
+
+            self.HiryrgichneLikyvannaPynktIX = ''
+            if self.HiryrgichneLikyvannaPynktIXNoCheckBox.isChecked():
+                self.HiryrgichneLikyvannaPynktIX = '2.3. Хірургічне лікування: ні.'
+            else:
+                self.HiryrgichneLikyvannaPynktIX = '2.3. Хірургічне лікування: так.'
+
+            self.HiryrgichneLikyvannaPynktIXTerminNazvaOperacii = '2.3.1. Назва операції та дата: хірургічне лікування не проводилося.'
+            if self.HiryrgichneLikyvannaPynktIXYesCheckBox.isChecked():
+                self.HiryrgichneLikyvannaPynktIXTerminNazvaOperaciiText = self.HiryrgichneLikyvannaPynktIXTerminNazvaOperaciiLineEdit.text(
+                )
+                self.HiryrgichneLikyvannaPynktIXTerminNazvaOperaciiText = self.HiryrgichneLikyvannaPynktIXTerminNazvaOperaciiText.strip(
+                )
+                if self.HiryrgichneLikyvannaPynktIXTerminNazvaOperaciiText == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно вказати назву та дату операції в пункті "ІХ.Післяпологовий період"!'
+                    )
+                else:
+                    self.HiryrgichneLikyvannaPynktIXTerminNazvaOperacii = '2.3.1.Назва операції та дата: ' + self.HiryrgichneLikyvannaPynktIXTerminNazvaOperaciiText
+            self.HiryrgichneLikyvannaPynktIXTerminNazvaOperacii = self.HiryrgichneLikyvannaPynktIXTerminNazvaOperacii.replace(
+                "'", "''")
+
+            self.TruvalistProvedenoiProfilaktuktPynktIX = '3. Тривалість проведеної профілактики: профілактика не проводилась.'
+            self.TruvalistProvedenoiProfilaktuktPynktIXText = self.TruvalistProvedenoiProfilaktuktPynktIXLineEdit.text(
+            )
+            self.TruvalistProvedenoiProfilaktuktPynktIXText = self.TruvalistProvedenoiProfilaktuktPynktIXText.strip(
+            )
+            if self.TruvalistProvedenoiProfilaktuktPynktIXText != '':
+                self.TruvalistProvedenoiProfilaktuktPynktIX = '3. Тривалість проведеної профілактики: ' + self.TruvalistProvedenoiProfilaktuktPynktIXText
+            self.TruvalistProvedenoiProfilaktuktPynktIX = self.TruvalistProvedenoiProfilaktuktPynktIX.replace(
+                "'", "''")
+
+            self.YskladnennaVidProfilaktukyPynktIX = ''
+            if self.YskladnennaVidProfilaktukyPynktIXNoCheckBox.isChecked():
+                self.YskladnennaVidProfilaktukyPynktIX = '4. Наявність ускладнень від проведеної профілактики: ні.'
+            else:
+                self.YskladnennaVidProfilaktukyPynktIXText = self.YskladnennaVidProfilaktukyPynktIXYskladnennaLineEdit.text(
+                )
+                self.YskladnennaVidProfilaktukyPynktIXText = self.YskladnennaVidProfilaktukyPynktIXText.strip(
+                )
+                if self.YskladnennaVidProfilaktukyPynktIXText == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно ускладнення від проведеної профілактики в пункті "ІХ.Післяпологовий період"!'
+                    )
+                else:
+                    self.YskladnennaVidProfilaktukyPynktIX = '4. Наявність ускладнень від проведеної профілактики: так; ускладнення: ' + self.YskladnennaVidProfilaktukyPynktIXText
+            self.YskladnennaVidProfilaktukyPynktIX = self.YskladnennaVidProfilaktukyPynktIX.replace(
+                "'", "''")
+
+            self.TromboembolichniYskladnennaPynktIX = ''
+            if self.TromboembolichniYskladnennaPynktIXNoCheckBox.isChecked():
+                self.TromboembolichniYskladnennaPynktIX = '5. Тромбоемболічні ускладнення: ні.'
+            else:
+                self.TromboembolichniYskladnennaPynktIX = '5. Тромбоемболічні ускладнення: так.'
+
+            self.TromboembolichniYskladnennaPynktIXVudTey = '5.1. Вид ТЕУ: тромбоемболічні ускладнення відсутні.'
+            if self.TromboembolichniYskladnennaPynktIXYesCheckBox.isChecked():
+                self.TromboembolichniYskladnennaPynktIXVudTeyText = self.TromboembolichniYskladnennaPynktIXVudTeyLineEdit.text(
+                )
+                self.TromboembolichniYskladnennaPynktIXVudTeyText = self.TromboembolichniYskladnennaPynktIXVudTeyText.strip(
+                )
+                if self.TromboembolichniYskladnennaPynktIXVudTeyText == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно вказати вид ТЕУ в пункті "ІХ.Післяпологовий період"!'
+                    )
+                else:
+                    self.TromboembolichniYskladnennaPynktIXVudTey = '5.1. Вид ТЕУ: ' + self.TromboembolichniYskladnennaPynktIXVudTeyText
+            self.TromboembolichniYskladnennaPynktIXVudTey = self.TromboembolichniYskladnennaPynktIXVudTey.replace(
+                "'", "''")
+
+            self.TromboembolichniYskladnennaPynktIXTerminVunuknenna = '5.2. Термін винекнення: тромбоемболічні ускладнення відсутні.'
+            if self.TromboembolichniYskladnennaPynktIXYesCheckBox.isChecked():
+                self.TromboembolichniYskladnennaPynktIXTerminVunuknennaText = self.TromboembolichniYskladnennaPynktIXTerminVunuknennaLineEdit.text(
+                )
+                self.TromboembolichniYskladnennaPynktIXTerminVunuknennaText = self.TromboembolichniYskladnennaPynktIXTerminVunuknennaText.strip(
+                )
+                if self.TromboembolichniYskladnennaPynktIXTerminVunuknennaText == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно вказати термін виникнення ТЕУ в пункті "ІХ.Післяпологовий період"!'
+                    )
+                else:
+                    self.TromboembolichniYskladnennaPynktIXTerminVunuknenna = '5.2. Термін винекнення: ' + self.TromboembolichniYskladnennaPynktIXTerminVunuknennaText
+            self.TromboembolichniYskladnennaPynktIXTerminVunuknenna = self.TromboembolichniYskladnennaPynktIXTerminVunuknenna.replace(
+                "'", "''")
+
+            self.TromboembolichniYskladnennaPynktIXTerapiaTEY = '5.3. Терапія ТЕУ: тромбоемболічні ускладнення відсутні.'
+            if self.TromboembolichniYskladnennaPynktIXYesCheckBox.isChecked():
+                self.TromboembolichniYskladnennaPynktIXTerapiaTEYText = self.TromboembolichniYskladnennaPynktIXTerapiaTEYLineEdit.text(
+                )
+                self.TromboembolichniYskladnennaPynktIXTerapiaTEYText = self.TromboembolichniYskladnennaPynktIXTerapiaTEYText.strip(
+                )
+                if self.TromboembolichniYskladnennaPynktIXTerapiaTEYText == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно вказати терапію ТЕУ в пункті "ІХ.Післяпологовий період"!'
+                    )
+                else:
+                    self.TromboembolichniYskladnennaPynktIXTerapiaTEY = '5.3. Терапія ТЕУ: ' + self.TromboembolichniYskladnennaPynktIXTerapiaTEYText
+            self.TromboembolichniYskladnennaPynktIXTerapiaTEY = self.TromboembolichniYskladnennaPynktIXTerapiaTEY.replace(
+                "'", "''")
+
+            self.MastutPynktIX = ''
+            if self.MastutPynktIXNoCheckBox.isChecked():
+                self.MastutPynktIX = '6. Мастит: ні.'
+            else:
+                self.MastutPynktIX = '6. Мастит: так.'
+
+            self.SubinvolyciaMatkuPynktIX = ''
+            if self.SubinvolyciaMatkuPynktIXNoCheckBox.isChecked():
+                self.SubinvolyciaMatkuPynktIX = '7. Субінволюція матки: ні.'
+            else:
+                self.SubinvolyciaMatkuPynktIX = '7. Субінволюція матки: так.'
+
+            self.EndometrutPynktIX = ''
+            if self.EndometrutPynktIXNoCheckBox.isChecked():
+                self.EndometrutPynktIX = '8. Ендометрит: ні.'
+            else:
+                self.EndometrutPynktIX = '8. Ендометрит: так.'
+
+            self.PiznaPologovaKrovotechaPynktIX = ''
+            if self.PiznaPologovaKrovotechaPynktIXNoCheckBox.isChecked():
+                self.PiznaPologovaKrovotechaPynktIX = '9. Пізня післяпологова кровотеча: ні.'
+            else:
+                self.PiznaPologovaKrovotechaPynktIX = '9. Пізня післяпологова кровотеча: так.'
+
+            self.SepsusPynktIX = ''
+            if self.SepsusPynktIXNoCheckBox.isChecked():
+                self.SepsusPynktIX = '10. Сепсис: ні.'
+            else:
+                self.SepsusPynktIX = '10. Сепсис: так.'
+
+            self.RoshodgennaShvivPynktIX = ''
+            if self.RoshodgennaShvivPynktIXNoCheckBox.isChecked():
+                self.RoshodgennaShvivPynktIX = '11. Розходження швів: ні.'
+            else:
+                self.RoshodgennaShvivPynktIX = '11. Розходження швів: так.'
+
+            self.InshiPynktIX = '12. Інші: відсутні.'
+            self.InshiPynktIXText = self.InshiPynktIXLineEdit.text()
+            self.InshiPynktIXText = self.InshiPynktIXText.strip()
+            if self.InshiPynktIXText != '':
+                self.InshiPynktIX = '12. Інші: ' + self.InshiPynktIXText
+            self.InshiPynktIX = self.InshiPynktIX.replace("'", "''")
+
+            self.HirVtyrchannaVPershi6TugnivPynktIX = ''
+            if self.HirVtyrchannaVPershi6TugnivPynktIXNoCheckBox.isChecked():
+                self.HirVtyrchannaVPershi6TugnivPynktIX = '13. Хірургічні втручання в перші 6 тиж після пологів: ні.'
+            else:
+                self.HirVtyrchannaVPershi6TugnivPynktIX = '13. Хірургічні втручання в перші 6 тиж після пологів: так.'
+
+            self.VupuskaDodomyPynktIX = ''
+            if self.VupuskaDodomyPynktIXNoCheckBox.isChecked():
+                self.VupuskaDodomyPynktIX = '14. Виписка додому: ні.'
+            else:
+                self.VupuskaDodomyPynktIXText = self.VupuskaDodomyPynktIXDobyLineEdit.text(
+                )
+                self.VupuskaDodomyPynktIXText = self.VupuskaDodomyPynktIXText.strip(
+                )
+                if self.VupuskaDodomyPynktIXText == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно вказати термін виписки додому в пункті "ІХ.Післяпологовий період"!'
+                    )
+                else:
+                    self.VupuskaDodomyPynktIX = '14. Виписка додому: так; на ' + self.VupuskaDodomyPynktIXText + " добу."
+
+            self.PerevedennaVInshuiStacionarPynktIX = ''
+            if self.PerevedennaVInshuiStacionarPynktIXNoCheckBox.isChecked():
+                self.PerevedennaVInshuiStacionarPynktIX = '15. Переведена в інший стаціонар: ні.'
+            else:
+                self.PerevedennaVInshuiStacionarPynktIXText = self.PerevedennaVInshuiStacionarPynktIXDobyLineEdit.text(
+                )
+                self.PerevedennaVInshuiStacionarPynktIXText = self.PerevedennaVInshuiStacionarPynktIXText.strip(
+                )
+                if self.PerevedennaVInshuiStacionarPynktIXText == '':
+                    self.ErrorCount = self.ErrorCount + 1
+                    self.Error_mesage(
+                        'Необхідно вказати термін переведення в інший стаціонар в пункті "ІХ.Післяпологовий період"!'
+                    )
+                else:
+                    self.PerevedennaVInshuiStacionarPynktIX = '15. Переведена в інший стаціонар: так; на ' + self.PerevedennaVInshuiStacionarPynktIXText + " добу."
+
+            self.ChangeDateRow = 'Дата та час заповнення реєстраційної карти: ' + self.ChangeDate.text(
+            )
+
+            self.WhoChangeRow = 'Заповняв: ' + self.WhoChange.text()
+            self.WhoChangeRow = self.WhoChangeRow.replace("'", "''")
+
+            if self.ErrorCount == 0:
+                try:
+                    cnx = self.ConnectToPregnantBD()
+                except mysql.connector.DatabaseError as e:
+                    self.Info_mesage(str(e))
+
+                try:
+                    cursor = cnx.cursor()
+                except mysql.connector.DatabaseError as e:
+                    self.Info_mesage(str(e))
+                    cnx.close()
+
+                query_to_insert = ("""
+                        INSERT INTO Registry
+                            (
+    
+                            PasportniDaniTitle,
+                            PasportniDani,
+                            HistoryNumber,
+                            Age,
+                            Address,
+                            Proffesional,
+                            Disability,
+                            ReceduvyTromboemboliiTitle,
+                            ReceduvyTromboembolii,
+                            TromboemboliiAndEstrogens,
+                            TromboemboliaSprovokovana,
+                            SimeinuiAnamnezTromboembolii,
+                            VstanovlennaTrombofilia,
+                            SypytniZahvoryvanna,
+                            OldMore35,
+                            Ogirinna,
+                            VagitnistMore3,
+                            Kyrinna,
+                            VelykiVarikozniVenu,
+                            ProvedennaProfTEYdpVagitnosti,
+                            ElastychnaKompresia,
+                            MedukamentoznaProfilaktuka,
+                            MedukamentoznaProfilaktukaNazvaPreperaty,
+                            MedukamentoznaProfilaktukaRegymPrujomy,
+                            HiryrgichneLikyvanna,
+                            TryvalistProvedennoiProfilaktyky,
+                            YskladneenaVidProfilaktyku,
+                            AkysherskiiAnamnez,
+                            DanaVagitnist,
+                            DanaVagitnistZaRahynkom,
+                            DaniPologuZaRahynkom,
+                            PoperedniPologuZavershulus,
+                            PoperedniPologu,
+                            NayavnistGuvyhDitey,
+                            VPerebigDannoiVagitnosti,
+                            Vagitnist,
+                            NaOblikyVGinochiiKonsyltacii,
+                            ZagrozaPereruvannaVagitnosti,
+                            ZagrozaPeredchasnuhPologiv,
+                            ZagrozaPeredchasnuhPologivP4_1,
+                            GestozIPolovunuVagitnosti,
+                            InshiPruchynyZnevodnenna,
+                            GestozIIPolovunuVagitnosti,
+                            GestozIIPolovunuVagitnostiVTermini,
+                            VunuknennaTEY,
+                            VudTEY,
+                            TEYTerminVagitnosti,
+                            Bagatovodda,
+                            BagatovoddaDiagnostovanoVTerminVagitnosti,
+                            MaloVodda,
+                            MaloVoddaDiagnostovanoVTerminVagitnosti,
+                            DustressPloda,
+                            ZatrumkaRozvutkyPloda,
+                            NajavnistSustemnoiInfekcii,
+                            PatologiaPlacentu,
+                            PatologiaLocalizaciiPlacentu,
+                            PeredchasneVadsharyvannaPlacentu,
+                            HiryrgichniVtyrchannaPidChasVagitnosti,
+                            TruvalaImmobilizacia,
+                            ZavershennaDannoiVagitnosti,
+                            ProvedennaProfilaktukuTerapiiTEYPidChasVagitnosti,
+                            PokazuDlaProvedennaProfilaktuky,
+                            ElastychnaKompresiaPynktVI,
+                            MedukamentoznaProfilaktukaPynktVI,
+                            MedukamentoznaProfilaktukaPynktVINazvaPreperaty,
+                            MedukamentoznaProfilaktukaPynktVIRegymPrujomy,
+                            MedukamentoznaProfilaktukaPynktVITerminKoluPruznacheno,
+                            HiryrgichneLikyvannaPynktVI,
+                            TryvalistProvedennoiProfilaktykyPynktVI,
+                            YskladneenaVidProfilaktykuPynktVI,
+                            TerapiyVidminenoZaGodDoPologivPynktVI,
+                            PerebigDanuhPologiv,
+                            PologuVaginalni,
+                            PologuAbdominalni,
+                            PokazannaDlaAbdominalnogoRozrodjenna,
+                            PoryshennaPologovoiDialnosti,
+                            KorekciaAnomaliiPologovoiDialnosti,
+                            VuluvNavkoloplodovuhVod,
+                            DustressPlodaVPologah,
+                            GipotonichnaKrovotecha,
+                            AnomaliiPrukriplennaPlacentu,
+                            DefektPoslidy,
+                            DefektObolonok,
+                            AnomaliiPrukriplennaPypovunu,
+                            OperatuvnaDopomoga,
+                            RozruvuPologovuhShlahiv,
+                            EpizoAboPerineotomia,
+                            KrovovtrataVPologah,
+                            TruvalistPologiv,
+                            StanNovonarodgennogoTaNeoPeriodTitleLable,
+                            Naroduvsa,
+                            PruchunaMertvonarodgenna,
+                            ZrilistNovonarodgennogo,
+                            ParametruNovonarodgennogo,
+                            GipotrofiaPloda,
+                            OcinkaZaShkaloyApgar,
+                            NovonarodjenuiZVadamuRozvutky,
+                            PologovaTravma,
+                            SDR,
+                            VnytrishnoytrobneInfikyvanna,
+                            GemoragichniYskladnenna,
+                            Anemia,
+                            GiperBilirybinemia,
+                            Asfiksia,
+                            PoryshennaKardioRespiratornoiAdaptacii,
+                            VtrataMasuTila,
+                            VitaminKVvedeno,
+                            VupusanuiNa,
+                            NeonatalnaSmert,
+                            PruchunaSmertiZaRezyltatomAytopsii,
+                            PislapologovuiPeriod,
+                            PislapologovuiPerebig,
+                            ProfilaktukaTerapiaTEYPynktI,
+                            ElastuchnaKompressiaPynktIX,
+                            MedukamentoznaProfilaktukaPynktIX,
+                            MedukamentoznaProfilaktukaPynktIXNazvaPreparaty,
+                            MedukamentoznaProfilaktukaPynktIXRegumPrujomy,
+                            MedukamentoznaProfilaktukaPynktIXTerminKoluPruznacheno,
+                            HiryrgichneLikyvannaPynktIX,
+                            HiryrgichneLikyvannaPynktIXTerminNazvaOperacii,
+                            TruvalistProvedenoiProfilaktuktPynktIX,
+                            YskladnennaVidProfilaktukyPynktIX,
+                            TromboembolichniYskladnennaPynktIX,
+                            TromboembolichniYskladnennaPynktIXVudTey,
+                            TromboembolichniYskladnennaPynktIXTerminVunuknenna,
+                            TromboembolichniYskladnennaPynktIXTerapiaTEY,
+                            MastutPynktIX,
+                            SubinvolyciaMatkuPynktIX,
+                            EndometrutPynktIX,
+                            PiznaPologovaKrovotechaPynktIX,
+                            SepsusPynktIX,
+                            RoshodgennaShvivPynktIX,
+                            InshiPynktIX,
+                            HirVtyrchannaVPershi6TugnivPynktIX,
+                            VupuskaDodomyPynktIX,
+                            PerevedennaVInshuiStacionarPynktIX,
+                            ChangeDateRow,
+                            WhoChangeRow)
+                            VALUES
+                            (
+                            '""" + self.PasportniDaniTitle + """',
+                            '""" + self.PasportniDani + """',
+                            '""" + self.HistoryNumber + """',
+                            '""" + self.Age + """',
+                            '""" + self.Address + """',
+                            '""" + self.Proffesional + """',
+                            '""" + self.Disability + """',
+                            '""" + self.ReceduvyTromboemboliiTitle + """',
+                            '""" + self.ReceduvyTromboembolii + """',
+                            '""" + self.TromboemboliiAndEstrogens + """',
+                            '""" + self.TromboemboliaSprovokovana + """',
+                            '""" + self.SimeinuiAnamnezTromboembolii + """',
+                            '""" + self.VstanovlennaTrombofilia + """',
+                            '""" + self.SypytniZahvoryvanna + """',
+                            '""" + self.OldMore35 + """',
+                            '""" + self.Ogirinna + """',
+                            '""" + self.VagitnistMore3 + """',
+                            '""" + self.Kyrinna + """',
+                            '""" + self.VelykiVarikozniVenu + """',
+                            '""" + self.ProvedennaProfTEYdpVagitnosti + """',
+                            '""" + self.ElastychnaKompresia + """',
+                            '""" + self.MedukamentoznaProfilaktuka + """',
+                            '""" + self.MedukamentoznaProfilaktukaNazvaPreperaty +
+                                   """',
+                            '""" + self.MedukamentoznaProfilaktukaRegymPrujomy +
+                                   """',
+                            '""" + self.HiryrgichneLikyvanna + """',
+                            '""" + self.TryvalistProvedennoiProfilaktyky + """',
+                            '""" + self.YskladneenaVidProfilaktyku + """',
+                            '""" + self.AkysherskiiAnamnez + """',
+                            '""" + self.DanaVagitnist + """',
+                            '""" + self.DanaVagitnistZaRahynkom + """',
+                            '""" + self.DaniPologuZaRahynkom + """',
+                            '""" + self.PoperedniPologuZavershulus + """',
+                            '""" + self.PoperedniPologu + """',
+                            '""" + self.NayavnistGuvyhDitey + """',
+                            '""" + self.VPerebigDannoiVagitnosti + """',
+                            '""" + self.Vagitnist + """',
+                            '""" + self.NaOblikyVGinochiiKonsyltacii + """',
+                            '""" + self.ZagrozaPereruvannaVagitnosti + """',
+                            '""" + self.ZagrozaPeredchasnuhPologiv + """',
+                            '""" + self.ZagrozaPeredchasnuhPologivP4_1 + """',
+                            '""" + self.GestozIPolovunuVagitnosti + """',
+                            '""" + self.InshiPruchynyZnevodnenna + """',
+                            '""" + self.GestozIIPolovunuVagitnosti + """',
+                            '""" + self.GestozIIPolovunuVagitnostiVTermini + """',
+                            '""" + self.VunuknennaTEY + """',
+                            '""" + self.VudTEY + """',
+                            '""" + self.TEYTerminVagitnosti + """',
+                            '""" + self.Bagatovodda + """',
+                            '""" + self.BagatovoddaDiagnostovanoVTerminVagitnosti +
+                                   """',
+                            '""" + self.MaloVodda + """',
+                            '""" + self.MaloVoddaDiagnostovanoVTerminVagitnosti +
+                                   """',
+                            '""" + self.DustressPloda + """',
+                            '""" + self.ZatrumkaRozvutkyPloda + """',
+                            '""" + self.NajavnistSustemnoiInfekcii + """',
+                            '""" + self.PatologiaPlacentu + """',
+                            '""" + self.PatologiaLocalizaciiPlacentu + """',
+                            '""" + self.PeredchasneVadsharyvannaPlacentu + """',
+                            '""" + self.HiryrgichniVtyrchannaPidChasVagitnosti +
+                                   """',
+                            '""" + self.TruvalaImmobilizacia + """',
+                            '""" + self.ZavershennaDannoiVagitnosti + """',
+                            '""" + self.
+                                   ProvedennaProfilaktukuTerapiiTEYPidChasVagitnosti
+                                   + """',
+                            '""" + self.PokazuDlaProvedennaProfilaktuky + """',
+                            '""" + self.ElastychnaKompresiaPynktVI + """',
+                            '""" + self.MedukamentoznaProfilaktukaPynktVI + """',
+                            '""" + self.
+                                   MedukamentoznaProfilaktukaPynktVINazvaPreperaty
+                                   + """',
+                            '""" + self.
+                                   MedukamentoznaProfilaktukaPynktVIRegymPrujomy +
+                                   """',
+                            '""" + self.
+                                   MedukamentoznaProfilaktukaPynktVITerminKoluPruznacheno
+                                   + """',
+                            '""" + self.HiryrgichneLikyvannaPynktVI + """',
+                            '""" + self.TryvalistProvedennoiProfilaktykyPynktVI +
+                                   """',
+                            '""" + self.YskladneenaVidProfilaktykuPynktVI + """',
+                            '""" + self.TerapiyVidminenoZaGodDoPologivPynktVI +
+                                   """',
+                            '""" + self.PerebigDanuhPologiv + """',
+                            '""" + self.PologuVaginalni + """',
+                            '""" + self.PologuAbdominalni + """',
+                            '""" + self.PokazannaDlaAbdominalnogoRozrodjenna +
+                                   """',
+                            '""" + self.PoryshennaPologovoiDialnosti + """',
+                            '""" + self.KorekciaAnomaliiPologovoiDialnosti + """',
+                            '""" + self.VuluvNavkoloplodovuhVod + """',
+                            '""" + self.DustressPlodaVPologah + """',
+                            '""" + self.GipotonichnaKrovotecha + """',
+                            '""" + self.AnomaliiPrukriplennaPlacentu + """',
+                            '""" + self.DefektPoslidy + """',
+                            '""" + self.DefektObolonok + """',
+                            '""" + self.AnomaliiPrukriplennaPypovunu + """',
+                            '""" + self.OperatuvnaDopomoga + """',
+                            '""" + self.RozruvuPologovuhShlahiv + """',
+                            '""" + self.EpizoAboPerineotomia + """',
+                            '""" + self.KrovovtrataVPologah + """',
+                            '""" + self.TruvalistPologiv + """',
+                            '""" + self.StanNovonarodgennogoTaNeoPeriodTitleLable +
+                                   """',
+                            '""" + self.Naroduvsa + """',
+                            '""" + self.PruchunaMertvonarodgenna + """',
+                            '""" + self.ZrilistNovonarodgennogo + """',
+                            '""" + self.ParametruNovonarodgennogo + """',
+                            '""" + self.GipotrofiaPloda + """',
+                            '""" + self.OcinkaZaShkaloyApgar + """',
+                            '""" + self.NovonarodjenuiZVadamuRozvutky + """',
+                            '""" + self.PologovaTravma + """',
+                            '""" + self.SDR + """',
+                            '""" + self.VnytrishnoytrobneInfikyvanna + """',
+                            '""" + self.GemoragichniYskladnenna + """',
+                            '""" + self.Anemia + """',
+                            '""" + self.GiperBilirybinemia + """',
+                            '""" + self.Asfiksia + """',
+                            '""" + self.PoryshennaKardioRespiratornoiAdaptacii +
+                                   """',
+                            '""" + self.VtrataMasuTila + """',
+                            '""" + self.VitaminKVvedeno + """',
+                            '""" + self.VupusanuiNa + """',
+                            '""" + self.NeonatalnaSmert + """',
+                            '""" + self.PruchunaSmertiZaRezyltatomAytopsii + """',
+                            '""" + self.PislapologovuiPeriod + """',
+                            '""" + self.PislapologovuiPerebig + """',
+                            '""" + self.ProfilaktukaTerapiaTEYPynktI + """',
+                            '""" + self.ElastuchnaKompressiaPynktIX + """',
+                            '""" + self.MedukamentoznaProfilaktukaPynktIX + """',
+                            '""" + self.
+                                   MedukamentoznaProfilaktukaPynktIXNazvaPreparaty
+                                   + """',
+                            '""" + self.
+                                   MedukamentoznaProfilaktukaPynktIXRegumPrujomy +
+                                   """',
+                            '""" + self.
+                                   MedukamentoznaProfilaktukaPynktIXTerminKoluPruznacheno
+                                   + """',
+                            '""" + self.HiryrgichneLikyvannaPynktIX + """',
+                            '""" + self.
+                                   HiryrgichneLikyvannaPynktIXTerminNazvaOperacii +
+                                   """',
+                            '""" + self.TruvalistProvedenoiProfilaktuktPynktIX +
+                                   """',
+                            '""" + self.YskladnennaVidProfilaktukyPynktIX + """',
+                            '""" + self.TromboembolichniYskladnennaPynktIX + """',
+                            '""" + self.TromboembolichniYskladnennaPynktIXVudTey +
+                                   """',
+                            '""" + self.
+                                   TromboembolichniYskladnennaPynktIXTerminVunuknenna
+                                   + """',
+                            '""" + self.TromboembolichniYskladnennaPynktIXTerapiaTEY
+                                   + """',
+                            '""" + self.MastutPynktIX + """',
+                            '""" + self.SubinvolyciaMatkuPynktIX + """',
+                            '""" + self.EndometrutPynktIX + """',
+                            '""" + self.PiznaPologovaKrovotechaPynktIX + """',
+                            '""" + self.SepsusPynktIX + """',
+                            '""" + self.RoshodgennaShvivPynktIX + """',
+                            '""" + self.InshiPynktIX + """',
+                            '""" + self.HirVtyrchannaVPershi6TugnivPynktIX + """',
+                            '""" + self.VupuskaDodomyPynktIX + """',
+                            '""" + self.PerevedennaVInshuiStacionarPynktIX + """',
+                            '""" + self.ChangeDateRow + """',
+                            '""" + self.WhoChangeRow + """'
+                            )
+                """)
+                try:
+                    cursor.execute(query_to_insert)
+                except mysql.connector.DatabaseError as e:
+                    self.Info_mesage(str(e))
+                    cursor.close()
+                    cnx.close()
+                cnx.commit()
                 cursor.close()
                 cnx.close()
-            cnx.commit()
-            cursor.close()
-            cnx.close()
-            self.Info_mesage('Дані успішно внесені в БД!')
+                self.Info_mesage('Дані успішно внесені в БД!')
 
-            self.ResetToDefaultValue()
+                self.ResetToDefaultValue()
+        except Exception  as e:
+            print (e)
+            self.Error_mesage(str(e))
 
     def ResetToDefaultValue(self):
         "Сброс полей на стартовые позиции при правильно заполнении всех полей self.ErrorCount = 0"
@@ -7423,47 +7454,51 @@ FROM Registry R WHERE R.PasportniDani """ + self.PasportniDaniToSelect +
             cnx.close()
 
     def SeachWievData(self):
-        self.DedicatedRow = self.SeachResultTable.currentRow()
+        try:
+            self.DedicatedRow = self.SeachResultTable.currentRow()
 
-        if self.DedicatedRow >= 0:
-            self.FirstItem = self.SeachResultTable.item(0, 0)
+            if self.DedicatedRow >= 0:
+                self.FirstItem = self.SeachResultTable.item(0, 0)
 
-            if self.FirstItem is not None:
-                self.WievText = BigTextRedactor()
-                self.WievText.setGeometry(300, 300, 700, 600)
-                i = 0
-                j = self.SeachResultTable.currentRow()
-                while i < int(self.SeachResultTable.columnCount()):
-                    CellText = self.SeachResultTable.item(j, i)
-                    OrderItemText = CellText.text()
-                    try:
-                        if str(OrderItemText).find('I. Паспортні дані.') != -1\
-                                or str(OrderItemText).find('II. Наявність постійних факторів ризику ТЕУ.') != -1 \
-                                or str(OrderItemText).find('III. Проведення профілактики/терапії ТЕУ до вагітності:') != -1 \
-                                or str(OrderItemText).find('ІV. Акушерський анамнез.') != -1 \
-                                or str(OrderItemText).find('V. Перебіг даної вагітності.') != -1 \
-                                or str(OrderItemText).find('VІ. Проведення профілактики/терапії ТЕУ під час вагітності:') != -1 \
-                                or str(OrderItemText).find('VII. Перебіг даних пологів.') != -1 \
-                                or str(OrderItemText).find('VIII. Стан новонародженого та перебіг раннього неонатального періоду.') != -1 \
-                                or str(OrderItemText).find('ІX.Післяпологовий період.') != -1:
-                            self.WievText.BigDataText.insertPlainText("\n")
-                            self.WievText.BigDataText.insertHtml(
-                                "<b>" + OrderItemText + "</b>\n")
-                            self.WievText.BigDataText.insertPlainText("\n")
-                        else:
-                            self.WievText.BigDataText.insertPlainText(
-                                OrderItemText + "\n")
-                    except Exception as e:
-                        self.Info_mesage(str(e))
-                    i = i + 1
+                if self.FirstItem is not None:
+                    self.WievText = BigTextRedactor()
+                    self.WievText.setGeometry(300, 300, 700, 600)
+                    i = 0
+                    j = self.SeachResultTable.currentRow()
+                    while i < int(self.SeachResultTable.columnCount()):
+                        CellText = self.SeachResultTable.item(j, i)
+                        OrderItemText = CellText.text()
+                        try:
+                            if str(OrderItemText).find('I. Паспортні дані.') != -1\
+                                    or str(OrderItemText).find('II. Наявність постійних факторів ризику ТЕУ.') != -1 \
+                                    or str(OrderItemText).find('III. Проведення профілактики/терапії ТЕУ до вагітності:') != -1 \
+                                    or str(OrderItemText).find('ІV. Акушерський анамнез.') != -1 \
+                                    or str(OrderItemText).find('V. Перебіг даної вагітності.') != -1 \
+                                    or str(OrderItemText).find('VІ. Проведення профілактики/терапії ТЕУ під час вагітності:') != -1 \
+                                    or str(OrderItemText).find('VII. Перебіг даних пологів.') != -1 \
+                                    or str(OrderItemText).find('VIII. Стан новонародженого та перебіг раннього неонатального періоду.') != -1 \
+                                    or str(OrderItemText).find('ІX.Післяпологовий період.') != -1:
+                                self.WievText.BigDataText.insertPlainText("\n")
+                                self.WievText.BigDataText.insertHtml(
+                                    "<b>" + OrderItemText + "</b>\n")
+                                self.WievText.BigDataText.insertPlainText("\n")
+                            else:
+                                self.WievText.BigDataText.insertPlainText(
+                                    OrderItemText + "\n")
+                        except Exception as e:
+                            self.Info_mesage(str(e))
+                        i = i + 1
 
-                self.WievText.CloseBigDataTextButton.clicked.connect(
-                    self.WievText.close)
+                    self.WievText.CloseBigDataTextButton.clicked.connect(
+                        self.WievText.close)
 
+                else:
+                    self.Error_mesage("Виділений рядок порожній!")
             else:
-                self.Error_mesage("Виділений рядок порожній!")
-        else:
-            self.Error_mesage("Необхідно виділити потрібний запис!")
+                self.Error_mesage("Необхідно виділити потрібний запис!")
+        except Exception  as e:
+            print (e)
+            self.Error_mesage(str(e))
 
     def CreateUser(self):
         self.CreatingUserErrorCount = 0
